@@ -1,0 +1,26 @@
+[project]
+name = "optunahub"
+description = "OptunaHub"
+version = "0.0.2"
+readme = "README.md"
+authors = [
+  {name = "Yoshihiko Ozaki"}
+]
+dependencies = [
+  "ga4mp",
+  "optuna",
+  "PyGithub",
+  "toml",
+]
+
+[project.optional-dependencies]
+checking = [
+  "mypy",
+  "ruff",
+  "types-toml",
+]
+
+docs = [
+  "sphinx",
+  "sphinx_rtd_theme",
+]
