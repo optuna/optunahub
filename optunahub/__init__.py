@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from optunahub.hub import load_module
 from optunahub.hub import load_module_local
 from optunahub.version import __version__
