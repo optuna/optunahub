@@ -178,12 +178,10 @@ def _report_stats(
             The base URL for the GitHub API.
     """
 
-    # Statistics are collected only for the official registries.
-    TARGET_REPO_OWNERS = ["optuna"]
-    TARGET_REPO_NAMES = ["optunahub-registry"]
+    # Statistics are collected only for the official registry.
     if (
-        repo_owner not in TARGET_REPO_OWNERS
-        or repo_name not in TARGET_REPO_NAMES
+        repo_owner != "optuna"
+        or repo_name != "optunahub-registry"
         or base_url != "https://api.github.com"
     ):
         return
@@ -201,8 +199,6 @@ def _report_stats(
     event.set_event_param(name="optuna_version", value=optuna.version.__version__)
     event.set_event_param(name="optunahub_version", value=optunahub.__version__)
     event.set_event_param(name="package", value=package)
-    event.set_event_param(name="repo_owner", value=repo_owner)
-    event.set_event_param(name="repo_name", value=repo_name)
     event.set_event_param(name="registry_root", value=registry_root)
     event.set_event_param(name="ref", value=ref)
     ga.send([event])
