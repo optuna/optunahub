@@ -35,7 +35,7 @@ Load the package you want from the OptunaHub registry as follows.
 
 
    if __name__ == "__main__":
-      mod = optunahub.load("samplers/simulated_annealing")
+      mod = optunahub.load_module("samplers/simulated_annealing")
 
       sampler = mod.SimulatedAnnealingSampler()
       study = optuna.create_study(sampler=sampler)
@@ -104,4 +104,4 @@ FAQ
 
 - Q. How can I update an OptunaHub package already cached?
 
-   - A. Calling `optunahub.load()` with `force_reload=True` ensures the selected package is re-download from the package registry.
+   - A. Calling `optunahub.load_module()` with `force_reload=True` ensures the selected package is re-download from the package registry.
