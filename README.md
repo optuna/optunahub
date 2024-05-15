@@ -1,5 +1,7 @@
-OptunaHub-Proto
+OptunaHub
 ==================
+
+__NOTICE: OptunaHub is under development and all features are experimental. API may change in the future.__
 
 Python Library to use packages published in [OptunaHub Registry](https://github.com/optuna/optunahub-registry).
 
