@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools >= 61.1.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "optunahub"
 description = "OptunaHub"
@@ -27,7 +31,7 @@ docs = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["package*"]
+include = ["optunahub*"]
 
 [tool.ruff]
 line-length = 99
