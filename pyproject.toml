@@ -5,17 +5,18 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "optunahub"
 description = "OptunaHub"
-version = "0.0.2"
 readme = "README.md"
 authors = [
-  {name = "Yoshihiko Ozaki"}
+  {name = "Optuna team"}
 ]
+requires-python = ">=3.8"
 dependencies = [
   "ga4mp",
   "optuna",
   "PyGithub",
   "toml",
 ]
+dynamic = ["version"]
 
 [project.optional-dependencies]
 checking = [
@@ -30,8 +31,17 @@ docs = [
   "sphinx_rtd_theme",
 ]
 
+[project.urls]
+homepage = "TBD"
+repository = "https://github.com/optuna/optunahub"
+documentation = "TBD"
+bugtracker = "https://github.com/optuna/optunahub/issues"
+
 [tool.setuptools.packages.find]
 include = ["optunahub*"]
+
+[tool.setuptools.dynamic]
+version = {attr = "optunahub.version.__version__"}
 
 [tool.ruff]
 line-length = 99
