@@ -100,7 +100,7 @@ The <a class="reference external" href="https://github.com/optuna/optunahub/">op
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-   <span class="n">mod</span> <span class="o">=</span> <span class="n">optunahub</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;samplers/simulated_annealing&quot;</span><span class="p">)</span>
+   <span class="n">mod</span> <span class="o">=</span> <span class="n">optunahub</span><span class="o">.</span><span class="n">load_module</span><span class="p">(</span><span class="s2">&quot;samplers/simulated_annealing&quot;</span><span class="p">)</span>
 
    <span class="n">sampler</span> <span class="o">=</span> <span class="n">mod</span><span class="o">.</span><span class="n">SimulatedAnnealingSampler</span><span class="p">()</span>
    <span class="n">study</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span><span class="p">(</span><span class="n">sampler</span><span class="o">=</span><span class="n">sampler</span><span class="p">)</span>
@@ -158,7 +158,7 @@ The data is used to understand how users interact with the service and to identi
 <blockquote>
 <div><ul class="simple">
 <li><ol class="upperalpha simple">
-<li><p>Calling <cite>optunahub.load()</cite> with <cite>force_reload=True</cite> ensures the selected package is re-download from the package registry.</p></li>
+<li><p>Calling <cite>optunahub.load_module()</cite> with <cite>force_reload=True</cite> ensures the selected package is re-download from the package registry.</p></li>
 </ol>
 </li>
 </ul>
