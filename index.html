@@ -46,11 +46,7 @@
               <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">Welcome to OptunaHub’s documentation!</a></li>
 <li><a class="reference internal" href="#usage">Usage</a></li>
-<li><a class="reference internal" href="#module-optunahub">Reference</a><ul>
-<li><a class="reference internal" href="#optunahub.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
-<li><a class="reference internal" href="#optunahub.load_local"><code class="docutils literal notranslate"><span class="pre">load_local()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#reference">Reference</a></li>
 <li><a class="reference internal" href="#anonymous-analytics">Anonymous Analytics</a></li>
 <li><a class="reference internal" href="#package-cache">Package Cache</a></li>
 <li><a class="reference internal" href="#faq">FAQ</a></li>
@@ -114,61 +110,8 @@ The <a class="reference external" href="https://github.com/optuna/optunahub/">op
 </pre></div>
 </div>
 </section>
-<section id="module-optunahub">
-<span id="reference"></span><h1>Reference<a class="headerlink" href="#module-optunahub" title="Link to this heading"></a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="optunahub.load">
-<span class="sig-prename descclassname"><span class="pre">optunahub.</span></span><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repo_owner</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'optuna'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repo_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'optunahub-registry'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registry_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'package'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'main'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'https://api.github.com'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_reload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Auth</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ModuleType</span></span></span><a class="headerlink" href="#optunahub.load" title="Link to this definition"></a></dt>
-<dd><p>Import a package from the OptunaHub registry.
-A third-party registry is also available by setting the <cite>repo_owner</cite> and
-<cite>repo_name</cite>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>package_name</strong> – The package name to load.</p></li>
-<li><p><strong>repo_owner</strong> – The owner of the repository.</p></li>
-<li><p><strong>repo_name</strong> – The name of the repository.</p></li>
-<li><p><strong>registry_root</strong> – The root directory of the registry.
-The default is “package”.</p></li>
-<li><p><strong>ref</strong> – The Git reference (branch, tag, or commit SHA) for the package.</p></li>
-<li><p><strong>base_url</strong> – The base URL for the GitHub API.</p></li>
-<li><p><strong>force_reload</strong> – If <cite>True</cite>, the package will be downloaded from the repository.
-If <cite>False</cite>, the package cached in the local directory will be
-loaded if available.
-If <cite>None</cite>, the setting is inherited from the outer <cite>load</cite>-like function.
-For the outermost call, the default is <cite>False</cite>.</p></li>
-<li><p><strong>auth</strong> – The authentication object for the GitHub API.
-It is required to access private/internal repositories.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The module object of the package.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="optunahub.load_local">
-<span class="sig-prename descclassname"><span class="pre">optunahub.</span></span><span class="sig-name descname"><span class="pre">load_local</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registry_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'/'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_reload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ModuleType</span></span></span><a class="headerlink" href="#optunahub.load_local" title="Link to this definition"></a></dt>
-<dd><p>Import a package from the local registry.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>package_name</strong> – The package name to load.</p></li>
-<li><p><strong>registry_root</strong> – The root directory of the registry.
-The default is the root directory of the file system,
-e.g., “/” for UNIX-like systems.</p></li>
-<li><p><strong>force_reload</strong> – This setting will be inherited to the inner <cite>load</cite>-like function.
-If <cite>None</cite>, the setting is inherited from the outer <cite>load</cite>-like function.
-For the outermost call, the default is <cite>False</cite>.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The module object of the package.</p>
-</dd>
-</dl>
-</dd></dl>
-
+<section id="reference">
+<h1>Reference<a class="headerlink" href="#reference" title="Link to this heading"></a></h1>
 </section>
 <section id="anonymous-analytics">
 <h1>Anonymous Analytics<a class="headerlink" href="#anonymous-analytics" title="Link to this heading"></a></h1>
