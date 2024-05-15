@@ -8,10 +8,11 @@ import sys
 import types
 from urllib.parse import urlparse
 
-import optuna.version
 from ga4mp import GtagMP  # type: ignore
-from github import Auth, Github
+from github import Auth
+from github import Github
 from github.ContentFile import ContentFile
+import optuna.version
 
 import optunahub
 from optunahub import _conf
@@ -63,9 +64,7 @@ def _import_github_dir(
     hostname = urlparse(base_url).hostname
     if hostname is None:
         raise ValueError(f"Invalid base URL: {base_url}")
-    cache_dir_prefix = os.path.join(
-        _conf.cache_home(), hostname, repo_owner, repo_name, ref
-    )
+    cache_dir_prefix = os.path.join(_conf.cache_home(), hostname, repo_owner, repo_name, ref)
     package_cache_dir = os.path.join(cache_dir_prefix, dir_path)
     use_cache = not force_reload and os.path.exists(package_cache_dir)
 
