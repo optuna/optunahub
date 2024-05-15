@@ -43,6 +43,11 @@ include = ["optunahub*"]
 [tool.setuptools.dynamic]
 version = {attr = "optunahub.version.__version__"}
 
+[tool.setuptools.package-data]
+"optunahub" = [
+  "py.typed",
+]
+
 [tool.ruff]
 line-length = 99
 
