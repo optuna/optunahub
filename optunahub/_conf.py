@@ -13,17 +13,13 @@ def config_file() -> str:
     """
     if platform.system() == "Windows":  # NOTE: unverified
         return os.path.join(
-            os.getenv(
-                "APPDATA", os.path.join(os.path.expanduser("~"), "AppData", "Roaming")
-            ),
+            os.getenv("APPDATA", os.path.join(os.path.expanduser("~"), "AppData", "Roaming")),
             "optunahub",
             "config.toml",
         )
     else:  # UNIX-like
         return os.path.join(
-            os.getenv(
-                "XDG_CONFIG_HOME", os.path.join(os.path.expanduser("~"), ".config")
-            ),
+            os.getenv("XDG_CONFIG_HOME", os.path.join(os.path.expanduser("~"), ".config")),
             "optunahub",
             "config.toml",
         )
@@ -103,9 +99,7 @@ def cache_home() -> str:
         )
     else:  # UNIX-like
         return os.path.join(
-            os.getenv(
-                "XDG_CACHE_HOME", os.path.join(os.path.expanduser("~"), ".cache")
-            ),
+            os.getenv("XDG_CACHE_HOME", os.path.join(os.path.expanduser("~"), ".cache")),
             "optunahub",
         )
 
