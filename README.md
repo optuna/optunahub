@@ -29,7 +29,7 @@ def objective(trial: optuna.Trial) -> float:
 
 
 if __name__ == "__main__":
-    mod = optunahub.load("samplers/simulated_annealing")
+    mod = optunahub.load_module("samplers/simulated_annealing")
 
     sampler = mod.SimulatedAnnealingSampler()
     study = optuna.create_study(sampler=sampler)

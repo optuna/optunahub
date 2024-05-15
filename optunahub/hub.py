@@ -208,7 +208,7 @@ def _report_stats(
     ga.send([event])
 
 
-def load(
+def load_module(
     package: str,
     *,
     repo_owner: str = "optuna",
@@ -278,7 +278,7 @@ def load(
     return module
 
 
-def load_local(
+def load_module_local(
     package: str,
     *,
     registry_root: str = os.sep,
