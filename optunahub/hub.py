@@ -109,56 +109,9 @@ def _import_github_dir(
     return module, use_cache
 
 
-def _check_analytics_optout() -> bool:
-    """Check if the user has opted out of analytics.
-
-    The analytics can be disabled in the following ways:
-        1. setting the environment variable `OPTUNAHUB_NO_ANALYTICS` to "1",
-        2. setting the value of `no_analytics` to `true` in the config file.
-
-    Returns:
-        `True` if the user has opted out of analytics.
-    """
-
-    optunahub_no_analytics_env = os.getenv("OPTUNAHUB_NO_ANALYTICS")
-    if optunahub_no_analytics_env is not None:
-        return optunahub_no_analytics_env == "1"
-
-    is_no_analytics = _conf.get_config_value("no_analytics")
-    if is_no_analytics is not None:
-        return is_no_analytics
-
-    print(
-        "Would you allow OptunaHub to collect anonymous usage statistics?\n"
-        "This information helps the Optuna team improve OptunaHub. [Yes/No]"
-    )
-    while is_no_analytics is None:
-        ans = input()
-        if ans.lower() in ["yes", "y"]:
-            is_no_analytics = False
-        elif ans.lower() in ["no", "n"]:
-            is_no_analytics = True
-        else:
-            print("Please answer Yes (Y/yes/y) or No (N/no/n).")
-
-    _conf.set_config_value("no_analytics", is_no_analytics)
-    _conf.set_config_value("no_analytics_version", optunahub.__version__)
-    print(
-        f'Your preference is saved to "{_conf.config_file()}".\n'
-        'You can change the setting later by editing the "no_analytics" value '
-        "in the config file."
-    )
-
-    return is_no_analytics
-
-
 def _report_stats(
     package: str,
-    repo_owner: str,
-    repo_name: str,
-    registry_root: str,
     ref: str | None,
-    base_url: str,
 ) -> None:
     """Report statistics to Google Analytics.
 
@@ -177,18 +130,6 @@ def _report_stats(
         base_url:
             The base URL for the GitHub API.
     """
-
-    # Statistics are collected only for the official registry.
-    if (
-        repo_owner != "optuna"
-        or repo_name != "optunahub-registry"
-        or base_url != "https://api.github.com"
-    ):
-        return
-
-    if _check_analytics_optout():
-        return
-
     ga = GtagMP(
         measurement_id="xxx",
         api_secret="xxx",
@@ -267,8 +208,14 @@ def load_module(
         auth=auth,
     )
 
-    if not is_cache:
-        _report_stats(package, repo_owner, repo_name, registry_root, ref, base_url)
+    # Statistics are collected only for the official registry.
+    is_official_registry = (
+        repo_owner == "optuna"
+        and repo_name == "optunahub-registry"
+        and base_url == "https://api.github.com"
+    )
+    if not _conf.is_no_analytics() and not is_cache and is_official_registry:
+        _report_stats(package, ref)
 
     return module
 
