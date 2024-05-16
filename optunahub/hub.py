@@ -199,7 +199,6 @@ def _report_stats(
     event.set_event_param(name="optuna_version", value=optuna.version.__version__)
     event.set_event_param(name="optunahub_version", value=optunahub.__version__)
     event.set_event_param(name="package", value=package)
-    event.set_event_param(name="registry_root", value=registry_root)
     event.set_event_param(name="ref", value=ref)
     ga.send([event])
 
