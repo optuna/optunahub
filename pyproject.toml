@@ -6,6 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "optunahub"
 description = "OptunaHub"
 readme = "README.md"
+license = {file = "LICENSE"}
 authors = [
   {name = "Optuna team"}
 ]
