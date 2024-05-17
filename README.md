@@ -1,6 +1,10 @@
 OptunaHub
 ==================
 
+[![Python](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/optuna/optuna)
+
+
 __NOTICE: OptunaHub is under development and all features are experimental. API may change in the future.__
 
 Python Library to use packages published in [OptunaHub Registry](https://github.com/optuna/optunahub-registry).
