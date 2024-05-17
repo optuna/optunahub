@@ -32,9 +32,9 @@ docs = [
 ]
 
 [project.urls]
-homepage = "TBD"
+homepage = "https://hub.optuna.org/"
 repository = "https://github.com/optuna/optunahub"
-documentation = "TBD"
+documentation = "https://optuna.github.io/optunahub/"
 bugtracker = "https://github.com/optuna/optunahub/issues"
 
 [tool.setuptools.packages.find]
