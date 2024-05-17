@@ -1,0 +1,68 @@
+name: Publish distributions to PyPI or TestPyPI
+
+# TestPyPI upload is scheduled in each weekday.
+# PyPI upload is only activated if the release is published.
+on:
+  # Temoorarily disabled the scheduled TestPyPI upload.
+  # schedule:
+    # - cron: '0 15 * * *'
+  release:
+    types:
+      - published
+
+jobs:
+  build-n-publish:
+    name: Build and publish Python distributions to PyPI or TestPyPI
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+
+    # Not intended for forks.
+    if: github.repository == 'optuna/optunahub'
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v5
+      with:
+        python-version: 3.8
+
+    - name: Install twine
+      run: |
+        python -m pip install -U pip
+        python -m pip install -U twine wheel build
+
+    - name: Output installed packages
+      run: |
+        pip freeze --all
+    - name: Output dependency tree
+      run: |
+        pip install pipdeptree
+        pipdeptree
+
+    - name: Change the version file for scheduled TestPyPI upload
+      if: github.event_name == 'schedule'
+      run: |
+        OPTUNAHUB_VERSION=$(cut -d '"' -f 2 optunahub/version.py)
+        DATE=`date +"%Y%m%d"`
+        echo "__version__ = \"${OPTUNAHUB_VERSION}${DATE}\"" > optunahub/version.py
+
+    - name: Build a tar ball
+      run: |
+        python -m build --sdist --wheel
+
+    - name: Verify the distributions
+      run: twine check dist/*
+
+    - name: Publish distribution to TestPyPI
+      # The following upload action cannot be executed in the forked repository.
+      if: (github.event_name == 'schedule') || (github.event_name == 'release')
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        repository-url: https://test.pypi.org/legacy/
+
+    - name: Publish distribution to PyPI
+      # The following upload action cannot be executed in the forked repository.
+      if: github.event_name == 'release'
+      uses: pypa/gh-action-pypi-publish@release/v1
+  
