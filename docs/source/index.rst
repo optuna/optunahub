@@ -43,4 +43,5 @@ Load the package you want from the OptunaHub registry as follows.
    :maxdepth: 2
    :caption: Contents:
 
+   reference
    faq
