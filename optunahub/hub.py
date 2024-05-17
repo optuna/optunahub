@@ -113,29 +113,31 @@ def _report_stats(
     package: str,
     ref: str | None,
 ) -> None:
-    """Report statistics to Google Analytics.
+    """Report anonymous statistics.
+
+    Collecting statistics for the official registry.
+    The following parameters are collected:
+      - CI: Whether the environment is CI or not.
+      - optuna_version: The version of Optuna.
+      - optunahub_version: The version of OptunaHub.
+      - package: The package name loaded.
+      - ref: The Git reference (branch, tag, or commit SHA) for the package.
+    WE NEVER COLLECT ANY PERSONAL INFORMATION.
+
+    The statistics can be disabled by setting the environmental variable OPTUNAHUB_NO_ANALYTICS=1,
 
     Args:
         package:
             The package name loaded.
-        repo_owner:
-            The owner of the repository.
-        repo_name:
-            The name of the repository.
-        registry_root:
-            The root directory of the registry.
-            The default is "package".
         ref:
             The Git reference (branch, tag, or commit SHA) for the package.
-        base_url:
-            The base URL for the GitHub API.
     """
     ga = GtagMP(
-        measurement_id="xxx",
-        api_secret="xxx",
-        client_id="xxx",
+        measurement_id="G-8EZ4F4Z74E",  # OptunaHub
+        api_secret="8tWYGaAEQJiYJSUJfqNMTw",
+        client_id="optunahub",  # Anonymous (by always setting client_id to "optunahub")
     )
-    event = ga.create_new_event("load_package")
+    event = ga.create_new_event("load_module")
     event.set_event_param(name="CI", value=os.getenv("CI", False))
     event.set_event_param(name="optuna_version", value=optuna.version.__version__)
     event.set_event_param(name="optunahub_version", value=optunahub.__version__)
