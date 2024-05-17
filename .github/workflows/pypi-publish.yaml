@@ -65,4 +65,3 @@ jobs:
       # The following upload action cannot be executed in the forked repository.
       if: github.event_name == 'release'
       uses: pypa/gh-action-pypi-publish@release/v1
-  
