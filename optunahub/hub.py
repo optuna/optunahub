@@ -90,7 +90,11 @@ def _import_github_dir(
                 package_contents.extend(dir_contents)
             else:
                 with open(file_path, "wb") as f:
-                    f.write(m.decoded_content)
+                    try:
+                        decoded_content = m.decoded_content
+                    except AssertionError:
+                        continue
+                    f.write(decoded_content)
 
     module_path = os.path.join(cache_dir_prefix, dir_path)
     module_name = os.path.basename(module_path)
