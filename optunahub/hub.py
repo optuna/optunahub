@@ -226,7 +226,7 @@ def load_module(
     return module
 
 
-def load_module_local(
+def load_local_module(
     package: str,
     *,
     registry_root: str = os.sep,
