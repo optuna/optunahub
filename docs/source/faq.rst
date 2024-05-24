@@ -7,7 +7,7 @@ FAQ
 How to opt-out of the anonymous analytics?
 ------------------------------------------
 
-`OptunaHub collects anonymous usage data <https://optuna.github.io/optunahub-web/static/anonymous_analytics/>`__ to improve the service.
+`OptunaHub collects anonymous usage data <https://hub.optuna.org/static/anonymous_analytics/>`__ to improve the service.
 The data is used to understand how users interact with the service and to identify areas for improvement.
 
 Youn can opt-out of the anonymous analytics by setting the environment variable `OPTUNAHUB_NO_ANALYTICS` to `1`
