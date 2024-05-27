@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import inspect
+import logging
 import os
 import shutil
 import sys
@@ -16,6 +17,10 @@ import optuna.version
 
 import optunahub
 from optunahub import _conf
+
+
+# Revert the log level to Python's default (i.e., WARNING) for the `ga4mp` package.
+logging.getLogger("ga4mp.ga4mp").setLevel(logging.WARNING)
 
 
 def _import_github_dir(
