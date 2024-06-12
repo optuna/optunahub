@@ -171,7 +171,7 @@ def load_module(
     `repo_name`.
 
     Args:
-        package_name:
+        package:
             The package name to load.
         repo_owner:
             The owner of the repository.
@@ -240,7 +240,7 @@ def load_local_module(
     """Import a package from the local registry.
 
     Args:
-        package_name:
+        package:
             The package name to load.
         registry_root:
             The root directory of the registry.
