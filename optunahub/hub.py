@@ -240,7 +240,7 @@ def load_local_module(
     """Import a package from the local registry.
 
     Args:
-        package_name:
+        package:
             The package name to load.
         registry_root:
             The root directory of the registry.
