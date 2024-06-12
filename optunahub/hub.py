@@ -171,7 +171,7 @@ def load_module(
     `repo_name`.
 
     Args:
-        package_name:
+        package:
             The package name to load.
         repo_owner:
             The owner of the repository.
