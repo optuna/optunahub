@@ -24,10 +24,11 @@ logging.getLogger("ga4mp.ga4mp").setLevel(logging.WARNING)
 
 
 def _import_github_dir(
+    package: str,
     repo_owner: str,
     repo_name: str,
+    registry_root: str,
     ref: str | None,
-    dir_path: str,
     base_url: str,
     force_reload: bool,
     auth: Auth.Auth | None,
@@ -35,15 +36,18 @@ def _import_github_dir(
     """Import a package in a GitHub repository.
 
     Args:
+        package:
+            The package name to load.
         repo_owner:
             The owner of the repository.
         repo_name:
             The name of the repository.
+        registry_root:
+            The root directory of the registry.
+            The default is "package".
         ref:
             The Git reference (branch, tag, or commit SHA) for the package.
             If None, the default branch of the repository is used.
-        dir_path:
-            The directory path to load in the repository.
         base_url:
             The base URL for the GitHub API.
         force_reload:
@@ -57,6 +61,11 @@ def _import_github_dir(
         The module object of the package and a boolean value indicating whether
         the cached package is imported.
     """
+
+    if registry_root:
+        dir_path = f"{registry_root}/{package}"
+    else:
+        dir_path = package
 
     # If `ref` is `None`, we need to access the repository to identify the
     # default branch regardless of the cache availability.
@@ -102,7 +111,7 @@ def _import_github_dir(
                     f.write(decoded_content)
 
     module_path = os.path.join(cache_dir_prefix, dir_path)
-    module_name = os.path.basename(module_path)
+    module_name = f"optunahub_package_{package.replace('/', '_')}"
     spec = importlib.util.spec_from_file_location(
         module_name, os.path.join(module_path, "__init__.py")
     )
@@ -114,7 +123,6 @@ def _import_github_dir(
     sys.modules[module_name] = module
     setattr(sys.modules[module_name], "OPTUNAHUB_FORCE_RELOAD", force_reload)
     spec.loader.exec_module(module)
-
     return module, use_cache
 
 
@@ -204,16 +212,12 @@ def load_module(
         else:
             force_reload = False
 
-    if registry_root:
-        dir_path = f"{registry_root}/{package}"
-    else:
-        dir_path = package
-
     module, is_cache = _import_github_dir(
+        package=package,
         repo_owner=repo_owner,
         repo_name=repo_name,
+        registry_root=registry_root,
         ref=ref,
-        dir_path=dir_path,
         base_url=base_url,
         force_reload=force_reload,
         auth=auth,
@@ -262,7 +266,7 @@ def load_local_module(
             force_reload = False
 
     module_path = os.path.join(registry_root, package)
-    module_name = os.path.basename(package)
+    module_name = f"optunahub_package_{package.replace('/', '_')}"
     spec = importlib.util.spec_from_file_location(
         module_name, os.path.join(module_path, "__init__.py")
     )
