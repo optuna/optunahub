@@ -111,7 +111,7 @@ def _import_github_dir(
                     f.write(decoded_content)
 
     module_path = os.path.join(cache_dir_prefix, dir_path)
-    module_name = f"optunahub_package_{package.replace('/', '_')}"
+    module_name = f"optunahub_registry.package.{package.replace('/', '.')}"
     spec = importlib.util.spec_from_file_location(
         module_name, os.path.join(module_path, "__init__.py")
     )
@@ -266,7 +266,7 @@ def load_local_module(
             force_reload = False
 
     module_path = os.path.join(registry_root, package)
-    module_name = f"optunahub_package_{package.replace('/', '_')}"
+    module_name = f"optunahub_registry.package.{package.replace('/', '.')}"
     spec = importlib.util.spec_from_file_location(
         module_name, os.path.join(module_path, "__init__.py")
     )
