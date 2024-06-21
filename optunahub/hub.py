@@ -34,6 +34,7 @@ def _import_github_dir(
     auth: Auth.Auth | None,
 ) -> tuple[types.ModuleType, bool]:
     """Import a package in a GitHub repository.
+       The loaded package name is set to `optunahub_registry.package.<package>`.
 
     Args:
         package:
@@ -242,6 +243,7 @@ def load_local_module(
     force_reload: bool | None = None,
 ) -> types.ModuleType:
     """Import a package from the local registry.
+       The loaded package name is set to `optunahub_registry.package.<package>`.
 
     Args:
         package:
