@@ -29,8 +29,21 @@ OptunaHub caches the downloaded packages in the following locations.
 The settings are prioritized in the order listed above.
 `XDG_CACHE_HOME` is usually `~/.cache` on UNIX-like systems.
 
+If you have any trouble with the cache, you can remove the cache directory to reset the cache.
+
 
 How can I update an OptunaHub package already cached?
 -----------------------------------------------------
 
 Calling `optunahub.load_module()` with `force_reload=True` ensures the selected package is re-download from the package registry.
+
+
+I got the "403: rate limit exceeded" error when loading a package. How can I fix it?
+------------------------------------------------------------------------------------
+
+Based on `the GitHub API documentation <https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28>`__, the primary rate limit for unauthenticated requests is 60 requests per hour.
+
+You can increase the rate limit by authenticating with GitHub using `a personal access token <https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens>`__.
+`optunahub.load_module <https://optuna.github.io/optunahub/reference.html#optunahub.load_module>`_ receives `an Auth object <https://pygithub.readthedocs.io/en/latest/examples/Authentication.html>`__ for authentication.
+
+Another option is cloning the `optunahub-registry <https://github.com/optuna/optunahub-registry>`__ repository and loading the desired package from the local directory by using `optunahub.load_local_module <https://optuna.github.io/optunahub/reference.html#optunahub.load_local_module>`__.
