@@ -200,7 +200,7 @@ def load_module(
             If `None`, the setting is inherited from the outer `load`-like function.
             For the outermost call, the default is `False`.
         auth:
-            The authentication object for the GitHub API.
+            `The authentication object <https://pygithub.readthedocs.io/en/latest/examples/Authentication.html>`__ for the GitHub API.
             It is required to access private/internal repositories.
 
     Returns:
