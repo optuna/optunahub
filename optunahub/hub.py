@@ -28,7 +28,7 @@ def _import_github_dir(
     repo_owner: str,
     repo_name: str,
     registry_root: str,
-    ref: str | None,
+    ref: str,
     base_url: str,
     force_reload: bool,
     auth: Auth.Auth | None,
@@ -48,7 +48,6 @@ def _import_github_dir(
             The default is "package".
         ref:
             The Git reference (branch, tag, or commit SHA) for the package.
-            If None, the default branch of the repository is used.
         base_url:
             The base URL for the GitHub API.
         force_reload:
@@ -68,14 +67,6 @@ def _import_github_dir(
     else:
         dir_path = package
 
-    # If `ref` is `None`, we need to access the repository to identify the
-    # default branch regardless of the cache availability.
-    g: Github | None = None
-    if ref is None:
-        g = Github(auth=auth, base_url=base_url)
-        repo = g.get_repo(f"{repo_owner}/{repo_name}")
-        ref = ref if ref is not None else repo.default_branch
-
     hostname = urlparse(base_url).hostname
     if hostname is None:
         raise ValueError(f"Invalid base URL: {base_url}")
@@ -84,9 +75,8 @@ def _import_github_dir(
     use_cache = not force_reload and os.path.exists(package_cache_dir)
 
     if not use_cache:
-        if g is None:
-            g = Github(auth=auth, base_url=base_url)
-            repo = g.get_repo(f"{repo_owner}/{repo_name}")
+        g = Github(auth=auth, base_url=base_url)
+        repo = g.get_repo(f"{repo_owner}/{repo_name}")
 
         package_contents = repo.get_contents(dir_path, ref)
 
@@ -121,8 +111,9 @@ def _import_github_dir(
     module = importlib.util.module_from_spec(spec)
     if module is None:
         raise ImportError(f"Module {module_name} not found in {module_path}")
+    setattr(module, "OPTUNAHUB_REF", ref)
+    setattr(module, "OPTUNAHUB_FORCE_RELOAD", force_reload)
     sys.modules[module_name] = module
-    setattr(sys.modules[module_name], "OPTUNAHUB_FORCE_RELOAD", force_reload)
     spec.loader.exec_module(module)
     return module, use_cache
 
@@ -170,7 +161,7 @@ def load_module(
     repo_owner: str = "optuna",
     repo_name: str = "optunahub-registry",
     registry_root: str = "package",
-    ref: str | None = "main",
+    ref: str | None = None,
     base_url: str = "https://api.github.com",
     force_reload: bool | None = None,
     auth: Auth.Auth | None = None,
@@ -191,6 +182,8 @@ def load_module(
             The default is "package".
         ref:
             The Git reference (branch, tag, or commit SHA) for the package.
+            If `None`, the setting is inherited from the outer `load`-like function.
+            For the outermost call, the default is `"main"`.
         base_url:
             The base URL for the GitHub API.
         force_reload:
@@ -206,12 +199,23 @@ def load_module(
     Returns:
         The module object of the package.
     """
+    if ref is None:
+        ref = "main"
+        for s in inspect.stack():
+            outer_globals = s[0].f_globals
+            if "OPTUNAHUB_REF" in outer_globals:
+                ref = outer_globals["OPTUNAHUB_REF"]
+                break
+    assert ref is not None
+
     if force_reload is None:
-        outer_globals = inspect.stack()[1][0].f_globals
-        if "OPTUNAHUB_FORCE_RELOAD" in outer_globals:
-            force_reload = outer_globals["OPTUNAHUB_FORCE_RELOAD"]
-        else:
-            force_reload = False
+        force_reload = False
+        for s in inspect.stack():
+            outer_globals = s[0].f_globals
+            if "OPTUNAHUB_FORCE_RELOAD" in outer_globals:
+                force_reload = outer_globals["OPTUNAHUB_FORCE_RELOAD"]
+                break
+    assert force_reload is not None
 
     module, is_cache = _import_github_dir(
         package=package,
@@ -239,6 +243,7 @@ def load_module(
 def load_local_module(
     package: str,
     *,
+    ref: str | None = None,
     registry_root: str = os.sep,
     force_reload: bool | None = None,
 ) -> types.ModuleType:
@@ -252,6 +257,10 @@ def load_local_module(
             The root directory of the registry.
             The default is the root directory of the file system,
             e.g., "/" for UNIX-like systems.
+        ref:
+            This setting will be inherited to the inner `load`-like function.
+            If `None`, the setting is inherited from the outer `load`-like function.
+            For the outermost call, the default is `"main"`.
         force_reload:
             This setting will be inherited to the inner `load`-like function.
             If `None`, the setting is inherited from the outer `load`-like function.
@@ -260,12 +269,20 @@ def load_local_module(
     Returns:
         The module object of the package.
     """
+    if ref is None:
+        ref = "main"
+        for s in inspect.stack():
+            outer_globals = s[0].f_globals
+            if "OPTUNAHUB_REF" in outer_globals:
+                ref = outer_globals["OPTUNAHUB_REF"]
+                break
     if force_reload is None:
-        outer_globals = inspect.stack()[1][0].f_globals
-        if "OPTUNAHUB_FORCE_RELOAD" in outer_globals:
-            force_reload = outer_globals["OPTUNAHUB_FORCE_RELOAD"]
-        else:
-            force_reload = False
+        force_reload = False
+        for s in inspect.stack():
+            outer_globals = s[0].f_globals
+            if "OPTUNAHUB_FORCE_RELOAD" in outer_globals:
+                force_reload = outer_globals["OPTUNAHUB_FORCE_RELOAD"]
+                break
 
     module_path = os.path.join(registry_root, package)
     module_name = f"optunahub_registry.package.{package.replace('/', '.')}"
@@ -277,8 +294,9 @@ def load_local_module(
     module = importlib.util.module_from_spec(spec)
     if module is None:
         raise ImportError(f"Module {module_name} not found in {module_path}")
+    setattr(module, "OPTUNAHUB_REF", ref)
+    setattr(module, "OPTUNAHUB_FORCE_RELOAD", force_reload)
     sys.modules[module_name] = module
-    setattr(sys.modules[module_name], "OPTUNAHUB_FORCE_RELOAD", force_reload)
     spec.loader.exec_module(module)
 
     return module
