@@ -44,10 +44,12 @@ checking = [
   "ruff",
   "types-toml",
 ]
-
 docs = [
   "sphinx",
   "sphinx_rtd_theme",
+]
+test = [
+  "pytest",
 ]
 
 [project.urls]
