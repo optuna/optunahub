@@ -1,4 +1,5 @@
 import os
+import sys
 
 import pytest
 
@@ -30,3 +31,6 @@ def test_load_settings_propagation(
     out = capsys.readouterr()[0].split("\n")
     assert out[0] == expected_ref
     assert {"True": True, "False": False}[out[1]] == expected_force_reload
+    assert out[2] == expected_ref
+    assert {"True": True, "False": False}[out[3]] == expected_force_reload
+    del sys.modules["optunahub_registry.package.package_for_test_hub.implementation"]
