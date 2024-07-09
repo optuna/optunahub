@@ -9,10 +9,12 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-    - name: Install
+    - name: Setup pip
       run: |
         python -m pip install --upgrade pip
         pip install --progress-bar off -U setuptools
+    - name: Install
+      run: |
         pip install --progress-bar off .
         pip install --progress-bar off .[test]
     - name: Run Test
