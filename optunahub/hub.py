@@ -28,7 +28,7 @@ sys.modules["optunahub_registry"] = types.ModuleType("optunahub_registry")
 logging.getLogger("ga4mp.ga4mp").setLevel(logging.WARNING)
 
 
-def _get_from_outer_globals(key: str, default: Any) -> Any:
+def _get_global_variable_from_outer_scopes(key: str, default: Any) -> Any:
     """Returns the value of the variable specified by the key defined on the stacks from the innermost caller to the outermost one.
     If the value with the key is not found in the stacks, return the default value.
 
@@ -230,8 +230,10 @@ def load_module(
     Returns:
         The module object of the package.
     """
-    ref = ref or _get_from_outer_globals("OPTUNAHUB_REF", "main")
-    force_reload = force_reload or _get_from_outer_globals("OPTUNAHUB_FORCE_RELOAD", False)
+    ref = ref or _get_global_variable_from_outer_scopes("OPTUNAHUB_REF", "main")
+    force_reload = force_reload or _get_global_variable_from_outer_scopes(
+        "OPTUNAHUB_FORCE_RELOAD", False
+    )
 
     module, is_cache = _import_github_dir(
         package=package,
@@ -286,8 +288,10 @@ def load_local_module(
         The module object of the package.
     """
 
-    ref = ref or _get_from_outer_globals("OPTUNAHUB_REF", "main")
-    force_reload = force_reload or _get_from_outer_globals("OPTUNAHUB_FORCE_RELOAD", False)
+    ref = ref or _get_global_variable_from_outer_scopes("OPTUNAHUB_REF", "main")
+    force_reload = force_reload or _get_global_variable_from_outer_scopes(
+        "OPTUNAHUB_FORCE_RELOAD", False
+    )
 
     module_path = os.path.join(registry_root, package)
     module_name = f"optunahub_registry.package.{package.replace('/', '.')}"
