@@ -227,10 +227,9 @@ def load_module(
     Returns:
         The module object of the package.
     """
-    if ref is None:
-        ref = _get_from_outer_globals("OPTUNAHUB_REF", "main")
+    ref = ref or _get_from_outer_globals("OPTUNAHUB_REF", "main")
     if force_reload is None:
-        force_reload = _get_from_outer_globals("OPTUNAHUB_FORCE_RELOAD", False)
+    force_reload = force_reload or _get_from_outer_globals("OPTUNAHUB_FORCE_RELOAD", False)
 
     module, is_cache = _import_github_dir(
         package=package,
@@ -285,10 +284,9 @@ def load_local_module(
         The module object of the package.
     """
 
-    if ref is None:
-        ref = _get_from_outer_globals("OPTUNAHUB_REF", "main")
+    ref = ref or _get_from_outer_globals("OPTUNAHUB_REF", "main")
     if force_reload is None:
-        force_reload = _get_from_outer_globals("OPTUNAHUB_FORCE_RELOAD", False)
+    force_reload = force_reload or  _get_from_outer_globals("OPTUNAHUB_FORCE_RELOAD", False)
 
     module_path = os.path.join(registry_root, package)
     module_name = f"optunahub_registry.package.{package.replace('/', '.')}"
