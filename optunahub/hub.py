@@ -25,12 +25,8 @@ logging.getLogger("ga4mp.ga4mp").setLevel(logging.WARNING)
 
 
 def _get_from_outer_globals(key: str, default: Any) -> Any:
-    """Get a value from the outer globals.
-
-    Find the value of the specified key from the outer globals.
-    If the key is found, return the value immediately.
-    Otherwise, search for the key in the outer globals of the outer caller.
-    If the key is not found after the search, return the default value.
+    """Returns the value of the variable specified by the key defined on the stacks from the innermost caller to the outermost one.
+    If the value with the key is not found in the stacks, return the default value.
 
     Args:
         key:
@@ -39,8 +35,9 @@ def _get_from_outer_globals(key: str, default: Any) -> Any:
             The default value.
     """
 
+    print(inspect.stack())
     for s in inspect.stack():
-        outer_globals = s[0].f_globals
+        outer_globals = s.frame.f_globals
         if key in outer_globals:
             return outer_globals[key]
     return default
