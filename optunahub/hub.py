@@ -20,6 +20,10 @@ import optunahub
 from optunahub import _conf
 
 
+# To avoid ModuleNotFoundError: No module named 'optunahub_registry', introduce dummy optunahub_registry module.
+sys.modules["optunahub_registry"] = types.ModuleType("optunahub_registry")
+
+
 # Revert the log level to Python's default (i.e., WARNING) for the `ga4mp` package.
 logging.getLogger("ga4mp.ga4mp").setLevel(logging.WARNING)
 

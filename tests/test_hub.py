@@ -33,5 +33,5 @@ def test_load_settings_propagation(
     assert m.implementation.ref == expected_ref
     assert m.implementation.force_reload == expected_force_reload
 
-    del sys.modules["package_for_test_hub"]
-    del sys.modules["package_for_test_hub.implementation"]
+    del sys.modules["optunahub_registry.package.package_for_test_hub"]
+    del sys.modules["optunahub_registry.package.package_for_test_hub.implementation"]
