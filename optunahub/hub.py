@@ -35,7 +35,6 @@ def _get_from_outer_globals(key: str, default: Any) -> Any:
             The default value.
     """
 
-    print(inspect.stack())
     for s in inspect.stack():
         outer_globals = s.frame.f_globals
         if key in outer_globals:
@@ -228,7 +227,6 @@ def load_module(
         The module object of the package.
     """
     ref = ref or _get_from_outer_globals("OPTUNAHUB_REF", "main")
-    if force_reload is None:
     force_reload = force_reload or _get_from_outer_globals("OPTUNAHUB_FORCE_RELOAD", False)
 
     module, is_cache = _import_github_dir(
@@ -285,8 +283,7 @@ def load_local_module(
     """
 
     ref = ref or _get_from_outer_globals("OPTUNAHUB_REF", "main")
-    if force_reload is None:
-    force_reload = force_reload or  _get_from_outer_globals("OPTUNAHUB_FORCE_RELOAD", False)
+    force_reload = force_reload or _get_from_outer_globals("OPTUNAHUB_FORCE_RELOAD", False)
 
     module_path = os.path.join(registry_root, package)
     module_name = f"optunahub_registry.package.{package.replace('/', '.')}"
