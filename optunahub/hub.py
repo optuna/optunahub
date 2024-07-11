@@ -20,7 +20,7 @@ import optunahub
 from optunahub import _conf
 
 
-# To avoid ModuleNotFoundError: No module named 'optunahub_registry', introduce dummy optunahub_registry module.
+# Dummy optunahub_registry module is required to avoid ModuleNotFoundError.
 sys.modules["optunahub_registry"] = types.ModuleType("optunahub_registry")
 
 
