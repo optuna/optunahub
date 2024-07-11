@@ -4,7 +4,6 @@ import sys
 import pytest
 
 import optunahub
-import optunahub.hub
 
 
 @pytest.mark.parametrize(
@@ -20,7 +19,6 @@ def test_load_settings_propagation(
     force_reload: bool,
     expected_ref: str,
     expected_force_reload: bool,
-    capsys: pytest.CaptureFixture,
 ) -> None:
     m = optunahub.load_local_module(
         "package_for_test_hub",
