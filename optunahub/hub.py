@@ -7,6 +7,7 @@ import os
 import shutil
 import sys
 import types
+from typing import Any
 from urllib.parse import urlparse
 
 from ga4mp import GtagMP  # type: ignore
@@ -19,8 +20,30 @@ import optunahub
 from optunahub import _conf
 
 
+# Dummy optunahub_registry module is required to avoid ModuleNotFoundError.
+sys.modules["optunahub_registry"] = types.ModuleType("optunahub_registry")
+
+
 # Revert the log level to Python's default (i.e., WARNING) for the `ga4mp` package.
 logging.getLogger("ga4mp.ga4mp").setLevel(logging.WARNING)
+
+
+def _get_global_variable_from_outer_scopes(key: str, default: Any) -> Any:
+    """Returns the value of the variable specified by the key defined on the stacks from the innermost caller to the outermost one.
+    If the value with the key is not found in the stacks, return the default value.
+
+    Args:
+        key:
+            The key to get.
+        default:
+            The default value.
+    """
+
+    for s in inspect.stack():
+        outer_globals = s.frame.f_globals
+        if key in outer_globals:
+            return outer_globals[key]
+    return default
 
 
 def _import_github_dir(
@@ -121,8 +144,9 @@ def _import_github_dir(
     module = importlib.util.module_from_spec(spec)
     if module is None:
         raise ImportError(f"Module {module_name} not found in {module_path}")
+    setattr(module, "OPTUNAHUB_REF", ref)
+    setattr(module, "OPTUNAHUB_FORCE_RELOAD", force_reload)
     sys.modules[module_name] = module
-    setattr(sys.modules[module_name], "OPTUNAHUB_FORCE_RELOAD", force_reload)
     spec.loader.exec_module(module)
     return module, use_cache
 
@@ -206,12 +230,10 @@ def load_module(
     Returns:
         The module object of the package.
     """
-    if force_reload is None:
-        outer_globals = inspect.stack()[1][0].f_globals
-        if "OPTUNAHUB_FORCE_RELOAD" in outer_globals:
-            force_reload = outer_globals["OPTUNAHUB_FORCE_RELOAD"]
-        else:
-            force_reload = False
+    ref = ref or _get_global_variable_from_outer_scopes("OPTUNAHUB_REF", "main")
+    force_reload = force_reload or _get_global_variable_from_outer_scopes(
+        "OPTUNAHUB_FORCE_RELOAD", False
+    )
 
     module, is_cache = _import_github_dir(
         package=package,
@@ -239,11 +261,12 @@ def load_module(
 def load_local_module(
     package: str,
     *,
+    ref: str | None = None,
     registry_root: str = os.sep,
     force_reload: bool | None = None,
 ) -> types.ModuleType:
     """Import a package from the local registry.
-       The loaded package name is set to `optunahub_registry.package.<package>`.
+       The imported package name is set to `optunahub_registry.package.<package>`.
 
     Args:
         package:
@@ -252,6 +275,10 @@ def load_local_module(
             The root directory of the registry.
             The default is the root directory of the file system,
             e.g., "/" for UNIX-like systems.
+        ref:
+            This setting will be inherited to the inner `load`-like function.
+            If `None`, the setting is inherited from the outer `load`-like function.
+            For the outermost call, the default is `"main"`.
         force_reload:
             This setting will be inherited to the inner `load`-like function.
             If `None`, the setting is inherited from the outer `load`-like function.
@@ -260,12 +287,11 @@ def load_local_module(
     Returns:
         The module object of the package.
     """
-    if force_reload is None:
-        outer_globals = inspect.stack()[1][0].f_globals
-        if "OPTUNAHUB_FORCE_RELOAD" in outer_globals:
-            force_reload = outer_globals["OPTUNAHUB_FORCE_RELOAD"]
-        else:
-            force_reload = False
+
+    ref = ref or _get_global_variable_from_outer_scopes("OPTUNAHUB_REF", "main")
+    force_reload = force_reload or _get_global_variable_from_outer_scopes(
+        "OPTUNAHUB_FORCE_RELOAD", False
+    )
 
     module_path = os.path.join(registry_root, package)
     module_name = f"optunahub_registry.package.{package.replace('/', '.')}"
@@ -277,8 +303,9 @@ def load_local_module(
     module = importlib.util.module_from_spec(spec)
     if module is None:
         raise ImportError(f"Module {module_name} not found in {module_path}")
+    setattr(module, "OPTUNAHUB_REF", ref)
+    setattr(module, "OPTUNAHUB_FORCE_RELOAD", force_reload)
     sys.modules[module_name] = module
-    setattr(sys.modules[module_name], "OPTUNAHUB_FORCE_RELOAD", force_reload)
     spec.loader.exec_module(module)
 
     return module
