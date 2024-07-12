@@ -194,7 +194,7 @@ def load_module(
     repo_owner: str = "optuna",
     repo_name: str = "optunahub-registry",
     registry_root: str = "package",
-    ref: str | None = "main",
+    ref: str | None = None,
     base_url: str = "https://api.github.com",
     force_reload: bool | None = None,
     auth: Auth.Auth | None = None,
@@ -215,6 +215,9 @@ def load_module(
             The default is "package".
         ref:
             The Git reference (branch, tag, or commit SHA) for the package.
+            This setting will be inherited to the inner `load`-like function.
+            If `None`, the setting is inherited from the outer `load`-like function.
+            For the outermost call, the default is `"main"`
         base_url:
             The base URL for the GitHub API.
         force_reload:
