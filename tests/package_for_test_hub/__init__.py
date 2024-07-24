@@ -1,3 +1,5 @@
+from optuna.samplers import RandomSampler
+
 import optunahub
 
 from . import implementation
@@ -9,4 +11,4 @@ force_reload = optunahub.hub._get_global_variable_from_outer_scopes(
 )
 
 
-__all__ = ["implementation", "ref", "force_reload"]
+__all__ = ["RandomSampler", "implementation", "ref", "force_reload"]
