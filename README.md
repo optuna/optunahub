@@ -25,8 +25,8 @@ pip install optunahub
 # Example
 
 ```python
-import optunahub
 import optuna
+import optunahub
 
 
 def objective(trial: optuna.Trial) -> float:
@@ -35,13 +35,10 @@ def objective(trial: optuna.Trial) -> float:
     return x
 
 
-if __name__ == "__main__":
-    mod = optunahub.load_module("samplers/simulated_annealing")
+mod = optunahub.load_module("samplers/simulated_annealing")
+study = optuna.create_study(sampler=mod.SimulatedAnnealingSampler())
+study.optimize(objective, n_trials=20)
 
-    sampler = mod.SimulatedAnnealingSampler()
-    study = optuna.create_study(sampler=sampler)
-    study.optimize(objective, n_trials=20)
-
-    print(study.best_trial.value, study.best_trial.params)
+print(study.best_trial.value, study.best_trial.params)
 
 ```
