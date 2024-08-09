@@ -95,9 +95,9 @@ def load_module(
     auth: Auth.Auth | None = None,
 ) -> types.ModuleType:
     """Import a package from the OptunaHub registry.
-    The imported package name is set to `optunahub_registry.package.<package>`.
-    A third-party registry is also available by setting the `repo_owner` and
-    `repo_name`.
+    The imported package name is set to ``optunahub_registry.package.<package>``.
+    A third-party registry is also available by setting the ``repo_owner`` and
+    ``repo_name``.
 
     Args:
         package:
@@ -112,15 +112,15 @@ def load_module(
         ref:
             The Git reference (branch, tag, or commit SHA) for the package.
             This setting will be inherited to the inner `load`-like function.
-            If `None`, the setting is inherited from the outer `load`-like function.
-            For the outermost call, the default is `"main"`.
+            If :obj:`None`, the setting is inherited from the outer `load`-like function.
+            For the outermost call, the default is "main".
         base_url:
             The base URL for the GitHub API.
         force_reload:
-            If `True`, the package will be downloaded from the repository.
-            If `False`, the package cached in the local directory will be
+            If :obj:`True`, the package will be downloaded from the repository.
+            If :obj:`False`, the package cached in the local directory will be
             loaded if available.
-            If `None`, the setting is inherited from the outer `load`-like function.
+            If :obj:`None`, the setting is inherited from the outer `load`-like function.
             For the outermost call, the default is `False`.
         auth:
             `The authentication object <https://pygithub.readthedocs.io/en/latest/examples/Authentication.html>`__ for the GitHub API.
@@ -198,7 +198,7 @@ def load_local_module(
     force_reload: bool | None = None,
 ) -> types.ModuleType:
     """Import a package from the local registry.
-       The imported package name is set to `optunahub_registry.package.<package>`.
+       The imported package name is set to ``optunahub_registry.package.<package>``.
 
     Args:
         package:
@@ -209,12 +209,12 @@ def load_local_module(
             e.g., "/" for UNIX-like systems.
         ref:
             This setting will be inherited to the inner `load`-like function.
-            If `None`, the setting is inherited from the outer `load`-like function.
-            For the outermost call, the default is `"main"`.
+            If :obj:`None`, the setting is inherited from the outer `load`-like function.
+            For the outermost call, the default is "main".
         force_reload:
             This setting will be inherited to the inner `load`-like function.
-            If `None`, the setting is inherited from the outer `load`-like function.
-            For the outermost call, the default is `False`.
+            If :obj:`None`, the setting is inherited from the outer `load`-like function.
+            For the outermost call, the default is :obj:`False`.
 
     Returns:
         The module object of the package.
