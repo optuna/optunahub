@@ -64,6 +64,7 @@ jobs:
         PYTHONPATH: .  # To invoke sitecutomize.py
         COVERAGE_PROCESS_START: .coveragerc  # https://coverage.readthedocs.io/en/6.4.1/subprocess.html
         COVERAGE_COVERAGE: yes  # https://github.com/nedbat/coveragepy/blob/65bf33fc03209ffb01bbbc0d900017614645ee7a/coverage/control.py#L255-L261
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       run: |
         coverage run --source=optunahub -m pytest tests 
         coverage combine
