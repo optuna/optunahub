@@ -44,7 +44,6 @@ jobs:
         # Install minimal dependencies and confirm that `import optunahub` is successful.
         pip install --progress-bar off .
         python -c 'import optunahub'
-        optunahub --version
 
         pip install --progress-bar off .[test]
 
