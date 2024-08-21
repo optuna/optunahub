@@ -86,7 +86,7 @@ def _report_stats(
 def load_module(
     package: str,
     *,
-    repo_owner: str = "optuna",
+    repo_owner: str | None = None,
     repo_name: str = "optunahub-registry",
     registry_root: str = "package",
     ref: str | None = None,
@@ -102,9 +102,12 @@ def load_module(
     Args:
         package:
             The package name to load.
-        repo_owner:
+       repo_owner:
             The owner of the repository.
-        repo_name:
+            This setting will be inherited to the inner `load`-like function.
+            If :obj:`None`, the setting is inherited from the outer `load`-like function.
+            For the outermost call, the default is "optuna".
+         repo_name:
             The name of the repository.
         registry_root:
             The root directory of the registry.
@@ -129,6 +132,9 @@ def load_module(
     Returns:
         The module object of the package.
     """
+    repo_owner = repo_owner or _get_global_variable_from_outer_scopes(
+        "OPTUNAHUB_REPO_OWNER", "optuna"
+    )
     ref = ref or _get_global_variable_from_outer_scopes("OPTUNAHUB_REF", "main")
     force_reload = force_reload or _get_global_variable_from_outer_scopes(
         "OPTUNAHUB_FORCE_RELOAD", False
@@ -173,6 +179,7 @@ def load_module(
     local_registry_root = os.path.join(cache_dir_prefix, registry_root)
     module = load_local_module(
         package=package,
+        repo_owner=repo_owner,
         registry_root=local_registry_root,
         ref=ref,
         force_reload=force_reload,
@@ -194,6 +201,7 @@ def load_local_module(
     package: str,
     *,
     registry_root: str = os.sep,
+    repo_owner: str | None = None,
     ref: str | None = None,
     force_reload: bool | None = None,
 ) -> types.ModuleType:
@@ -207,6 +215,10 @@ def load_local_module(
             The root directory of the registry.
             The default is the root directory of the file system,
             e.g., "/" for UNIX-like systems.
+        repo_owner:
+            This setting will be inherited to the inner `load`-like function.
+            If :obj:`None`, the setting is inherited from the outer `load`-like function.
+            For the outermost call, the default is "optuna".
         ref:
             This setting will be inherited to the inner `load`-like function.
             If :obj:`None`, the setting is inherited from the outer `load`-like function.
@@ -220,6 +232,9 @@ def load_local_module(
         The module object of the package.
     """
 
+    repo_owner = repo_owner or _get_global_variable_from_outer_scopes(
+        "OPTUNAHUB_REPO_OWNER", "optuna"
+    )
     ref = ref or _get_global_variable_from_outer_scopes("OPTUNAHUB_REF", "main")
     force_reload = force_reload or _get_global_variable_from_outer_scopes(
         "OPTUNAHUB_FORCE_RELOAD", False
@@ -235,6 +250,7 @@ def load_local_module(
     module = importlib.util.module_from_spec(spec)
     if module is None:
         raise ImportError(f"Module {module_name} not found in {module_path}")
+    setattr(module, "OPTUNAHUB_REPO_OWNER", repo_owner)
     setattr(module, "OPTUNAHUB_REF", ref)
     setattr(module, "OPTUNAHUB_FORCE_RELOAD", force_reload)
     sys.modules[module_name] = module

@@ -41,27 +41,39 @@ def test_load_local_module() -> None:
 
 
 @pytest.mark.parametrize(
-    ("ref", "force_reload", "expected_ref", "expected_force_reload"),
+    (
+        "repo_owner",
+        "ref",
+        "force_reload",
+        "expected_repo_owner",
+        "expected_ref",
+        "expected_force_reload",
+    ),
     [
-        (None, None, "main", False),
-        ("main", False, "main", False),
-        ("test", True, "test", True),
+        (None, None, None, "optuna", "main", False),
+        ("optuna", "main", False, "optuna", "main", False),
+        ("test", "test", True, "test", "test", True),
     ],
 )
 def test_load_settings_propagation(
+    repo_owner: str,
     ref: str,
     force_reload: bool,
+    expected_repo_owner: str,
     expected_ref: str,
     expected_force_reload: bool,
 ) -> None:
     m = optunahub.load_local_module(
         "package_for_test_hub",
         registry_root=os.path.dirname(__file__),
+        repo_owner=repo_owner,
         ref=ref,
         force_reload=force_reload,
     )
+    assert m.repo_owner == expected_repo_owner
     assert m.ref == expected_ref
     assert m.force_reload == expected_force_reload
+    assert m.implementation.repo_owner == expected_repo_owner
     assert m.implementation.ref == expected_ref
     assert m.implementation.force_reload == expected_force_reload
 
