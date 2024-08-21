@@ -1,7 +1,7 @@
 # Run tests on Windows.
 # Currently, Python3.11 is only used as an environment.
 # This is mainly for the sake of speed.
-name: Mac tests
+name: Windows tests
 on:
   push:
     branches:
