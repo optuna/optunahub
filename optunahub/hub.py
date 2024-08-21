@@ -102,12 +102,12 @@ def load_module(
     Args:
         package:
             The package name to load.
-       repo_owner:
+        repo_owner:
             The owner of the repository.
             This setting will be inherited to the inner `load`-like function.
             If :obj:`None`, the setting is inherited from the outer `load`-like function.
             For the outermost call, the default is "optuna".
-         repo_name:
+        repo_name:
             The name of the repository.
         registry_root:
             The root directory of the registry.
