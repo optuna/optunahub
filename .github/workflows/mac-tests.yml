@@ -22,4 +22,6 @@ jobs:
           pip install --progress-bar off -U setuptools
           pip install --progress-bar off ".[test]"
       - name: Run Test
+        env:
+          OPTUNAHUB_NO_ANALYTICS: 1
         run: pytest tests
