@@ -1,0 +1,25 @@
+# Run tests on Windows.
+# Currently, Python3.11 is only used as an environment.
+# This is mainly for the sake of speed.
+name: Mac tests
+on:
+  push:
+    branches:
+      - main
+  pull_request: {}
+  workflow_dispatch: {}
+jobs:
+  tests:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+      - name: Install
+        run: |
+          python -m pip install -U pip
+          pip install --progress-bar off -U setuptools
+          pip install --progress-bar off ".[test]"
+      - name: Run Test
+        run: pytest tests
