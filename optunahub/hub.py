@@ -1,13 +1,11 @@
 from __future__ import annotations
 
 import importlib.util
-import inspect
 import logging
 import os
 import shutil
 import sys
 import types
-from typing import Any
 from urllib.parse import urlparse
 
 from ga4mp import GtagMP  # type: ignore
@@ -26,24 +24,6 @@ sys.modules["optunahub_registry"] = types.ModuleType("optunahub_registry")
 
 # Revert the log level to Python's default (i.e., WARNING) for the `ga4mp` package.
 logging.getLogger("ga4mp.ga4mp").setLevel(logging.WARNING)
-
-
-def _get_global_variable_from_outer_scopes(key: str, default: Any) -> Any:
-    """Returns the value of the variable specified by the key defined on the stacks from the innermost caller to the outermost one.
-    If the value with the key is not found in the stacks, return the default value.
-
-    Args:
-        key:
-            The key to get.
-        default:
-            The default value.
-    """
-
-    for s in inspect.stack():
-        outer_globals = s.frame.f_globals
-        if key in outer_globals:
-            return outer_globals[key]
-    return default
 
 
 def _report_stats(
@@ -89,9 +69,9 @@ def load_module(
     repo_owner: str = "optuna",
     repo_name: str = "optunahub-registry",
     registry_root: str = "package",
-    ref: str | None = None,
+    ref: str = "main",
     base_url: str = "https://api.github.com",
-    force_reload: bool | None = None,
+    force_reload: bool = False,
     auth: Auth.Auth | None = None,
 ) -> types.ModuleType:
     """Import a package from the OptunaHub registry.
@@ -111,17 +91,12 @@ def load_module(
             The default is "package".
         ref:
             The Git reference (branch, tag, or commit SHA) for the package.
-            This setting will be inherited to the inner `load`-like function.
-            If :obj:`None`, the setting is inherited from the outer `load`-like function.
-            For the outermost call, the default is "main".
         base_url:
             The base URL for the GitHub API.
         force_reload:
             If :obj:`True`, the package will be downloaded from the repository.
             If :obj:`False`, the package cached in the local directory will be
             loaded if available.
-            If :obj:`None`, the setting is inherited from the outer `load`-like function.
-            For the outermost call, the default is `False`.
         auth:
             `The authentication object <https://pygithub.readthedocs.io/en/latest/examples/Authentication.html>`__ for the GitHub API.
             It is required to access private/internal repositories.
@@ -129,11 +104,6 @@ def load_module(
     Returns:
         The module object of the package.
     """
-    ref = ref or _get_global_variable_from_outer_scopes("OPTUNAHUB_REF", "main")
-    force_reload = force_reload or _get_global_variable_from_outer_scopes(
-        "OPTUNAHUB_FORCE_RELOAD", False
-    )
-
     dir_path = f"{registry_root}/{package}" if registry_root else package
     hostname = urlparse(base_url).hostname
     if hostname is None:
@@ -174,8 +144,6 @@ def load_module(
     module = load_local_module(
         package=package,
         registry_root=local_registry_root,
-        ref=ref,
-        force_reload=force_reload,
     )
 
     # Statistics are collected only for the official registry.
@@ -194,8 +162,6 @@ def load_local_module(
     package: str,
     *,
     registry_root: str = os.sep,
-    ref: str | None = None,
-    force_reload: bool | None = None,
 ) -> types.ModuleType:
     """Import a package from the local registry.
        The imported package name is set to ``optunahub_registry.package.<package>``.
@@ -207,23 +173,10 @@ def load_local_module(
             The root directory of the registry.
             The default is the root directory of the file system,
             e.g., "/" for UNIX-like systems.
-        ref:
-            This setting will be inherited to the inner `load`-like function.
-            If :obj:`None`, the setting is inherited from the outer `load`-like function.
-            For the outermost call, the default is "main".
-        force_reload:
-            This setting will be inherited to the inner `load`-like function.
-            If :obj:`None`, the setting is inherited from the outer `load`-like function.
-            For the outermost call, the default is :obj:`False`.
 
     Returns:
         The module object of the package.
     """
-
-    ref = ref or _get_global_variable_from_outer_scopes("OPTUNAHUB_REF", "main")
-    force_reload = force_reload or _get_global_variable_from_outer_scopes(
-        "OPTUNAHUB_FORCE_RELOAD", False
-    )
 
     module_path = os.path.join(registry_root, package)
     module_name = f"optunahub_registry.package.{package.replace('/', '.')}"
@@ -235,8 +188,6 @@ def load_local_module(
     module = importlib.util.module_from_spec(spec)
     if module is None:
         raise ImportError(f"Module {module_name} not found in {module_path}")
-    setattr(module, "OPTUNAHUB_REF", ref)
-    setattr(module, "OPTUNAHUB_FORCE_RELOAD", force_reload)
     sys.modules[module_name] = module
     spec.loader.exec_module(module)
 
