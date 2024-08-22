@@ -1,7 +1,8 @@
 Reference
 =========
 
-.. automodule:: optunahub
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. toctree::
+    :maxdepth: 1
+
+    optunahub
+    samplers

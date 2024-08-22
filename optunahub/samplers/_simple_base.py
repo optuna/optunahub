@@ -12,6 +12,8 @@ from optuna.trial import FrozenTrial
 
 
 class SimpleBaseSampler(BaseSampler, abc.ABC):
+    """A simple base class to implement user-defined samplers."""
+
     def __init__(
         self, search_space: dict[str, BaseDistribution] | None = None, seed: int | None = None
     ) -> None:
