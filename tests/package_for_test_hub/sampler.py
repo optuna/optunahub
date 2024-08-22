@@ -1,4 +1,5 @@
 from typing import Any
+from typing import Optional
 
 import numpy as np
 from optuna import Study
@@ -9,7 +10,7 @@ import optunahub
 
 
 class TestSampler(optunahub.samplers.SimpleBaseSampler):
-    def __init__(self, search_space: dict[str, BaseDistribution] | None = None) -> None:
+    def __init__(self, search_space: Optional[dict[str, BaseDistribution]] = None) -> None:
         super().__init__(search_space)
         self._rng = np.random.RandomState()
 
