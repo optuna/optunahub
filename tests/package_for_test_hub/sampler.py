@@ -19,8 +19,8 @@ class TestSampler(optunahub.samplers.SimpleBaseSampler):
         self,
         study: Study,
         trial: FrozenTrial,
-        search_space: dict[str, BaseDistribution],
-    ) -> dict[str, Any]:
+        search_space: Dict[str, BaseDistribution],
+    ) -> Dict[str, Any]:
         params = {}
         for n, d in search_space.items():
             params[n] = self._rng.uniform(d.low, d.high)
