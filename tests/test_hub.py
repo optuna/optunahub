@@ -33,6 +33,6 @@ def test_load_local_module() -> None:
     assert m.__name__ == "optunahub_registry.package.package_for_test_hub"
 
     # Confirm no error occurs by running optimization
-    sampler = m.RandomSampler()
+    sampler = m.TestSampler()
     study = optuna.create_study(sampler=sampler)
     study.optimize(objective, n_trials=10)

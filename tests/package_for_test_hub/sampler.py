@@ -1,0 +1,25 @@
+from typing import Any
+
+import numpy as np
+from optuna import Study
+from optuna.distributions import BaseDistribution
+from optuna.trial import FrozenTrial
+
+import optunahub
+
+
+class TestSampler(optunahub.samplers.SimpleBaseSampler):
+    def __init__(self, search_space: dict[str, BaseDistribution] | None = None) -> None:
+        super().__init__(search_space)
+        self._rng = np.random.RandomState()
+
+    def sample_relative(
+        self,
+        study: Study,
+        trial: FrozenTrial,
+        search_space: dict[str, BaseDistribution],
+    ) -> dict[str, Any]:
+        params = {}
+        for n, d in search_space.items():
+            params[n] = self._rng.uniform(d.low, d.high)
+        return params

@@ -1,4 +1,4 @@
-from optuna.samplers import RandomSampler
+from .sampler import TestSampler
 
 
-__all__ = ["RandomSampler"]
+__all__ = ["TestSampler"]
