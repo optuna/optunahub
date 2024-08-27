@@ -5,8 +5,6 @@ OptunaHub
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/optuna/optunahub)
 
 
-__NOTICE: OptunaHub is under development and all features are experimental. API may change in the future.__
-
 Python Library to use packages published in [OptunaHub](https://hub.optuna.org/).
 If you would like to register your package in OptunaHub, please contribute by creating a pull request to [the optunahub-registry repository](https://github.com/optuna/optunahub-registry).
 
