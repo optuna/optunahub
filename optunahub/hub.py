@@ -68,7 +68,6 @@ def load_module(
     *,
     repo_owner: str = "optuna",
     repo_name: str = "optunahub-registry",
-    registry_root: str = "package",
     ref: str = "main",
     base_url: str = "https://api.github.com",
     force_reload: bool = False,
@@ -86,9 +85,6 @@ def load_module(
             The owner of the repository.
         repo_name:
             The name of the repository.
-        registry_root:
-            The root directory of the registry.
-            The default is "package".
         ref:
             The Git reference (branch, tag, or commit SHA) for the package.
         base_url:
@@ -104,7 +100,8 @@ def load_module(
     Returns:
         The module object of the package.
     """
-    dir_path = f"{registry_root}/{package}" if registry_root else package
+    registry_root = "package"
+    dir_path = f"{registry_root}/{package}"
     hostname = urlparse(base_url).hostname
     if hostname is None:
         raise ValueError(f"Invalid base URL: {base_url}")
