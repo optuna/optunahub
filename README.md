@@ -1,4 +1,4 @@
-![OptunaHub](https://github.com/user-attachments/assets/f93874ee-2a37-45e6-b1a5-125b8689f151)
+![OptunaHub](https://github.com/user-attachments/assets/c5a53304-8f62-4c26-8464-9b338dd3ad97)
 OptunaHub: Feature-sharing platform for Optuna
 ==================
 
