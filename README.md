@@ -1,4 +1,3 @@
-![OptunaHub](https://github.com/user-attachments/assets/c5a53304-8f62-4c26-8464-9b338dd3ad97)
 OptunaHub: Feature-sharing platform for Optuna
 ==================
 
@@ -8,18 +7,16 @@ OptunaHub: Feature-sharing platform for Optuna
 [![Codecov](https://codecov.io/gh/optuna/optunahub/branch/main/graph/badge.svg)](https://codecov.io/gh/optuna/optunahub)
 
 
-:link: [**Website**](https://hub.optuna.org/)
+:link: [**OptunaHub**](https://hub.optuna.org/)
 | :page_with_curl: [**Docs**](https://optuna.github.io/optunahub/)
-| [**Twitter**](https://twitter.com/OptunaAutoML)
-| [**LinkedIn**](https://www.linkedin.com/showcase/optuna/)
-| [**Medium**](https://medium.com/optuna)
+| [**Optuna.org**](https://optuna.org/)
 
+![OptunaHub](https://github.com/user-attachments/assets/c5a53304-8f62-4c26-8464-9b338dd3ad97)
 
 [*OptunaHub*](https://hub.optuna.org/) is a platform for sharing algorithms in [Optuna](https://optuna.org/), a powerful and flexible hyperparameter optimization framework. OptunaHub provides implementations of state-of-the-art optimization algorithms and visualization of optimization results for analysis. You can also publish your algorithm implementation on the platform and make it available to Optuna users around the world.
 
 
 This is the repository of the optunahub Python Library to use packages published in [OptunaHub](https://hub.optuna.org/). If you would like to register your package in OptunaHub, please contribute by creating a pull request to [the optunahub-registry repository](https://github.com/optuna/optunahub-registry).
-
 
 ## :loudspeaker: News
 
