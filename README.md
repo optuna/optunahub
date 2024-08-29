@@ -2,7 +2,9 @@ OptunaHub
 ==================
 
 [![Python](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org)
+[![pypi](https://img.shields.io/pypi/v/optunahub.svg)](https://pypi.python.org/pypi/optunahub)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/optuna/optunahub)
+[![Codecov](https://codecov.io/gh/optuna/optunahub/branch/main/graph/badge.svg)](https://codecov.io/gh/optuna/optunahub)
 
 
 Python Library to use packages published in [OptunaHub](https://hub.optuna.org/).
