@@ -14,8 +14,6 @@ OptunaHub: Feature-sharing platform for Optuna
 | :page_with_curl: [**Docs**](https://optuna.github.io/optunahub/)
 | [**Optuna.org**](https://optuna.org/)
 
-![OptunaHub](https://github.com/user-attachments/assets/c5a53304-8f62-4c26-8464-9b338dd3ad97)
-
 [*OptunaHub*](https://hub.optuna.org/) is a platform for sharing algorithms in [Optuna](https://optuna.org/), a powerful and flexible hyperparameter optimization framework. OptunaHub provides implementations of state-of-the-art optimization algorithms and visualization of optimization results for analysis. You can also publish your algorithm implementation on the platform and make it available to Optuna users around the world.
 
 
