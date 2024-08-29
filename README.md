@@ -1,8 +1,7 @@
 OptunaHub: Feature-sharing platform for Optuna
 ==================
 
-![OptunaHub](https://github.com/user-attachments/assets/c5a53304-8f62-4c26-8464-9b338dd3ad97)
-
+![OptunaHub](https://github.com/user-attachments/assets/ee24b6eb-a431-4e02-ae52-c2538ffe01ee)
 
 [![Python](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org)
 [![pypi](https://img.shields.io/pypi/v/optunahub.svg)](https://pypi.python.org/pypi/optunahub)
