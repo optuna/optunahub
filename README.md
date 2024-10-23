@@ -20,6 +20,7 @@ This is the repository of the optunahub Python Library to use packages published
 
 ## :loudspeaker: News
 
+* **Oct 21, 2024**: We posted [an article](https://medium.com/optuna/an-introduction-to-moea-d-and-examples-of-multi-objective-optimization-comparisons-8630565a4e89) introducing [MOEA/D](https://hub.optuna.org/samplers/moead/) and examples of multi-objective optimization comparisons.
 * **Aug 30, 2024**: New Medium article "[OptunaHub, a Feature-Sharing Platform for Optuna, Now Available in Official Release!](https://medium.com/optuna/optunahub-a-feature-sharing-platform-for-optuna-now-available-in-official-release-4b99efe9934d)" was published!
 * **Jul 16, 2024**: We posted an article [Announcing OptunaHub 0.1.0-β](https://medium.com/optuna/announcing-optunahub-0-1-0-%CE%B2-69b35bb3e95e) that describes what is, how to use, and how to contribute to OptunaHub.
 
