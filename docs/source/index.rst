@@ -28,7 +28,7 @@ The details for ``AutoSampler`` can be found in `this article <https://medium.co
       x = trial.suggest_float("x", -5, 5)
       y = trial.suggest_float("y", -5, 5)
 
-   return x**2 + y**2
+      return x**2 + y**2
 
 
    mod = optunahub.load_module("samplers/auto_sampler")
