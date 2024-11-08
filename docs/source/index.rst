@@ -15,7 +15,8 @@ Install the `optunahub`_ package.
 
       pip install optunahub
 
-Load the package you want from the OptunaHub registry. In the next example code, you will load the ``SimulatedAnnealingSampler`` from the `samplers/simulated_annealing <https://hub.optuna.org/samplers/simulated_annealing/>`__ package.
+Load the package you want from the OptunaHub registry. In the next example code, you will load the ``AutoSampler`` from the `samplers/auto_sampler <https://hub.optuna.org/samplers/auto_sampler/>`__ package.
+The details for ``AutoSampler`` can be found in `this article <https://medium.com/optuna/autosampler-automatic-selection-of-optimization-algorithms-in-optuna-1443875fd8f9>`__.
 
 .. code-block:: python
 
@@ -24,15 +25,16 @@ Load the package you want from the OptunaHub registry. In the next example code,
 
 
    def objective(trial: optuna.Trial) -> float:
-      x = trial.suggest_float("x", 0, 1)
+      x = trial.suggest_float("x", -5, 5)
+      y = trial.suggest_float("y", -5, 5)
 
-      return x
+   return x**2 + y**2
 
 
-   mod = optunahub.load_module("samplers/simulated_annealing")
+   mod = optunahub.load_module("samplers/auto_sampler")
 
-   study = optuna.create_study(sampler=mod.SimulatedAnnealingSampler())
-   study.optimize(objective, n_trials=20)
+   study = optuna.create_study(sampler=mod.AutoSampler())
+   study.optimize(objective, n_trials=10)
 
    print(study.best_trial.value, study.best_trial.params)
 
