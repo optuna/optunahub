@@ -5,6 +5,8 @@ Welcome to OptunaHub's documentation!
 It allows users to share and discover Optuna packages that are not included in the official Optuna distribution.
 The `optunahub <https://github.com/optuna/optunahub/>`_ library provides Python APIs to load and use packages from the OptunaHub registry.
 
+**If you are interested in registering your own features in OptunaHub**, please contribute them to `the optunahub-registry repository <https://github.com/optuna/optunahub-registry>`__. For more information, see `the optunahub-registry tutorial <https://optuna.github.io/optunahub-registry/>`__.
+
 
 Usage
 =====
