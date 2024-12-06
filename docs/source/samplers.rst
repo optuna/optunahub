@@ -6,5 +6,6 @@ optunahub.samplers
 .. autosummary::
    :toctree: generated/
    :nosignatures:
+   :template: custom_summary.rst
 
    optunahub.samplers.SimpleBaseSampler
