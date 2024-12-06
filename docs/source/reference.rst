@@ -6,3 +6,4 @@ Reference
 
     optunahub
     samplers
+    benchmarks
