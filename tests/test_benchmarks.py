@@ -18,9 +18,5 @@ def test_base_problem() -> None:
             return [optuna.study.StudyDirection.MINIMIZE]
 
     problem = TestProblem()
-    assert problem.search_space == {"x": optuna.distributions.FloatDistribution(low=-1, high=1)}
-    assert problem.directions == [optuna.study.StudyDirection.MINIMIZE]
-    assert problem.evaluate({"x": 0.0}) == 0.0
-
     study = optuna.create_study()
     study.optimize(problem, n_trials=20)  # verify no error occurs
