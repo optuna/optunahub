@@ -32,7 +32,7 @@ class BaseProblem(metaclass=ABCMeta):
             params: Dictionary of input parameters.
 
         Returns:
-            The objective value.
+            The objective value or a sequence of the objective values for multi-objective optimization.
 
         Example:
             ::
