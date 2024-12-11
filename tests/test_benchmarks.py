@@ -20,5 +20,5 @@ def test_base_problem() -> None:
             return [optuna.study.StudyDirection.MINIMIZE]
 
     problem = TestProblem()
-    study = optuna.create_study()
+    study = optuna.create_study(directions=problem.directions)
     study.optimize(problem, n_trials=20)  # verify no error occurs
