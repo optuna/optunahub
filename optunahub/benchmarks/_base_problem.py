@@ -17,7 +17,7 @@ class BaseProblem(metaclass=ABCMeta):
         Args:
             trial: Optuna trial object.
         Returns:
-            The objective value.
+            The objective value or a sequence of the objective values for multi-objective optimization.
         """
         params = {}
         for name, dist in self.search_space.items():
