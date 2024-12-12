@@ -69,7 +69,7 @@ class BaseProblem(metaclass=ABCMeta):
         """Return the optimization directions.
 
         Returns:
-            List of `optuna.study.direction <https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.StudyDirection.html>`__.
+            List of `optuna.study.StudyDirection <https://optuna.readthedocs.io/en/stable/reference/generated/optuna.study.StudyDirection.html>`__.
 
         Example:
             ::
