@@ -17,7 +17,6 @@ class ConstrainedMixIn:
 
             import optuna
             import optunahub
-            from typing import Sequence
 
             class BinAndKorn(optunahub.benchmarks.ConstrainedMixIn, optunahub.benchmarks.BaseProblem):
                 def evaluate(self, params: dict[str, float]) -> float:
@@ -29,7 +28,7 @@ class ConstrainedMixIn:
 
                     return v0, v1
 
-                def evaluate_constraints(self, params: dict[str, float]) -> Sequence[float]:
+                def evaluate_constraints(self, params: dict[str, float]) -> list[float]:
                     x = params["x"]
                     y = params["y"]
 
