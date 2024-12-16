@@ -26,7 +26,7 @@ def test_base_problem() -> None:
 
 
 def test_constrained_mixin() -> None:
-    class ConstrainedTestProblem(optunahub.benchmarks.ConstrainedMixIn, TestProblem):
+    class ConstrainedTestProblem(optunahub.benchmarks.ConstrainedMixin, TestProblem):
         def evaluate_constraints(self, params: dict[str, float]) -> list[float]:
             return [params["x"]]
 

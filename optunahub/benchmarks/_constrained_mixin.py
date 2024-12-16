@@ -6,7 +6,7 @@ from typing import Sequence
 import optuna
 
 
-class ConstrainedMixIn:
+class ConstrainedMixin:
     """Mixin class for constrained optimization problems.
 
     Example:
@@ -18,7 +18,7 @@ class ConstrainedMixIn:
             import optuna
             import optunahub
 
-            class BinAndKorn(optunahub.benchmarks.ConstrainedMixIn, optunahub.benchmarks.BaseProblem):
+            class BinAndKorn(optunahub.benchmarks.ConstrainedMixin, optunahub.benchmarks.BaseProblem):
                 def evaluate(self, params: dict[str, float]) -> float:
                     x = params["x"]
                     y = params["y"]

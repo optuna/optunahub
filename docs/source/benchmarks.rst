@@ -9,4 +9,4 @@ optunahub.benchmarks
     :template: custom_summary.rst
 
     optunahub.benchmarks.BaseProblem
-    optunahub.benchmarks.ConstrainedMixIn
+    optunahub.benchmarks.ConstrainedMixin
