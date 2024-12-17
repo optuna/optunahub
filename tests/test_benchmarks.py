@@ -37,4 +37,4 @@ def test_constrained_mixin() -> None:
 
     # Check if constraints are stored in trials
     for t in study.trials:
-        assert "constraints" in t.system_attrs
+        assert _CONSTRAINTS_KEY in study._storage.get_trial_system_attrs(t._trial_id)
