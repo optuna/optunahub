@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from typing import Any
-from typing import Sequence
+from collections.abc import Sequence
 
 import optuna
 
