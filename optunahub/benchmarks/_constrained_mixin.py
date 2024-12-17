@@ -19,7 +19,7 @@ class ConstrainedMixin:
             import optunahub
 
             class BinAndKorn(optunahub.benchmarks.ConstrainedMixin, optunahub.benchmarks.BaseProblem):
-                def evaluate(self, params: dict[str, float]) -> float:
+                def evaluate(self, params: dict[str, float]) -> tuple[float]:
                     x = params["x"]
                     y = params["y"]
 
