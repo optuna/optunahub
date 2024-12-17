@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import optuna
 
+from optuna.samplers._base import _CONSTRAINTS_KEY
 import optunahub
 
 
