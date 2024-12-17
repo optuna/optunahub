@@ -65,7 +65,7 @@ class ConstrainedMixin:
         Returns:
             List of the constraint values.
         """
-        return self.evaluate_constraints(trial.params)
+        return self.evaluate_constraints(trial.params.copy())
 
     def evaluate_constraints(self, params: dict[str, Any]) -> Sequence[float]:
         """Evaluate the constraint functions.
