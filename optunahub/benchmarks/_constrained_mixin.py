@@ -23,8 +23,8 @@ class ConstrainedMixin:
                     x = params["x"]
                     y = params["y"]
 
-                    v0 = 4 * x ** 2 + 4 * y ** 2
-                    v1 = (x - 5) ** 2 + (y - 5) ** 2
+                    v0 = 4 * x**2 + 4 * y**2
+                    v1 = (x - 5)**2 + (y - 5)**2
 
                     return v0, v1
 
