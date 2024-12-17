@@ -28,7 +28,7 @@ class ConstrainedMixin:
 
                     return v0, v1
 
-                def evaluate_constraints(self, params: dict[str, float]) -> list[float]:
+                def evaluate_constraints(self, params: dict[str, float]) -> tuple[float]:
                     x = params["x"]
                     y = params["y"]
 
