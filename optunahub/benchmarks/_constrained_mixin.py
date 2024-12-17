@@ -38,7 +38,7 @@ class ConstrainedMixin:
                     c0 = (x - 5) ** 2 + y ** 2 - 25
                     c1 = -((x - 8) ** 2) - (y + 3) ** 2 + 7.7
 
-                    return [c0, c1]
+                    return c0, c1
 
                 @property
                 def search_space(self) -> dict[str, optuna.distributions.BaseDistribution]:
