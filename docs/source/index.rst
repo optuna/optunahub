@@ -49,4 +49,5 @@ Get ready to explore the most suitable packages for your problems in the `Optuna
    :caption: Contents:
 
    reference
+   tutorials/index
    faq
