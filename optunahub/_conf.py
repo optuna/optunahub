@@ -26,9 +26,7 @@ def cache_home() -> str:
         )
     else:  # UNIX-like
         return os.path.join(
-            os.getenv(
-                "XDG_CACHE_HOME", os.path.join(os.path.expanduser("~"), ".cache")
-            ),
+            os.getenv("XDG_CACHE_HOME", os.path.join(os.path.expanduser("~"), ".cache")),
             "optunahub",
         )
 
