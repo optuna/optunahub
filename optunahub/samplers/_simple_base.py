@@ -15,7 +15,9 @@ class SimpleBaseSampler(BaseSampler, abc.ABC):
     """A simple base class to implement user-defined samplers."""
 
     def __init__(
-        self, search_space: dict[str, BaseDistribution] | None = None, seed: int | None = None
+        self,
+        search_space: dict[str, BaseDistribution] | None = None,
+        seed: int | None = None,
     ) -> None:
         self.search_space = search_space
         self._seed = seed
@@ -53,7 +55,9 @@ class SimpleBaseSampler(BaseSampler, abc.ABC):
     ) -> Any:
         # This method is optional.
         # By default, parameter values are sampled by ``optuna.samplers.RandomSampler``.
-        return self._default_sample_independent(study, trial, param_name, param_distribution)
+        return self._default_sample_independent(
+            study, trial, param_name, param_distribution
+        )
 
     def reseed_rng(self) -> None:
         self._default_reseed_rng()
@@ -66,7 +70,9 @@ class SimpleBaseSampler(BaseSampler, abc.ABC):
         self, study: Study, trial: FrozenTrial
     ) -> dict[str, BaseDistribution]:
         search_space: dict[str, BaseDistribution] = {}
-        for name, distribution in self._intersection_search_space.calculate(study).items():
+        for name, distribution in self._intersection_search_space.calculate(
+            study
+        ).items():
             if distribution.single():
                 # Single value objects are not sampled with the `sample_relative` method,
                 # but with the `sample_independent` method.
