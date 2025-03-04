@@ -11,7 +11,7 @@ OptunaHub: Feature-sharing platform for Optuna
 
 :link: [**OptunaHub**](https://hub.optuna.org/)
 | :page_with_curl: [**Docs**](https://optuna.github.io/optunahub/)
-| :book: [**Tutorial**](https://optuna.org/)
+| :book: [**Tutorials**](https://optuna.org/)
 | :question: [**FAQ**](https://optuna.org/)
 | [**Optuna.org**](https://optuna.org/)
 
