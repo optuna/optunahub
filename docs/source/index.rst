@@ -50,5 +50,6 @@ Get ready to explore the most suitable packages for your problems in the `Optuna
    :caption: Contents:
 
    reference
-   tutorials/index
+   tutorials_for_users/index
+   tutorials_for_contributors
    faq
