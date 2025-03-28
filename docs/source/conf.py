@@ -43,7 +43,7 @@ sphinx_gallery_conf = {
     "gallery_dirs": [
         "generated/recipes",
     ],
-    "within_subsection_order": FileNameSortKey, 
-    "filename_pattern": r"/*\.py", 
-    "first_notebook_cell": None,  
+    "within_subsection_order": FileNameSortKey,
+    "filename_pattern": r"/*\.py",
+    "first_notebook_cell": None,
 }

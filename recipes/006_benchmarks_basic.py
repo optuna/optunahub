@@ -13,6 +13,7 @@ In this tutorial, we will explain how to implement your own benchmark problems u
 from __future__ import annotations
 
 import optuna
+
 from optunahub.benchmarks import BaseProblem
 
 

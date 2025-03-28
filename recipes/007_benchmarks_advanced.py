@@ -20,6 +20,7 @@ For the implementation of simple benchmark problems, please refer to :ref:`bench
 from __future__ import annotations
 
 import optuna
+
 from optunahub.benchmarks import BaseProblem
 from optunahub.benchmarks import ConstrainedMixin
 
