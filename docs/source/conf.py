@@ -6,6 +6,7 @@ from __future__ import annotations
 
 from sphinx_gallery.sorting import FileNameSortKey
 
+
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
