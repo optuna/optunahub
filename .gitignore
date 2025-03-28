@@ -112,3 +112,4 @@ ENV/
 # Sphinx
 docs/_build/
 docs/source/generated/
+docs/source/sg_execution_times.rst
