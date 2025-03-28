@@ -46,6 +46,7 @@ checking = [
 docs = [
   "sphinx",
   "sphinx_rtd_theme",
+  "sphinx-gallery",
 ]
 test = [
   "coverage",
