@@ -170,7 +170,9 @@ def _download_via_git(
     repo_url_separator = "/" if "://" in base_url else ":"
     repo_url = f"{base_url.rstrip('/')}{repo_url_separator}{repo_owner}/{repo_name}"
     repo = Repo.init(cache_dir_prefix)
-    origin = repo.create_remote("origin", repo_url)
+    origin = repo.remotes.origin if "origin" in repo.remotes else repo.create_remote("origin", repo_url)
+    if repo.remotes.origin.url != repo_url:
+        repo.remotes.origin.set_url(repo_url)
     repo.git.sparse_checkout("init", "--cone")
     repo.git.sparse_checkout("set", dir_path)
     origin.fetch(refspec=ref, depth=1)
