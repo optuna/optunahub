@@ -7,12 +7,14 @@ import shutil
 import sys
 import types
 from urllib.parse import urlparse
+import re
 
 from ga4mp import GtagMP  # type: ignore
 from github import Auth
 from github import Github
 from github.ContentFile import ContentFile
 import optuna.version
+from git import Repo
 
 import optunahub
 from optunahub import _conf
@@ -69,7 +71,7 @@ def load_module(
     repo_owner: str = "optuna",
     repo_name: str = "optunahub-registry",
     ref: str = "main",
-    base_url: str = "https://api.github.com",
+    base_url: str = "https://github.com",
     force_reload: bool = False,
     auth: Auth.Auth | None = None,
 ) -> types.ModuleType:
@@ -88,54 +90,50 @@ def load_module(
         ref:
             The Git reference (branch, tag, or commit SHA) for the package.
         base_url:
-            The base URL for the GitHub API.
+            If ``auth`` is :obj:`None`, the base URI for the remote repository.
+            If ``auth`` is not :obj:`None`, the base URL for the GitHub API.
         force_reload:
             If :obj:`True`, the package will be downloaded from the repository.
             If :obj:`False`, the package cached in the local directory will be
             loaded if available.
         auth:
             `The authentication object <https://pygithub.readthedocs.io/en/latest/examples/Authentication.html>`__ for the GitHub API.
-            It is required to access private/internal repositories.
+            It is required to access private/internal repositories via the GitHub API.
 
     Returns:
         The module object of the package.
     """
     registry_root = "package"
     dir_path = f"{registry_root}/{package}"
-    hostname = urlparse(base_url).hostname
+    hostname = _extract_hostname(base_url)
     if hostname is None:
-        raise ValueError(f"Invalid base URL: {base_url}")
+        raise ValueError(f"Invalid base URI: {base_url}")
     cache_dir_prefix = os.path.join(_conf.cache_home(), hostname, repo_owner, repo_name, ref)
     package_cache_dir = os.path.join(cache_dir_prefix, dir_path)
     use_cache = not force_reload and os.path.exists(package_cache_dir)
 
     if not use_cache:
-        # Download package from GitHub.
-        g = Github(auth=auth, base_url=base_url)
-        repo = g.get_repo(f"{repo_owner}/{repo_name}")
+        if auth is None:
+            _download_via_git(
+                repo_owner=repo_owner,
+                repo_name=repo_name,
+                dir_path=dir_path,
+                ref=ref,
+                base_url=base_url,
+                cache_dir_prefix=cache_dir_prefix,
+            )
+        else:
+            _download_via_github_api(
+                auth=auth,
+                base_url=base_url,
+                repo_owner=repo_owner,
+                repo_name=repo_name,
+                dir_path=dir_path,
+                ref=ref,
+                package_cache_dir=package_cache_dir,
+                cache_dir_prefix=cache_dir_prefix,
+            )
 
-        package_contents = repo.get_contents(dir_path, ref)
-
-        if isinstance(package_contents, ContentFile):
-            package_contents = [package_contents]
-
-        shutil.rmtree(package_cache_dir, ignore_errors=True)
-        os.makedirs(cache_dir_prefix, exist_ok=True)
-        for m in package_contents:
-            file_path = os.path.join(cache_dir_prefix, m.path)
-            os.makedirs(os.path.dirname(file_path), exist_ok=True)
-            if m.type == "dir":
-                dir_contents = repo.get_contents(m.path, ref)
-                if isinstance(dir_contents, ContentFile):
-                    dir_contents = [dir_contents]
-                package_contents.extend(dir_contents)
-            else:
-                with open(file_path, "wb") as f:
-                    try:
-                        decoded_content = m.decoded_content
-                    except AssertionError:
-                        continue
-                    f.write(decoded_content)
 
     local_registry_root = os.path.join(cache_dir_prefix, registry_root)
     module = load_local_module(
@@ -147,13 +145,72 @@ def load_module(
     is_official_registry = (
         repo_owner == "optuna"
         and repo_name == "optunahub-registry"
-        and base_url == "https://api.github.com"
+        and base_url == "https://github.com"
     )
     if not _conf.is_no_analytics() and not use_cache and is_official_registry:
         _report_stats(package, ref)
 
     return module
 
+def _extract_hostname(url: str) -> str | None:
+    if "://" in url:
+        return urlparse(url).hostname
+    else:
+        match = re.match(r"(?:.+@)?([^:]+)(?::.*)?", url)
+        return match and match.group(1)
+
+def _download_via_git(
+    repo_owner: str,
+    repo_name: str,
+    dir_path: str,
+    ref: str,
+    base_url: str,
+    cache_dir_prefix: str,
+) -> None:
+    repo_url_separator = "/" if "://" in base_url else ":"
+    repo_url = f"{base_url.rstrip('/')}{repo_url_separator}{repo_owner}/{repo_name}"
+    repo = Repo.init(cache_dir_prefix)
+    origin = repo.create_remote("origin", repo_url)
+    repo.git.sparse_checkout("init", "--cone")
+    repo.git.sparse_checkout("set", dir_path)
+    origin.fetch(refspec=ref, depth=1)
+    repo.git.checkout("FETCH_HEAD")
+
+def _download_via_github_api(
+    auth: Auth.Auth | None,
+    base_url: str,
+    repo_owner: str,
+    repo_name: str,
+    dir_path: str,
+    ref: str,
+    package_cache_dir: str,
+    cache_dir_prefix: str,
+) -> None:
+    g = Github(auth=auth, base_url=base_url)
+    repo = g.get_repo(f"{repo_owner}/{repo_name}")
+
+    package_contents = repo.get_contents(dir_path, ref)
+
+    if isinstance(package_contents, ContentFile):
+        package_contents = [package_contents]
+
+    shutil.rmtree(package_cache_dir, ignore_errors=True)
+    os.makedirs(cache_dir_prefix, exist_ok=True)
+    for m in package_contents:
+        file_path = os.path.join(cache_dir_prefix, m.path)
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        if m.type == "dir":
+            dir_contents = repo.get_contents(m.path, ref)
+            if isinstance(dir_contents, ContentFile):
+                dir_contents = [dir_contents]
+            package_contents.extend(dir_contents)
+        else:
+            with open(file_path, "wb") as f:
+                try:
+                    decoded_content = m.decoded_content
+                except AssertionError:
+                    continue
+                f.write(decoded_content)
 
 def load_local_module(
     package: str,
