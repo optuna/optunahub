@@ -1,5 +1,5 @@
-Tutorial for contributors
-=========================
+Tutorials for contributors
+==========================
 - :doc:`generated/recipes/001_first`
 - :doc:`generated/recipes/002_registration`
 - :doc:`generated/recipes/003_pruner`
