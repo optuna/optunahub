@@ -1,4 +1,4 @@
-Tutorials for contributors
+Tutorials for Contributors
 ==========================
 - :doc:`generated/recipes/001_first`
 - :doc:`generated/recipes/002_registration`
