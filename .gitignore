@@ -111,3 +111,4 @@ ENV/
 
 # Sphinx
 docs/_build/
+docs/source/generated/

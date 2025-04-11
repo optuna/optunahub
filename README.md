@@ -11,6 +11,8 @@ OptunaHub: Feature-sharing platform for Optuna
 
 :link: [**OptunaHub**](https://hub.optuna.org/)
 | :page_with_curl: [**Docs**](https://optuna.github.io/optunahub/)
+| :book: [**Tutorials**](https://optuna.github.io/optunahub/tutorials/index.html)
+| :question: [**FAQ**](https://optuna.github.io/optunahub/faq.html)
 | [**Optuna.org**](https://optuna.org/)
 
 [*OptunaHub*](https://hub.optuna.org/) is a platform for sharing algorithms in [Optuna](https://optuna.org/), a powerful and flexible hyperparameter optimization framework. OptunaHub provides implementations of state-of-the-art optimization algorithms and visualization of optimization results for analysis. You can also publish your algorithm implementation on the platform and make it available to Optuna users around the world.
@@ -20,6 +22,7 @@ This is the repository of the optunahub Python Library to use packages published
 
 ## :loudspeaker: News
 
+* **Jan 22, 2025**: A new article [OptunaHub Benchmarks: A New Feature to Use/Register Various Benchmark Problems](https://medium.com/optuna/optunahub-benchmarks-a-new-feature-to-use-register-various-benchmark-problems-694401524ce0) has been published.
 * **Nov 6, 2024**: A new article [AutoSampler: Automatic Selection of Optimization Algorithms in Optuna](https://medium.com/optuna/autosampler-automatic-selection-of-optimization-algorithms-in-optuna-1443875fd8f9) has been published.
 * **Oct 21, 2024**: We posted [an article](https://medium.com/optuna/an-introduction-to-moea-d-and-examples-of-multi-objective-optimization-comparisons-8630565a4e89) introducing [MOEA/D](https://hub.optuna.org/samplers/moead/) and an example comparison with other optimization methods.
 * **Aug 30, 2024**: New Medium article "[OptunaHub, a Feature-Sharing Platform for Optuna, Now Available in Official Release!](https://medium.com/optuna/optunahub-a-feature-sharing-platform-for-optuna-now-available-in-official-release-4b99efe9934d)" was published!
