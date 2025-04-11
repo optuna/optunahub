@@ -90,23 +90,23 @@ def load_module(
         ref:
             The Git reference (branch, tag, or commit SHA) for the package.
         base_url:
-            If ``auth`` is :obj:`None`, the base URI for the remote repository.
-            In this case, specifying ``git@github.com`` allows access to private repositories via SSH.
-            If ``auth`` is not :obj:`None`, the base URL for the GitHub API.
+            If ``auth`` is :obj:`None` and the ``git`` command is available, the base URI for the remote repository.
+            In this case, specifying ``git@github.com`` allows access to private/internal repositories via SSH.
+            If ``auth`` is not :obj:`None` or the ``git`` command is not available, the base URL for the GitHub API.
         force_reload:
             If :obj:`True`, the package will be downloaded from the repository.
             If :obj:`False`, the package cached in the local directory will be
             loaded if available.
         auth:
             `The authentication object <https://pygithub.readthedocs.io/en/latest/examples/Authentication.html>`__ for the GitHub API.
-            It is required to access private/internal repositories via the GitHub API.
+            It also allows access to access private/internal repositories via the GitHub API.
 
     Returns:
         The module object of the package.
     """
     registry_root = "package"
     dir_path = f"{registry_root}/{package}"
-    hostname = _extract_hostname(base_url)
+    hostname = _extract_hostname(base_url) if base_url else "github.com"
     if hostname is None:
         raise ValueError(f"Invalid base URI: {base_url}")
     cache_dir_prefix = os.path.join(_conf.cache_home(), hostname, repo_owner, repo_name, ref)
