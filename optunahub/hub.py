@@ -71,7 +71,7 @@ def load_module(
     repo_owner: str = "optuna",
     repo_name: str = "optunahub-registry",
     ref: str = "main",
-    base_url: str = "https://github.com",
+    base_url: str | None = None,
     force_reload: bool = False,
     auth: Auth.Auth | None = None,
 ) -> types.ModuleType:
@@ -114,19 +114,19 @@ def load_module(
     use_cache = not force_reload and os.path.exists(package_cache_dir)
 
     if not use_cache:
-        if auth is None:
+        if auth is None and shutil.which("git") is not None:
             _download_via_git(
                 repo_owner=repo_owner,
                 repo_name=repo_name,
                 dir_path=dir_path,
                 ref=ref,
-                base_url=base_url,
+                base_url=base_url or "https://github.com",
                 cache_dir_prefix=cache_dir_prefix,
             )
         else:
             _download_via_github_api(
                 auth=auth,
-                base_url=base_url,
+                base_url=base_url or "https://api.github.com",
                 repo_owner=repo_owner,
                 repo_name=repo_name,
                 dir_path=dir_path,
