@@ -3,18 +3,18 @@ from __future__ import annotations
 import importlib.util
 import logging
 import os
+import re
 import shutil
 import sys
 import types
 from urllib.parse import urlparse
-import re
 
 from ga4mp import GtagMP  # type: ignore
+from git import Repo
 from github import Auth
 from github import Github
 from github.ContentFile import ContentFile
 import optuna.version
-from git import Repo
 
 import optunahub
 from optunahub import _conf
