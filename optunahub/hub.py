@@ -135,7 +135,6 @@ def load_module(
                 cache_dir_prefix=cache_dir_prefix,
             )
 
-
     local_registry_root = os.path.join(cache_dir_prefix, registry_root)
     module = load_local_module(
         package=package,
@@ -153,12 +152,14 @@ def load_module(
 
     return module
 
+
 def _extract_hostname(url: str) -> str | None:
     if "://" in url:
         return urlparse(url).hostname
     else:
         match = re.match(r"(?:.+@)?([^:]+)(?::.*)?", url)
         return match and match.group(1)
+
 
 def _download_via_git(
     repo_owner: str,
@@ -171,13 +172,16 @@ def _download_via_git(
     repo_url_separator = "/" if "://" in base_url else ":"
     repo_url = f"{base_url.rstrip('/')}{repo_url_separator}{repo_owner}/{repo_name}"
     repo = Repo.init(cache_dir_prefix)
-    origin = repo.remotes.origin if "origin" in repo.remotes else repo.create_remote("origin", repo_url)
+    origin = (
+        repo.remotes.origin if "origin" in repo.remotes else repo.create_remote("origin", repo_url)
+    )
     if repo.remotes.origin.url != repo_url:
         repo.remotes.origin.set_url(repo_url)
     repo.git.sparse_checkout("init", "--cone")
     repo.git.sparse_checkout("set", dir_path)
     origin.fetch(refspec=ref, depth=1)
     repo.git.checkout("FETCH_HEAD")
+
 
 def _download_via_github_api(
     auth: Auth.Auth | None,
@@ -214,6 +218,7 @@ def _download_via_github_api(
                 except AssertionError:
                     continue
                 f.write(decoded_content)
+
 
 def load_local_module(
     package: str,
