@@ -30,6 +30,9 @@ exclude_patterns = ["build", "Thumbs.db", ".DS_Store"]
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = "sphinx_rtd_theme"
-html_static_path: list[str] = []
+html_theme_options = {"logo_only": True, "navigation_with_keys": True, "navigation_depth": 2}
+html_static_path = ["_static"]
+html_favicon = "_static/favicon.ico"
+html_logo = "_static/optuna-logo.png"
+html_css_files = ["css/custom.css"]
 
-html_theme_options = {"navigation_depth": 2}
