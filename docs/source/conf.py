@@ -35,4 +35,3 @@ html_static_path = ["_static"]
 html_favicon = "_static/favicon.ico"
 html_logo = "_static/optuna-logo.png"
 html_css_files = ["css/custom.css"]
-
