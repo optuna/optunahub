@@ -30,7 +30,7 @@ This is the repository of the optunahub Python Library to use packages published
 
 ## Installation
 
-Optuna is available at [the Python Package Index](https://pypi.org/project/optunahub/).
+OptunaHub is available at [the Python Package Index](https://pypi.org/project/optunahub/).
 
 ```sh
 pip install optunahub
