@@ -4,6 +4,8 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 from __future__ import annotations
 
+from sphinx_gallery.sorting import FileNameSortKey
+
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -20,6 +22,7 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
+    "sphinx_gallery.gen_gallery",
 ]
 
 templates_path = ["_templates"]
@@ -35,3 +38,15 @@ html_static_path = ["_static"]
 html_favicon = "_static/favicon.ico"
 html_logo = "_static/optuna-logo.png"
 html_css_files = ["css/custom.css"]
+
+sphinx_gallery_conf = {
+    "examples_dirs": [
+        "../../recipes",
+    ],
+    "gallery_dirs": [
+        "generated/recipes",
+    ],
+    "within_subsection_order": FileNameSortKey,
+    "filename_pattern": r"/*\.py",
+    "first_notebook_cell": None,
+}

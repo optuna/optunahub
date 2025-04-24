@@ -44,8 +44,13 @@ checking = [
   "types-toml",
 ]
 docs = [
+  "plotly",
   "sphinx",
   "sphinx_rtd_theme",
+  "sphinx-gallery",
+  "matplotlib",
+  "optuna",
+  "optunahub",
 ]
 test = [
   "coverage",
