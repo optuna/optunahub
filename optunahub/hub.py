@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import importlib.util
 import json
-import logging
 import os
 import shutil
 import sys
@@ -23,10 +22,6 @@ from optunahub import _conf
 
 # Dummy optunahub_registry module is required to avoid ModuleNotFoundError.
 sys.modules["optunahub_registry"] = types.ModuleType("optunahub_registry")
-
-
-# Revert the log level to Python's default (i.e., WARNING) for the `ga4mp` package.
-logging.getLogger("ga4mp.ga4mp").setLevel(logging.WARNING)
 
 
 def _report_stats(
@@ -88,9 +83,9 @@ def _report_stats(
         with urlopen(req) as response:
             status_code = response.status
             if status_code != 200:
-                print(f"Failed to send data. Status code: {status_code}")
+                print(f"Failed to send data. Status code: {status_code}", file=sys.stderr)
     except Exception as e:
-        print(f"Error occurred: {e}")
+        print(f"Error occurred: {e}", file=sys.stderr)
 
 
 def load_module(
