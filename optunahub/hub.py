@@ -1,14 +1,17 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import logging
 import os
 import shutil
 import sys
+import time
 import types
 from urllib.parse import urlparse
+from urllib.request import Request
+from urllib.request import urlopen
 
-from ga4mp import GtagMP  # type: ignore
 from github import Auth
 from github import Github
 from github.ContentFile import ContentFile
@@ -49,18 +52,45 @@ def _report_stats(
         ref:
             The Git reference (branch, tag, or commit SHA) for the package.
     """
-    ga = GtagMP(
-        measurement_id="G-8EZ4F4Z74E",  # OptunaHub
-        api_secret="8tWYGaAEQJiYJSUJfqNMTw",
-        client_id="optunahub",  # Anonymous (by always setting client_id to "optunahub")
-    )
-    event = ga.create_new_event("load_module")
-    event.set_event_param(name="CI", value=os.getenv("CI", False))
-    event.set_event_param(name="optuna_version", value=optuna.version.__version__)
-    event.set_event_param(name="optunahub_version", value=optunahub.__version__)
-    event.set_event_param(name="package", value=package)
-    event.set_event_param(name="ref", value=ref)
-    ga.send([event])
+    measurement_id = "G-8EZ4F4Z74E"
+    api_secret = "8tWYGaAEQJiYJSUJfqNMTw"
+    client_id = "optunahub"
+
+    url = f"https://www.google-analytics.com/mp/collect?measurement_id={measurement_id}&api_secret={api_secret}"
+    data = {
+        "client_id": client_id,
+        "events": [
+            {
+                "name": "load_module",
+                "params": {
+                    "CI": os.getenv("CI", False),
+                    "optuna_version": optuna.version.__version__,
+                    "optunahub_version": optunahub.__version__,
+                    "package": package,
+                    "ref": ref,
+                    "session_id": int(time.time()),
+                    "engagement_time_msec": 0,
+                },
+            }
+        ],
+    }
+
+    jsondata = json.dumps(data)
+    json_data_as_bytes = jsondata.encode("utf-8")  # needs to be bytes
+
+    headers = {
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": str(len(json_data_as_bytes)),
+    }
+
+    req = Request(url, data=json_data_as_bytes, headers=headers)
+    try:
+        with urlopen(req) as response:
+            status_code = response.status
+            if status_code != 200:
+                print(f"Failed to send data. Status code: {status_code}")
+    except Exception as e:
+        print(f"Error occurred: {e}")
 
 
 def load_module(
