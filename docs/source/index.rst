@@ -12,7 +12,7 @@ Please check out `Tutorials for Users <./tutorials_for_users/index.html>`__  as 
 Usage
 =====
 
-Install the `optunahub`_ package.
+Install the ``optunahub`` package.
 
 .. code-block:: shell
 
@@ -42,7 +42,7 @@ The details for ``AutoSampler`` can be found in `this article <https://medium.co
    print(study.best_trial.value, study.best_trial.params)
 
 
-Now that you've successfully loaded a package from the OptunaHub registry, you can start using `optunahub`_ in your optimization!
+Now that you've successfully loaded a package from the OptunaHub registry, you can start using ``optunahub`` in your optimization!
 Get ready to explore the most suitable packages for your problems in the `OptunaHub registry <https://hub.optuna.org/>`_.
 
 .. toctree::
