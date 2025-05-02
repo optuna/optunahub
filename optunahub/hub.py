@@ -157,6 +157,7 @@ def _extract_hostname(url: str) -> str | None:
     if "://" in url:
         return urlparse(url).hostname
     else:
+        # NOTE(kAIto47802) Extract hostname: skip optional user@, capture up to `:`, ignore the rest.
         match = re.match(r"(?:.+@)?([^:]+)(?::.*)?", url)
         return match and match.group(1)
 
