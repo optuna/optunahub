@@ -90,9 +90,9 @@ def load_module(
         ref:
             The Git reference (branch, tag, or commit SHA) for the package.
         base_url:
-            If ``auth`` is :obj:`None` and the ``git`` command is available, the base URI for the remote repository.
+            If ``auth`` is :obj:`None` and the ``git`` command is available, this should be the base URI for the remote repository.
             In this case, specifying ``git@github.com`` allows access to private/internal repositories via SSH.
-            If ``auth`` is not :obj:`None` or the ``git`` command is not available, the base URL for the GitHub API.
+            Otherwise, ``base_url`` should be the base URL for the GitHub API.
         force_reload:
             If :obj:`True`, the package will be downloaded from the repository.
             If :obj:`False`, the package cached in the local directory will be
