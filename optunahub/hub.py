@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from contextlib import suppress
 import importlib.util
 import json
 import os
@@ -79,13 +80,9 @@ def _report_stats(
     }
 
     req = Request(url, data=json_data_as_bytes, headers=headers)
-    try:
-        with urlopen(req) as response:
-            status_code = response.status
-            if status_code != 200:
-                print(f"Failed to send data. Status code: {status_code}", file=sys.stderr)
-    except Exception as e:
-        print(f"Error occurred: {e}", file=sys.stderr)
+    with suppress(Exception):
+        with urlopen(req) as _:
+            pass
 
 
 def load_module(
