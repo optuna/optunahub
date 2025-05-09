@@ -50,7 +50,7 @@ def _report_stats(
     """
     measurement_id = "G-8EZ4F4Z74E"
     api_secret = "8tWYGaAEQJiYJSUJfqNMTw"
-    client_id = "optunahub"
+    client_id = "optunahub"  # Anonymous (by always setting client_id to "optunahub")
 
     url = f"https://www.google-analytics.com/mp/collect?measurement_id={measurement_id}&api_secret={api_secret}"
     data = {
