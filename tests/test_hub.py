@@ -1,8 +1,10 @@
 import os
 
 import optuna
+import pytest
 
 import optunahub
+from optunahub.hub import _extract_hostname
 
 
 def test_load_module() -> None:
@@ -36,3 +38,16 @@ def test_load_local_module() -> None:
     sampler = m.TestSampler()
     study = optuna.create_study(sampler=sampler)
     study.optimize(objective, n_trials=10)
+
+
+@pytest.mark.parametrize(
+    "uri, expected_hostname",
+    [
+        ("git@github.com", "github.com"),
+        ("git@gitlab.example.com", "gitlab.example.com"),
+        ("https://api.github.com", "api.github.com"),
+        ("https://gitlab.example.com/api/v4/", "gitlab.example.com"),
+    ],
+)
+def test_extract_hostname(uri: str, expected_hostname: str) -> None:
+    assert _extract_hostname(uri) == expected_hostname
