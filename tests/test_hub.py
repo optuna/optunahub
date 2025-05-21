@@ -1,18 +1,22 @@
 import os
+import shutil
 
 import optuna
 import pytest
+from pytest import MonkeyPatch
 
 import optunahub
 from optunahub.hub import _extract_hostname
 
 
-def test_load_module() -> None:
+@pytest.mark.parametrize("git_command", ["/usr/bin/git", None])
+def test_load_module(monkeypatch: MonkeyPatch, git_command: str | None) -> None:
     def objective(trial: optuna.Trial) -> float:
         x = trial.suggest_float("x", 0, 1)
 
         return x
 
+    monkeypatch.setattr(shutil, "which", lambda cmd: git_command)
     m = optunahub.load_module("samplers/simulated_annealing")
     assert m.__name__ == "optunahub_registry.package.samplers.simulated_annealing"
 
