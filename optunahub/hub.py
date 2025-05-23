@@ -6,11 +6,9 @@ import json
 import os
 import shutil
 import sys
-import time
 import types
 from urllib.parse import urlparse
-from urllib.request import Request
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 
 from github import Auth
 from github import Github
@@ -64,8 +62,6 @@ def _report_stats(
                     "optunahub_version": optunahub.__version__,
                     "package": package,
                     "ref": ref,
-                    "session_id": int(time.time()),
-                    "engagement_time_msec": 0,
                 },
             }
         ],
