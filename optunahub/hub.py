@@ -8,7 +8,8 @@ import shutil
 import sys
 import types
 from urllib.parse import urlparse
-from urllib.request import Request, urlopen
+from urllib.request import Request
+from urllib.request import urlopen
 
 from github import Auth
 from github import Github
