@@ -4,15 +4,15 @@ Welcome to OptunaHub's documentation!
 `OptunaHub <https://hub.optuna.org/>`__ is a registry of third-party packages designed for `Optuna <https://optuna.org>`__.
 It allows users to share and discover Optuna packages that are not included in the official Optuna distribution.
 The `optunahub <https://github.com/optuna/optunahub/>`__ library provides Python APIs to load and use packages from the OptunaHub registry.
-Please check out `the OptunaHub tutorial <./tutorials/index.html>`__  as well.
+Please check out `Tutorials for Users <./tutorials_for_users/index.html>`__  as well.
 
-**If you are interested in registering your own features in OptunaHub**, please visit `the optunahub-registry repository <https://github.com/optuna/optunahub-registry>`__ and submit a pull request there. More details are available in `the optunahub-registry tutorial <https://optuna.github.io/optunahub-registry/>`__.
+**If you are interested in registering your own features in OptunaHub**, please visit `the optunahub-registry repository <https://github.com/optuna/optunahub-registry>`__ and submit a pull request there. More details are available in `Tutorials for Contributors <./tutorials_for_contributors.html>`__.
 
 
 Usage
 =====
 
-Install the `optunahub`_ package.
+Install the ``optunahub`` package.
 
 .. code-block:: shell
 
@@ -42,7 +42,7 @@ The details for ``AutoSampler`` can be found in `this article <https://medium.co
    print(study.best_trial.value, study.best_trial.params)
 
 
-Now that you've successfully loaded a package from the OptunaHub registry, you can start using `optunahub`_ in your optimization!
+Now that you've successfully loaded a package from the OptunaHub registry, you can start using ``optunahub`` in your optimization!
 Get ready to explore the most suitable packages for your problems in the `OptunaHub registry <https://hub.optuna.org/>`_.
 
 .. toctree::
@@ -50,5 +50,6 @@ Get ready to explore the most suitable packages for your problems in the `Optuna
    :caption: Contents:
 
    reference
-   tutorials/index
+   tutorials_for_users/index
+   tutorials_for_contributors
    faq
