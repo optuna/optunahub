@@ -1,14 +1,16 @@
 from __future__ import annotations
 
+from contextlib import suppress
 import importlib.util
-import logging
+import json
 import os
 import shutil
 import sys
 import types
 from urllib.parse import urlparse
+from urllib.request import Request
+from urllib.request import urlopen
 
-from ga4mp import GtagMP  # type: ignore
 from github import Auth
 from github import Github
 from github.ContentFile import ContentFile
@@ -20,10 +22,6 @@ from optunahub import _conf
 
 # Dummy optunahub_registry module is required to avoid ModuleNotFoundError.
 sys.modules["optunahub_registry"] = types.ModuleType("optunahub_registry")
-
-
-# Revert the log level to Python's default (i.e., WARNING) for the `ga4mp` package.
-logging.getLogger("ga4mp.ga4mp").setLevel(logging.WARNING)
 
 
 def _report_stats(
@@ -49,18 +47,39 @@ def _report_stats(
         ref:
             The Git reference (branch, tag, or commit SHA) for the package.
     """
-    ga = GtagMP(
-        measurement_id="G-8EZ4F4Z74E",  # OptunaHub
-        api_secret="8tWYGaAEQJiYJSUJfqNMTw",
-        client_id="optunahub",  # Anonymous (by always setting client_id to "optunahub")
-    )
-    event = ga.create_new_event("load_module")
-    event.set_event_param(name="CI", value=os.getenv("CI", False))
-    event.set_event_param(name="optuna_version", value=optuna.version.__version__)
-    event.set_event_param(name="optunahub_version", value=optunahub.__version__)
-    event.set_event_param(name="package", value=package)
-    event.set_event_param(name="ref", value=ref)
-    ga.send([event])
+    measurement_id = "G-8EZ4F4Z74E"
+    api_secret = "8tWYGaAEQJiYJSUJfqNMTw"
+    client_id = "optunahub"  # Anonymous (by always setting client_id to "optunahub")
+
+    url = f"https://www.google-analytics.com/mp/collect?measurement_id={measurement_id}&api_secret={api_secret}"
+    data = {
+        "client_id": client_id,
+        "events": [
+            {
+                "name": "load_module",
+                "params": {
+                    "CI": os.getenv("CI", False),
+                    "optuna_version": optuna.version.__version__,
+                    "optunahub_version": optunahub.__version__,
+                    "package": package,
+                    "ref": ref,
+                },
+            }
+        ],
+    }
+
+    jsondata = json.dumps(data)
+    json_data_as_bytes = jsondata.encode("utf-8")  # needs to be bytes
+
+    headers = {
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": str(len(json_data_as_bytes)),
+    }
+
+    req = Request(url, data=json_data_as_bytes, headers=headers)
+    with suppress(Exception):
+        with urlopen(req) as _:
+            pass
 
 
 def load_module(
