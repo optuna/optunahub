@@ -19,7 +19,7 @@ def test_load_module(monkeypatch: MonkeyPatch, git_command: str | None) -> None:
         return x
 
     monkeypatch.setattr(shutil, "which", lambda cmd: git_command)
-    m = optunahub.load_module("samplers/simulated_annealing")
+    m = optunahub.load_module("samplers/simulated_annealing", force_reload=True)
     assert m.__name__ == "optunahub_registry.package.samplers.simulated_annealing"
 
     # Confirm no error occurs by running optimization
