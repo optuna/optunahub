@@ -12,6 +12,7 @@ authors = [
 requires-python = ">=3.8"
 dependencies = [
   "optuna",
+  "GitPython",
   "PyGithub>=1.59",
 ]
 dynamic = ["version"]
