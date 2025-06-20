@@ -136,11 +136,11 @@ def load_module(
     if not use_cache:
         if auth is None and shutil.which("git") is not None:
             _download_via_git(
+                base_url=base_url or "https://github.com",
                 repo_owner=repo_owner,
                 repo_name=repo_name,
                 dir_path=dir_path,
                 ref=ref,
-                base_url=base_url or "https://github.com",
                 cache_dir_prefix=cache_dir_prefix,
             )
         else:
@@ -162,11 +162,7 @@ def load_module(
     )
 
     # Statistics are collected only for the official registry.
-    is_official_registry = (
-        repo_owner == "optuna"
-        and repo_name == "optunahub-registry"
-        and base_url == "https://github.com"
-    )
+    is_official_registry = repo_owner == "optuna" and repo_name == "optunahub-registry"
     if not _conf.is_no_analytics() and not use_cache and is_official_registry:
         _report_stats(package, ref)
 
@@ -183,11 +179,11 @@ def _extract_hostname(url: str) -> str | None:
 
 
 def _download_via_git(
+    base_url: str,
     repo_owner: str,
     repo_name: str,
     dir_path: str,
     ref: str,
-    base_url: str,
     cache_dir_prefix: str,
 ) -> None:
     repo_url_separator = "/" if "://" in base_url else ":"
