@@ -61,7 +61,7 @@ def test_extract_hostname(uri: str, expected_hostname: str) -> None:
 
 @pytest.mark.parametrize("git_command", ["/usr/bin/git", None])
 def test_if_report_stats_is_called(monkeypatch: MonkeyPatch, git_command: str | None) -> None:
-    def mock_do_nothing(*args, **kwargs) -> None:
+    def mock_do_nothing(*args, **kwargs) -> None:  # type: ignore[no-untyped-def]
         return
 
     # To make the environment look like git is available or unavailable.
@@ -73,9 +73,7 @@ def test_if_report_stats_is_called(monkeypatch: MonkeyPatch, git_command: str | 
     monkeypatch.setattr("optunahub._conf.is_no_analytics", lambda: False)
 
     # Capture the call of _report_stats.
-    calls = []
-    monkeypatch.setattr(
-        "optunahub.hub._report_stats", lambda *args, **kwargs: calls.append(None)
-    )
+    calls: list[None] = []
+    monkeypatch.setattr("optunahub.hub._report_stats", lambda *args, **kwargs: calls.append(None))
     optunahub.load_module(package="dummy/test")
     assert len(calls) > 0
