@@ -57,3 +57,23 @@ def test_load_local_module() -> None:
 )
 def test_extract_hostname(uri: str, expected_hostname: str) -> None:
     assert _extract_hostname(uri) == expected_hostname
+
+
+@pytest.mark.parametrize("git_command", ["/usr/bin/git", None])
+def test_if_report_stats_is_called(monkeypatch: MonkeyPatch, git_command: str | None) -> None:
+    def mock_do_nothing(*args, **kwargs) -> None:  # type: ignore[no-untyped-def]
+        return
+
+    # To make the environment look like git is available or unavailable.
+    monkeypatch.setattr(shutil, "which", lambda cmd: git_command)
+    monkeypatch.setattr("optunahub.hub._download_via_git", mock_do_nothing)
+    monkeypatch.setattr("optunahub.hub._download_via_github_api", mock_do_nothing)
+    monkeypatch.setattr("optunahub.hub.load_local_module", mock_do_nothing)
+    # Analytics must be activated.
+    monkeypatch.setattr("optunahub._conf.is_no_analytics", lambda: False)
+
+    # Capture the call of _report_stats.
+    calls: list[None] = []
+    monkeypatch.setattr("optunahub.hub._report_stats", lambda *args, **kwargs: calls.append(None))
+    optunahub.load_module(package="dummy/test")
+    assert len(calls) > 0

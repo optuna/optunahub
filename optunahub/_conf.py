@@ -31,11 +31,11 @@ def cache_home() -> str:
         )
 
 
-def is_no_analytics() -> bool | None:
+def is_no_analytics() -> bool:
     """Return whether the analytics is disabled.
 
     Returns:
-        `True` if the analytics is disabled, `False` if the analytics is enabled, or `None` if the configuration is not set.
+        `True` if the analytics is disabled, `False` if the analytics is enabled.
     """
 
     return os.getenv("OPTUNAHUB_NO_ANALYTICS", "0") == "1"
