@@ -74,7 +74,7 @@ class MySampler(optunahub.samplers.SimpleBaseSampler):
             if isinstance(d, optuna.distributions.FloatDistribution):
                 params[n] = self._rng.uniform(d.low, d.high)
             elif isinstance(d, optuna.distributions.IntDistribution):
-                params[n] = self._rng.randint(d.low, d.high)
+                params[n] = self._rng.randint(d.low, d.high + 1)  # sample from [d.low, d.high + 1)
             elif isinstance(d, optuna.distributions.CategoricalDistribution):
                 params[n] = d.choices[self._rng.randint(len(d.choices))]
             else:
