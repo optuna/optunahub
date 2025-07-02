@@ -36,6 +36,12 @@ OptunaHub is available at [the Python Package Index](https://pypi.org/project/op
 pip install optunahub
 ```
 
+It is also available at [conda-forge](https://anaconda.org/conda-forge/optunahub).
+
+```sh
+conda install -c conda-forge optunahub
+```
+
 ## Example
 
 You only need to search for the desired function on [the OptunaHub website](https://hub.optuna.org/) and call the [optunahub.load_module](https://optuna.github.io/optunahub/) function in your code to incorporate it.
