@@ -18,13 +18,13 @@ From PyPI:
 
 .. code-block:: shell
 
-      pip install optunahub
+   pip install optunahub
 
 From conda-forge:
 
 .. code-block:: shell
 
-      conda install -c conda-forge optunahub
+   conda install -c conda-forge optunahub
 
 Load the package you want from the OptunaHub registry. In the next example code, you will load the ``AutoSampler`` from the `samplers/auto_sampler <https://hub.optuna.org/samplers/auto_sampler/>`__ package.
 The details for ``AutoSampler`` can be found in `this article <https://medium.com/optuna/autosampler-automatic-selection-of-optimization-algorithms-in-optuna-1443875fd8f9>`__.
