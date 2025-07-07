@@ -55,6 +55,7 @@ docs = [
 test = [
   "coverage",
   "pytest",
+  "pytest-timeout",
 ]
 
 [project.urls]

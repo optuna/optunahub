@@ -10,8 +10,9 @@ from pytest import MonkeyPatch
 import optunahub
 from optunahub.hub import _extract_hostname
 
-
+# NOTE(fusawa-yugo): Ensure the test fails quickly if GitHub API rate limits cause delays.
 @pytest.mark.parametrize("git_command", ["/usr/bin/git", None])
+@pytest.mark.timeout(120)
 def test_load_module(monkeypatch: MonkeyPatch, git_command: str | None) -> None:
     def objective(trial: optuna.Trial) -> float:
         x = trial.suggest_float("x", 0, 1)
