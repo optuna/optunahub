@@ -10,13 +10,14 @@ from pytest import MonkeyPatch
 import optunahub
 from optunahub.hub import _extract_hostname
 
+
 @pytest.mark.timeout(30)
 @pytest.mark.parametrize(
-    "git_command", 
+    "git_command",
     [
         pytest.param("/usr/bin/git"),
         pytest.param(None, marks=pytest.mark.use_github_api),
-    ]
+    ],
 )
 def test_load_module(monkeypatch: MonkeyPatch, git_command: str | None) -> None:
     def objective(trial: optuna.Trial) -> float:
