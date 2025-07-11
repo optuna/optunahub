@@ -110,3 +110,8 @@ exclude = [
     "work",
     ".*/.ipynb_checkpoints/.*",
 ]
+
+[tool.pytest.ini_options]
+markers = [
+    "use_github_api: marks tests to run only when --github-api option is specified",
+]
