@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 from contextlib import suppress
+from datetime import datetime
 import importlib.util
 import json
 import os
+from pathlib import Path
 import re
 import shutil
 import sys
@@ -131,7 +133,11 @@ def load_module(
         raise ValueError(f"Invalid base URI: {base_url}")
     cache_dir_prefix = os.path.join(_conf.cache_home(), hostname, repo_owner, repo_name, ref)
     package_cache_dir = os.path.join(cache_dir_prefix, dir_path)
-    use_cache = not force_reload and os.path.exists(package_cache_dir)
+    use_cache = (
+        not force_reload
+        and os.path.exists(package_cache_dir)
+        and _is_cache_valid(package_cache_dir)
+    )
 
     if not use_cache:
         if auth is None and shutil.which("git") is not None:
@@ -271,3 +277,19 @@ def load_local_module(
     spec.loader.exec_module(module)
 
     return module
+
+
+def _is_cache_valid(package_cache_dir: str) -> bool:
+    OPTUNAHUB_CACHE_EXPIRATION_DAYS = int(os.getenv("OPTUNAHUB_CACHE_EXPIRATION_DAYS", 30))
+    dir_path = Path(package_cache_dir)
+    if not dir_path.exists():
+        return False
+
+    # Get the most recent modification time among all files and directories in the package cache
+    paths = [dir_path] + list(dir_path.rglob("*"))
+    if not paths:
+        return False
+    last_modified_time = datetime.fromtimestamp(max(p.stat().st_mtime for p in paths))
+    diff_days = (datetime.now() - last_modified_time).days
+
+    return diff_days <= OPTUNAHUB_CACHE_EXPIRATION_DAYS
