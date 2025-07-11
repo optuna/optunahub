@@ -1,12 +1,12 @@
 from typing import List
 
 from _pytest.config import Config
-from _pytest.config import Perser
+from _pytest.config import Parser
 from _pytest.nodes import Item
 import pytest
 
 
-def pytest_addoption(parser: Perser) -> None:
+def pytest_addoption(parser: Parser) -> None:
     parser.addoption(
         "--github-api",
         action="store_true",
