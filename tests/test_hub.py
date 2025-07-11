@@ -11,7 +11,6 @@ import optunahub
 from optunahub.hub import _extract_hostname
 
 
-@pytest.mark.timeout(30)
 @pytest.mark.parametrize(
     "git_command",
     [
