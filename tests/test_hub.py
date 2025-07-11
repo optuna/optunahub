@@ -15,7 +15,7 @@ from optunahub.hub import _extract_hostname
     "git_command",
     [
         pytest.param("/usr/bin/git"),
-        pytest.param(None, marks=pytest.mark.use_github_api),
+        pytest.param(None, marks=pytest.mark.github_api),
     ],
 )
 def test_load_module(monkeypatch: MonkeyPatch, git_command: str | None) -> None:

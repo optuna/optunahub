@@ -112,6 +112,7 @@ exclude = [
 ]
 
 [tool.pytest.ini_options]
+addopts = ["-m", "not github_api"]
 markers = [
-    "use_github_api: marks tests to run only when --github-api option is specified",
+    "github_api: marks tests that use the GitHub API",
 ]
