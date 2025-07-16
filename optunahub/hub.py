@@ -268,7 +268,7 @@ def _load_remote_module(
     modified_time_after_download = _get_cache_latest_modified_time(package_cache_dir)
     # Forcefully update the last modified time of the package cache directory
     # if the downloaded package hasn't changed.
-    if modified_time_after_download <= last_modified_time:
+    if last_modified_time is not None and modified_time_after_download <= last_modified_time:
         current_time = time.time()
         os.utime(package_cache_dir, (current_time, current_time))
 
@@ -309,22 +309,21 @@ def load_local_module(
     return module
 
 
-def _get_cache_latest_modified_time(package_cache_dir: str) -> datetime:
+def _get_cache_latest_modified_time(package_cache_dir: str) -> float:
     """Get the latest modified time of the package cache directory."""
     path = Path(package_cache_dir)
     if not path.exists():
-        raise FileNotFoundError(f"Directory {package_cache_dir} does not exist.")
-
+        return 0
     # Get the most recent modification time among all files and directories in the package cache
     paths = [path] + list(path.rglob("*"))
-    if not paths:
-        raise FileNotFoundError(f"No files found in {package_cache_dir}.")
-    return datetime.fromtimestamp(max(p.stat().st_mtime for p in paths))
+    return max(p.stat().st_mtime for p in paths)
 
 
 def _is_cache_valid(package_cache_dir: str) -> bool:
     OPTUNAHUB_CACHE_EXPIRATION_DAYS = int(os.getenv("OPTUNAHUB_CACHE_EXPIRATION_DAYS", 30))
+    if not os.path.exists(package_cache_dir):
+        return False
     last_modified_time = _get_cache_latest_modified_time(package_cache_dir)
-    diff_days = (datetime.now() - last_modified_time).days
+    diff_days = (datetime.now() - datetime.fromtimestamp(last_modified_time)).days
 
     return diff_days <= OPTUNAHUB_CACHE_EXPIRATION_DAYS
