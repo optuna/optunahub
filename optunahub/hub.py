@@ -325,6 +325,6 @@ def _get_cache_latest_modified_time(package_cache_dir: str) -> datetime:
 def _is_cache_valid(package_cache_dir: str) -> bool:
     OPTUNAHUB_CACHE_EXPIRATION_DAYS = int(os.getenv("OPTUNAHUB_CACHE_EXPIRATION_DAYS", 30))
     last_modified_time = _get_cache_latest_modified_time(package_cache_dir)
-    diff_days = (datetime.now() - last_modified_time).seconds
+    diff_days = (datetime.now() - last_modified_time).days
 
     return diff_days <= OPTUNAHUB_CACHE_EXPIRATION_DAYS
