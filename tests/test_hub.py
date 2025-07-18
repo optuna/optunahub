@@ -66,8 +66,7 @@ def test_if_report_stats_is_called(monkeypatch: MonkeyPatch, git_command: str | 
 
     # To make the environment look like git is available or unavailable.
     monkeypatch.setattr(shutil, "which", lambda cmd: git_command)
-    monkeypatch.setattr("optunahub.hub._download_via_git", mock_do_nothing)
-    monkeypatch.setattr("optunahub.hub._download_via_github_api", mock_do_nothing)
+    monkeypatch.setattr("optunahub.hub._load_remote_module", mock_do_nothing)
     monkeypatch.setattr("optunahub.hub.load_local_module", mock_do_nothing)
     # Analytics must be activated.
     monkeypatch.setattr("optunahub._conf.is_no_analytics", lambda: False)
