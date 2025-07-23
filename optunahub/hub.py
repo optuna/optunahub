@@ -4,9 +4,11 @@ from contextlib import suppress
 import importlib.util
 import json
 import os
+from pathlib import Path
 import re
 import shutil
 import sys
+import time
 import types
 from urllib.parse import urlparse
 from urllib.request import Request
@@ -131,29 +133,23 @@ def load_module(
         raise ValueError(f"Invalid base URI: {base_url}")
     cache_dir_prefix = os.path.join(_conf.cache_home(), hostname, repo_owner, repo_name, ref)
     package_cache_dir = os.path.join(cache_dir_prefix, dir_path)
-    use_cache = not force_reload and os.path.exists(package_cache_dir)
+    use_cache = (
+        not force_reload
+        and os.path.exists(package_cache_dir)
+        and _is_cache_valid(package_cache_dir)
+    )
 
     if not use_cache:
-        if auth is None and shutil.which("git") is not None:
-            _download_via_git(
-                base_url=base_url or "https://github.com",
-                repo_owner=repo_owner,
-                repo_name=repo_name,
-                dir_path=dir_path,
-                ref=ref,
-                cache_dir_prefix=cache_dir_prefix,
-            )
-        else:
-            _download_via_github_api(
-                auth=auth,
-                base_url=base_url or "https://api.github.com",
-                repo_owner=repo_owner,
-                repo_name=repo_name,
-                dir_path=dir_path,
-                ref=ref,
-                package_cache_dir=package_cache_dir,
-                cache_dir_prefix=cache_dir_prefix,
-            )
+        _load_remote_module(
+            auth=auth,
+            base_url=base_url,
+            repo_owner=repo_owner,
+            repo_name=repo_name,
+            dir_path=dir_path,
+            ref=ref,
+            package_cache_dir=package_cache_dir,
+            cache_dir_prefix=cache_dir_prefix,
+        )
 
     local_registry_root = os.path.join(cache_dir_prefix, registry_root)
     module = load_local_module(
@@ -237,6 +233,45 @@ def _download_via_github_api(
                 f.write(decoded_content)
 
 
+def _load_remote_module(
+    auth: Auth.Auth | None,
+    base_url: str | None,
+    repo_owner: str,
+    repo_name: str,
+    dir_path: str,
+    ref: str,
+    package_cache_dir: str,
+    cache_dir_prefix: str,
+) -> None:
+    last_modified_time = _get_cache_latest_modified_time(package_cache_dir)
+    if auth is None and shutil.which("git") is not None:
+        _download_via_git(
+            base_url=base_url or "https://github.com",
+            repo_owner=repo_owner,
+            repo_name=repo_name,
+            dir_path=dir_path,
+            ref=ref,
+            cache_dir_prefix=cache_dir_prefix,
+        )
+    else:
+        _download_via_github_api(
+            auth=auth,
+            base_url=base_url or "https://api.github.com",
+            repo_owner=repo_owner,
+            repo_name=repo_name,
+            dir_path=dir_path,
+            ref=ref,
+            package_cache_dir=package_cache_dir,
+            cache_dir_prefix=cache_dir_prefix,
+        )
+    modified_time_after_download = _get_cache_latest_modified_time(package_cache_dir)
+    # Forcefully update the last modified time of the package cache directory
+    # if the downloaded package hasn't changed.
+    if last_modified_time is not None and modified_time_after_download <= last_modified_time:
+        current_time = time.time()
+        os.utime(package_cache_dir, (current_time, current_time))
+
+
 def load_local_module(
     package: str,
     *,
@@ -271,3 +306,25 @@ def load_local_module(
     spec.loader.exec_module(module)
 
     return module
+
+
+def _get_cache_latest_modified_time(package_cache_dir: str) -> float:
+    """Get the latest modified time of the package cache directory."""
+    path = Path(package_cache_dir)
+    if not path.exists():
+        return 0
+    # Get the most recent modification time among all files and directories in the package cache
+    paths = [path] + list(path.rglob("*"))
+    return max(p.stat().st_mtime for p in paths)
+
+
+def _is_cache_valid(package_cache_dir: str) -> bool:
+    OPTUNAHUB_CACHE_EXPIRATION_SECONDS = int(
+        os.getenv("OPTUNAHUB_CACHE_EXPIRATION_SECONDS", 30 * 24 * 60 * 60)
+    )  # Default to 30 days
+    if not os.path.exists(package_cache_dir):
+        return False
+    last_modified_time = _get_cache_latest_modified_time(package_cache_dir)
+    diff_seconds = time.time() - last_modified_time
+
+    return diff_seconds < OPTUNAHUB_CACHE_EXPIRATION_SECONDS
