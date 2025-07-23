@@ -11,7 +11,13 @@ import optunahub
 from optunahub.hub import _extract_hostname
 
 
-@pytest.mark.parametrize("git_command", ["/usr/bin/git", None])
+@pytest.mark.parametrize(
+    "git_command",
+    [
+        pytest.param("/usr/bin/git"),
+        pytest.param(None, marks=pytest.mark.github_api),
+    ],
+)
 def test_load_module(monkeypatch: MonkeyPatch, git_command: str | None) -> None:
     def objective(trial: optuna.Trial) -> float:
         x = trial.suggest_float("x", 0, 1)
