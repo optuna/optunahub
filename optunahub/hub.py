@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from contextlib import suppress
-from datetime import datetime
 import importlib.util
 import json
 import os
@@ -326,6 +325,6 @@ def _is_cache_valid(package_cache_dir: str) -> bool:
     if not os.path.exists(package_cache_dir):
         return False
     last_modified_time = _get_cache_latest_modified_time(package_cache_dir)
-    diff_seconds = (datetime.now() - datetime.fromtimestamp(last_modified_time)).seconds
+    diff_seconds = time.time() - last_modified_time
 
     return diff_seconds < OPTUNAHUB_CACHE_EXPIRATION_SECONDS
