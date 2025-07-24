@@ -7,6 +7,7 @@ import os
 import re
 import shutil
 import sys
+import tempfile
 import types
 from urllib.parse import urlparse
 from urllib.request import Request
@@ -151,7 +152,6 @@ def load_module(
                 repo_name=repo_name,
                 dir_path=dir_path,
                 ref=ref,
-                package_cache_dir=package_cache_dir,
                 cache_dir_prefix=cache_dir_prefix,
             )
 
@@ -188,16 +188,26 @@ def _download_via_git(
 ) -> None:
     repo_url_separator = "/" if "://" in base_url else ":"
     repo_url = f"{base_url.rstrip('/')}{repo_url_separator}{repo_owner}/{repo_name}"
-    repo = Repo.init(cache_dir_prefix)
-    origin = (
-        repo.remotes.origin if "origin" in repo.remotes else repo.create_remote("origin", repo_url)
-    )
-    if repo.remotes.origin.url != repo_url:
-        repo.remotes.origin.set_url(repo_url)
-    repo.git.sparse_checkout("init", "--cone")
-    repo.git.sparse_checkout("set", dir_path)
-    origin.fetch(refspec=ref, depth=1)
-    repo.git.checkout("FETCH_HEAD")
+    with tempfile.TemporaryDirectory() as tmpdir:
+        # Initialize a temporary Git repository to perform sparse checkout.
+        repo = Repo.init(tmpdir)
+        origin = (
+            repo.remotes.origin
+            if "origin" in repo.remotes
+            else repo.create_remote("origin", repo_url)
+        )
+        if repo.remotes.origin.url != repo_url:
+            repo.remotes.origin.set_url(repo_url)
+        repo.git.sparse_checkout("init", "--cone")
+        repo.git.sparse_checkout("set", dir_path)
+        origin.fetch(refspec=ref, depth=1)
+        repo.git.checkout("FETCH_HEAD")
+
+        # Move the downloaded package to the cache directory.
+        package_cache_dir = os.path.join(cache_dir_prefix, dir_path)
+        shutil.rmtree(package_cache_dir, ignore_errors=True)
+        os.makedirs(os.path.dirname(package_cache_dir), exist_ok=True)
+        shutil.move(os.path.join(tmpdir, dir_path), package_cache_dir)
 
 
 def _download_via_github_api(
@@ -207,7 +217,6 @@ def _download_via_github_api(
     repo_name: str,
     dir_path: str,
     ref: str,
-    package_cache_dir: str,
     cache_dir_prefix: str,
 ) -> None:
     g = Github(auth=auth, base_url=base_url)
@@ -218,23 +227,28 @@ def _download_via_github_api(
     if isinstance(package_contents, ContentFile):
         package_contents = [package_contents]
 
-    shutil.rmtree(package_cache_dir, ignore_errors=True)
-    os.makedirs(cache_dir_prefix, exist_ok=True)
-    for m in package_contents:
-        file_path = os.path.join(cache_dir_prefix, m.path)
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
-        if m.type == "dir":
-            dir_contents = repo.get_contents(m.path, ref)
-            if isinstance(dir_contents, ContentFile):
-                dir_contents = [dir_contents]
-            package_contents.extend(dir_contents)
-        else:
-            with open(file_path, "wb") as f:
-                try:
-                    decoded_content = m.decoded_content
-                except AssertionError:
-                    continue
-                f.write(decoded_content)
+    with tempfile.TemporaryDirectory() as tmpdir:
+        for m in package_contents:
+            file_path = os.path.join(tmpdir, m.path)
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+            if m.type == "dir":
+                dir_contents = repo.get_contents(m.path, ref)
+                if isinstance(dir_contents, ContentFile):
+                    dir_contents = [dir_contents]
+                package_contents.extend(dir_contents)
+            else:
+                with open(file_path, "wb") as f:
+                    try:
+                        decoded_content = m.decoded_content
+                    except AssertionError:
+                        continue
+                    f.write(decoded_content)
+
+        # Move the downloaded package to the cache directory.
+        package_cache_dir = os.path.join(cache_dir_prefix, dir_path)
+        shutil.rmtree(package_cache_dir, ignore_errors=True)
+        os.makedirs(os.path.dirname(package_cache_dir), exist_ok=True)
+        shutil.move(os.path.join(tmpdir, dir_path), package_cache_dir)
 
 
 def load_local_module(
