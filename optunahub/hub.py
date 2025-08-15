@@ -295,12 +295,6 @@ def load_local_module(
 
 
 def _is_cache_valid(package_cache_dir: str) -> bool:
-    try:
-        OPTUNAHUB_CACHE_EXPIRATION_SECONDS = int(
-            os.getenv("OPTUNAHUB_CACHE_EXPIRATION_SECONDS", 30 * 24 * 60 * 60)
-        )
-    except ValueError:
-        OPTUNAHUB_CACHE_EXPIRATION_SECONDS = 30 * 24 * 60 * 60
     if not os.path.exists(package_cache_dir):
         return False
     package_cache_path = Path(package_cache_dir)
@@ -310,4 +304,4 @@ def _is_cache_valid(package_cache_dir: str) -> bool:
     # Get the most recent modification time among all files and directories in the package cache
     last_modified_time = max(p.stat().st_mtime for p in paths)
     diff_seconds = time.time() - last_modified_time
-    return diff_seconds < OPTUNAHUB_CACHE_EXPIRATION_SECONDS
+    return diff_seconds < _conf.cache_expiration_seconds()
