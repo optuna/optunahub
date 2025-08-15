@@ -48,6 +48,7 @@ def cache_expiration_seconds() -> int:
         The cache expiration time in seconds.
     """
     try:
+        # Default to 30 days
         cache_expiration_seconds = int(os.getenv("OPTUNAHUB_CACHE_EXPIRATION_SECONDS", "2592000"))
         return cache_expiration_seconds
     except ValueError:
