@@ -35,7 +35,11 @@ If you have any trouble with the cache, you can remove the cache directory to re
 How can I update an OptunaHub package already cached?
 -----------------------------------------------------
 
-Calling ``optunahub.load_module()`` with ``force_reload=True`` ensures the selected package is re-download from the package registry.
+You can set the environment variable ``OPTUNAHUB_CACHE_EXPIRATION_SECONDS`` to define the cache expiration time in seconds.
+The default value is 2,592,000 seconds (30 days).
+When the cache expires, the package will be re-downloaded from the package registry.
+
+If you want to force update the package every time you call it, you can use ``optunahub.load_module()`` with ``force_reload=True``.
 
 
 I got the "403: rate limit exceeded" error when loading a package. How can I fix it?

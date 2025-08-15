@@ -4,10 +4,12 @@ from contextlib import suppress
 import importlib.util
 import json
 import os
+from pathlib import Path
 import re
 import shutil
 import sys
 import tempfile
+import time
 import types
 from urllib.parse import urlparse
 from urllib.request import Request
@@ -132,7 +134,12 @@ def load_module(
         raise ValueError(f"Invalid base URI: {base_url}")
     cache_dir_prefix = os.path.join(_conf.cache_home(), hostname, repo_owner, repo_name, ref)
     package_cache_dir = os.path.join(cache_dir_prefix, dir_path)
-    use_cache = not force_reload and os.path.exists(package_cache_dir)
+    use_cache = (
+        not force_reload
+        and os.path.exists(package_cache_dir)
+        and _is_cache_valid(package_cache_dir)
+    )
+    print(f"use_cache: {use_cache}")
 
     if not use_cache:
         if auth is None and shutil.which("git") is not None:
@@ -285,3 +292,22 @@ def load_local_module(
     spec.loader.exec_module(module)
 
     return module
+
+
+def _is_cache_valid(package_cache_dir: str) -> bool:
+    try:
+        OPTUNAHUB_CACHE_EXPIRATION_SECONDS = int(
+            os.getenv("OPTUNAHUB_CACHE_EXPIRATION_SECONDS", 30 * 24 * 60 * 60)
+        )
+    except ValueError:
+        OPTUNAHUB_CACHE_EXPIRATION_SECONDS = 30 * 24 * 60 * 60
+    if not os.path.exists(package_cache_dir):
+        return False
+    package_cache_path = Path(package_cache_dir)
+    if not package_cache_path.exists():
+        return False
+    paths = [package_cache_path] + list(package_cache_path.rglob("*"))
+    # Get the most recent modification time among all files and directories in the package cache
+    last_modified_time = max(p.stat().st_mtime for p in paths)
+    diff_seconds = time.time() - last_modified_time
+    return diff_seconds < OPTUNAHUB_CACHE_EXPIRATION_SECONDS
