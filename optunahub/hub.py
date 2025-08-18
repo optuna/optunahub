@@ -134,6 +134,7 @@ def load_module(
         raise ValueError(f"Invalid base URI: {base_url}")
     cache_dir_prefix = os.path.join(_conf.cache_home(), hostname, repo_owner, repo_name, ref)
     package_cache_dir = os.path.join(cache_dir_prefix, dir_path)
+    print(f"package_cache_dir: {package_cache_dir}")
     use_cache = (
         not force_reload
         and os.path.exists(package_cache_dir)
