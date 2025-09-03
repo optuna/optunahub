@@ -5,3 +5,4 @@ Tutorials for Users
     :maxdepth: 1
 
     plot-in-optuna-dashboard
+    how_to_use_benchmarks
