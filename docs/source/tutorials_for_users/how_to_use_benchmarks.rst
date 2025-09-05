@@ -61,7 +61,8 @@ There are also some benchmarks that have constraints.
 
     study = optuna.create_study(
         sampler=optuna.samplers.TPESampler(
-            constraints_func=constrained_sphere2d.constraints_func
+            constraints_func=constrained_sphere2d.constraints_func,
+            seed=42
         ),
         directions=constrained_sphere2d.directions
     )
