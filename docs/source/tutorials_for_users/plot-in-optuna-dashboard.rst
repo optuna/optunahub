@@ -1,5 +1,5 @@
 How to Plot in Optuna-Dashboard
-=========================================
+===============================
 
 In this tutorial, we will explain how to display plots in `Optuna-Dashboard <https://optuna-dashboard.readthedocs.io/en/latest/index.html>`_.
 
