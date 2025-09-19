@@ -1,7 +1,7 @@
 How to Use Benchmarks
 =====================
 
-In this tutorial, we will explain how to use benchmarks in optunahub.
+In this tutorial, we will explain how to use benchmarks in OptunaHub.
 
 Preparation
 -----------
