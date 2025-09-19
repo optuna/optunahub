@@ -1,7 +1,10 @@
 How to Use Benchmarks
 =====================
 
-In this tutorial, we will explain how to use benchmarks in OptunaHub.
+OptunaHub provides various benchmarks, and you can utilize them through a unified interface.
+In this tutorial, we will explain how to use benchmarks in OptunaHub. 
+Check details `here <https://medium.com/optuna/optunahub-benchmarks-a-new-feature-to-use-register-various-benchmark-problems-694401524ce0>`__ . 
+If you are interested in registering your own benchmark problems, please check  `Basic <https://optuna.github.io/optunahub/recipes/006_benchmarks_basic.html>`_ and `Advanced <https://optuna.github.io/optunahub/recipes/007_benchmarks_advanced.html>`_ tutorials.
 
 Preparation
 -----------
@@ -45,10 +48,33 @@ Test code is as follows:
    :align: center
    :width: 800px
 
+
+You can also use other optimizing frameworks to optimize the problem.
+Here, we use `scipy.optimize.minimize <https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html>`__ as an example.
+
+.. code-block:: python
+    
+    import optunahub
+    import scipy
+
+
+    bbob = optunahub.load_module("benchmarks/bbob")
+    sphere2d = bbob.Problem(function_id=1, dimension=2, instance_id=1)
+    result = scipy.optimize.minimize(
+        fun=lambda x: sphere2d.evaluate({f"x{d}": x[d] for d in range(sphere2d.dimension)}),
+        x0=sphere2d.initial_solution,
+        bounds=scipy.optimize.Bounds(
+            lb=sphere2d.lower_bounds, ub=sphere2d.upper_bounds
+        )
+    )
+
+
 Constrained Problem
 ^^^^^^^^^^^^^^^^^^^
 
-There are also some benchmarks that have constraints.
+Some benchmarks also include constraints. 
+In such cases, the constrained functions are handled through the ``evaluate_constraints`` method.
+You can optimize these problems in the same way as usual, but you need to set the ``constraints_func`` argument in the sampler.
 
 .. code-block:: python
 
