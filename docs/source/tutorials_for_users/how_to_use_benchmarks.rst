@@ -2,9 +2,12 @@ How to Use Benchmarks
 =====================
 
 OptunaHub provides various benchmarks, and you can utilize them through a unified interface.
-In this tutorial, we will explain how to use benchmarks in OptunaHub. 
-Check details `here <https://medium.com/optuna/optunahub-benchmarks-a-new-feature-to-use-register-various-benchmark-problems-694401524ce0>`__ . 
+In this tutorial, we will explain how to use benchmarks in OptunaHub.
 If you are interested in registering your own benchmark problems, please check  `Basic <https://optuna.github.io/optunahub/recipes/006_benchmarks_basic.html>`_ and `Advanced <https://optuna.github.io/optunahub/recipes/007_benchmarks_advanced.html>`_ tutorials.
+
+The following blog post also provides an overview of this feature:
+
+- `OptunaHub Benchmarks: A New Feature to Use/Register Various Benchmark Problems <https://medium.com/optuna/optunahub-benchmarks-a-new-feature-to-use-register-various-benchmark-problems-694401524ce0>`__ .
 
 Preparation
 -----------
