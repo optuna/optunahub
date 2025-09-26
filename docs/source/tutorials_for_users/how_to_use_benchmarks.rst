@@ -7,7 +7,7 @@ If you are interested in registering your own benchmark problems, please check  
 
 The following blog post also provides an overview of this feature:
 
-- `OptunaHub Benchmarks: A New Feature to Use/Register Various Benchmark Problems <https://medium.com/optuna/optunahub-benchmarks-a-new-feature-to-use-register-various-benchmark-problems-694401524ce0>`__ .
+- `OptunaHub Benchmarks: A New Feature to Use/Register Various Benchmark Problems <https://medium.com/optuna/optunahub-benchmarks-a-new-feature-to-use-register-various-benchmark-problems-694401524ce0>`__
 
 Preparation
 -----------
@@ -53,7 +53,11 @@ Test code is as follows:
 
 
 You can also use other optimizing frameworks to optimize the problem.
+:class:`~optunahub.benchmarks.BaseProblem` provides :meth:`~optunahub.benchmarks.BaseProblem.__call__` and :meth:`~optunahub.benchmarks.BaseProblem.evaluate` methods, which is used to evaluate the objective function.
+:meth:`~optunahub.benchmarks.BaseProblem.__call__` takes an :class:`optuna.Trial` object, while :meth:`~optunahub.benchmarks.BaseProblem.evaluate` takes a dictionary of input parameters.
+Therefore, you can use :meth:`~optunahub.benchmarks.BaseProblem.evaluate` to optimize the problem with other optimizing frameworks.
 Here, we use `scipy.optimize.minimize <https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html>`__ as an example.
+The properties ``initial_solution``, ``lower_bounds``, and ``upper_bounds`` are provided by `the bbob package <https://hub.optuna.org/benchmarks/bbob/>`__.
 
 .. code-block:: python
     
@@ -76,7 +80,10 @@ Constrained Problem
 ^^^^^^^^^^^^^^^^^^^
 
 Some benchmarks also include constraints. 
-In such cases, the constrained functions are handled through the ``evaluate_constraints`` method.
+These problems are implemented by inheriting :class:`~optunahub.benchmarks.ConstrainedMixin` class.
+:class:`~optunahub.benchmarks.ConstrainedMixin` provides :meth:`~optunahub.benchmarks.ConstrainedMixin.evaluate_constraints` and :meth:`~optunahub.benchmarks.ConstrainedMixin.constraints_func` methods.
+As same as objective functions, :meth:`~optunahub.benchmarks.ConstrainedMixin.constraints_func` takes an :class:`optuna.Trial` object, while :meth:`~optunahub.benchmarks.ConstrainedMixin.evaluate_constraints` takes a dictionary of input parameters.
+Those methods are used to evaluate the constraint functions.
 You can optimize these problems in the same way as usual, but you need to set the ``constraints_func`` argument in the sampler.
 
 .. code-block:: python
@@ -96,12 +103,6 @@ You can optimize these problems in the same way as usual, but you need to set th
         directions=constrained_sphere2d.directions
     )
     study.optimize(constrained_sphere2d, n_trials=100)
-
-    try:
-        print(study.best_trial.params, study.best_trial.value)
-    except Exception as e:
-        print(e)
-
     optuna.visualization.plot_optimization_history(study).show()
     plt.show()
 
@@ -111,10 +112,11 @@ You can optimize these problems in the same way as usual, but you need to set th
    :width: 800px
 
 
-Multi-objective Problem
+Multi-Objective Problem
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-You can also try multi-objective optimization by using the `the WFG Problem Collection <https://hub.optuna.org/benchmarks/wfg/>`__ module.
+You can also try multi-objective optimization. 
+Here, we use the `the WFG Problem Collection <https://hub.optuna.org/benchmarks/wfg/>`__ as an example.
 In order to use this module, you need to install `optproblems <https://pypi.org/project/optproblems/>`__ and `diversipy <https://pypi.org/project/diversipy/>`__ packages.
 
 .. code-block:: console
@@ -132,26 +134,21 @@ Example is as follows:
     wfg = optunahub.load_module("benchmarks/wfg")
     wfg4 = wfg.Problem(function_id=4, n_objectives=2, dimension=3, k=1)
 
-    study_pareto = optuna.create_study(
-        study_name="ParetoFront", directions=wfg4.directions
-    )
-    for x in wfg4.get_optimal_solutions(1000):
-        study_pareto.enqueue_trial(params={
-            f"x{i}": x.phenome[i] for i in range(3)
-        })
-    study_pareto.optimize(wfg4, n_trials=1000)
-
-    study_tpe = optuna.create_study(
+    study = optuna.create_study(
         study_name="TPESampler",
         sampler=optuna.samplers.TPESampler(seed=42), directions=wfg4.directions
     )
-    study_tpe.optimize(wfg4, n_trials=1000)
+    study.optimize(wfg4, n_trials=1000)
 
-    optunahub.load_module("visualization/plot_pareto_front_multi").plot_pareto_front(
-        [study_pareto, study_tpe]
-    ).show()
+    optuna.visualization.plot_pareto_front(study).show()
 
 .. figure:: ./images/pareto_front.png
    :alt: Pareto Front
    :align: center
    :width: 800px
+
+Keep Exploring!
+---------------
+
+There are many kinds of benchmarks in OptunaHub.
+You can find them in the `OptunaHub Benchmarks <https://hub.optuna.org/?q=Benchmark>`__ page.
