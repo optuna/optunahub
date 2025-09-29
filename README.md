@@ -1,7 +1,7 @@
-OptunaHub: Feature-sharing platform for Optuna
+OptunaHub: A Platform for Black-Box Optimization
 ==================
 
-![OptunaHub](https://github.com/user-attachments/assets/ee24b6eb-a431-4e02-ae52-c2538ffe01ee)
+![OptunaHub](https://github.com/user-attachments/assets/df21f6d7-9f39-48a1-a824-6b060f7503e2)
 
 [![Python](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org)
 [![pypi](https://img.shields.io/pypi/v/optunahub.svg)](https://pypi.python.org/pypi/optunahub)
@@ -15,7 +15,7 @@ OptunaHub: Feature-sharing platform for Optuna
 | :question: [**FAQ**](https://optuna.github.io/optunahub/faq.html)
 | [**Optuna.org**](https://optuna.org/)
 
-[*OptunaHub*](https://hub.optuna.org/) is a platform for sharing algorithms in [Optuna](https://optuna.org/), a powerful and flexible hyperparameter optimization framework. OptunaHub provides implementations of state-of-the-art optimization algorithms and visualization of optimization results for analysis. You can also publish your algorithm implementation on the platform and make it available to Optuna users around the world.
+[*OptunaHub*](https://hub.optuna.org/) is a platform for black-box optimizaiton. On the basis of [Optuna](https://optuna.org/), a powerful and flexible black-box optimization framework, OptunaHub provides implementations of state-of-the-art optimization algorithms and visualization of optimization results for analysis. You can also publish your algorithm implementation on the platform and make it available to Optuna users around the world.
 
 
 This is the repository of the optunahub Python Library to use packages published in [OptunaHub](https://hub.optuna.org/). If you would like to register your package in OptunaHub, please contribute by creating a pull request to [the optunahub-registry repository](https://github.com/optuna/optunahub-registry).
