@@ -2,7 +2,7 @@ Welcome to OptunaHub's documentation!
 =====================================
 
 `OptunaHub <https://hub.optuna.org/>`__ is a platform for black-box optimization.
-It hosts a registry of third-party packages designed for `Optuna <https://optuna.org>`__ and allows users to share and discover Optuna packages that are not included in the official Optuna distribution.
+It hosts a registry of third-party packages designed for `Optuna <https://optuna.org>`__, allowing users to share and discover Optuna packages that are not included in the official Optuna distribution.
 The `optunahub <https://github.com/optuna/optunahub/>`__ library provides Python APIs to load and use packages from the OptunaHub registry.
 Please check out `Tutorials for Users <./tutorials_for_users/index.html>`__  as well.
 
