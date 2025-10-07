@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+authors:
+  - name: Preferred Networks, Inc.
+title: "OptunaHub: A Platform for Black-Box Optimization"
+url: "https://github.com/optuna/optunahub"
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Yoshihiko"
+      given-names: "Ozaki"
+    - family-names: "Shuhei"
+      given-names: "Watanabe"
+    - family-names: "Yanase"
+      given-names: "Toshihiko"
+  doi: "10.48550/arXiv.2510.02798"
+  collection-title: "arXiv preprint arXiv:2510.02798"
+  start: 1
+  end: 6
+  title: "OptunaHub: A Platform for Black-Box Optimization"
+  year: 2025
