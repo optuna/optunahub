@@ -6,7 +6,7 @@ It hosts a registry of third-party packages designed for `Optuna <https://optuna
 The `optunahub <https://github.com/optuna/optunahub/>`__ library provides Python APIs to load and use packages from the OptunaHub registry.
 Please check out `Tutorials for Users <./tutorials_for_users/index.html>`__  as well.
 
-**If you are interested in registering your own features in OptunaHub**, please visit `the optunahub-registry repository <https://github.com/optuna/optunahub-registry>`__ and submit a pull request there. More details are available in `Tutorials for Contributors <./tutorials_for_contributors.html>`__.
+**If you are interested in registering your own features in OptunaHub**, please visit `theoptunahub-registry repository <https://github.com/optuna/optunahub-registry>`__ and submit a pull request there. More details are available in `Tutorials for Contributors <./tutorials_for_contributors.html>`__.
 
 
 Usage
@@ -61,3 +61,18 @@ Get ready to explore the most suitable packages for your problems in the `Optuna
    tutorials_for_users/index
    tutorials_for_contributors
    faq
+
+Reference
+=========
+
+
+Please cite `the OptunaHub paper <https://doi.org/10.48550/arXiv.2510.02798>`__ with the following format when you use it in your project:
+
+.. code-block:: bibtex
+
+   @article{ozaki2025optunahub,
+      title={{OptunaHub}: A Platform for Black-Box Optimization},
+      author={Ozaki, Yoshihiko and Watanabe, Shuhei and Yanase, Toshihiko},
+      journal={arXiv preprint arXiv:2510.02798},
+      year={2025}
+   }
