@@ -7,10 +7,10 @@ license: "MIT"
 preferred-citation:
   type: article
   authors:
-    - family-names: "Yoshihiko"
-      given-names: "Ozaki"
-    - family-names: "Shuhei"
-      given-names: "Watanabe"
+    - family-names: "Ozaki"
+      given-names: "Yoshihiko"
+    - family-names: "Watanabe"
+      given-names: "Shuhei"
     - family-names: "Yanase"
       given-names: "Toshihiko"
   doi: "10.48550/arXiv.2510.02798"
