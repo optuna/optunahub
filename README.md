@@ -82,7 +82,7 @@ MIT License (see [LICENSE](https://github.com/optuna/optunahub/blob/main/LICENSE
 
 ## Citation
 
-Please cite OptunaHub with the following format when you use it in your project:
+Please cite [the OptunaHub paper](https://arxiv.org/abs/2510.02798) with the following format when you use it in your project:
 
 ```bibtex
 @article{ozaki2025optunahub,
