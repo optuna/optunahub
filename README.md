@@ -80,3 +80,16 @@ OptunaHub is composed of the following three related repositories. Please contri
 ## License
 
 MIT License (see [LICENSE](https://github.com/optuna/optunahub/blob/main/LICENSE)).
+
+## Citation
+
+Please cite [the OptunaHub paper](https://arxiv.org/abs/2510.02798) with the following format when you use it in your project:
+
+```bibtex
+@article{ozaki2025optunahub,
+  title={{OptunaHub}: A Platform for Black-Box Optimization},
+  author={Ozaki, Yoshihiko and Watanabe, Shuhei and Yanase, Toshihiko},
+  journal={arXiv preprint arXiv:2510.02798},
+  year={2025}
+}
+```
