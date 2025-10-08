@@ -6,7 +6,7 @@ It hosts a registry of third-party packages designed for `Optuna <https://optuna
 The `optunahub <https://github.com/optuna/optunahub/>`__ library provides Python APIs to load and use packages from the OptunaHub registry.
 Please check out `Tutorials for Users <./tutorials_for_users/index.html>`__  as well.
 
-**If you are interested in registering your own features in OptunaHub**, please visit `theoptunahub-registry repository <https://github.com/optuna/optunahub-registry>`__ and submit a pull request there. More details are available in `Tutorials for Contributors <./tutorials_for_contributors.html>`__.
+**If you are interested in registering your own features in OptunaHub**, please visit `the optunahub-registry repository <https://github.com/optuna/optunahub-registry>`__ and submit a pull request there. More details are available in `Tutorials for Contributors <./tutorials_for_contributors.html>`__.
 
 
 Usage
