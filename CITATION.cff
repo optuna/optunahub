@@ -3,6 +3,7 @@ authors:
   - name: Preferred Networks, Inc.
 title: "OptunaHub: A Platform for Black-Box Optimization"
 url: "https://github.com/optuna/optunahub"
+license: "MIT"
 preferred-citation:
   type: article
   authors:
