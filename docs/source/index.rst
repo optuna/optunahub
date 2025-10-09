@@ -61,3 +61,18 @@ Get ready to explore the most suitable packages for your problems in the `Optuna
    tutorials_for_users/index
    tutorials_for_contributors
    faq
+
+Reference
+=========
+
+
+Please cite `the OptunaHub paper <https://doi.org/10.48550/arXiv.2510.02798>`__ with the following format when you use it in your project:
+
+.. code-block:: bibtex
+
+   @article{ozaki2025optunahub,
+      title={{OptunaHub}: A Platform for Black-Box Optimization},
+      author={Ozaki, Yoshihiko and Watanabe, Shuhei and Yanase, Toshihiko},
+      journal={arXiv preprint arXiv:2510.02798},
+      year={2025}
+   }
