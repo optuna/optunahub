@@ -210,7 +210,7 @@ def _download_via_git(
         shutil.move(os.path.join(tmpdir, dir_path), package_cache_dir)
 
 
-def _download_via_github_api(
+def _download_via_github_api(  # pragma: no cover
     auth: Auth.Auth | None,
     base_url: str,
     repo_owner: str,
