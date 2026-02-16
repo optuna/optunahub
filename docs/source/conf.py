@@ -28,6 +28,9 @@ extensions = [
 templates_path = ["_templates"]
 exclude_patterns = ["build", "Thumbs.db", ".DS_Store"]
 
+# Silence warning about unpickleable sphinx_gallery_conf during environment caching.
+suppress_warnings = ["config.cache"]
+
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
@@ -50,3 +53,11 @@ sphinx_gallery_conf = {
     "filename_pattern": r"/*\.py",
     "first_notebook_cell": None,
 }
+
+# -- Options for linkcheck -------------------------------------------------
+
+linkcheck_anchors = False
+# Ignore pages that respond with a 403 status code to bots, including linkcheck.
+linkcheck_ignore = [
+    r"https?://([^.]+\.)?medium\.com/.*",
+]
