@@ -4,9 +4,8 @@ optunahub.benchmarks
 ====================
 
 .. autosummary::
-    :toctree: generated/
-    :nosignatures:
-    :template: custom_summary.rst
+   :toctree: generated/
+   :nosignatures:
 
-    optunahub.benchmarks.BaseProblem
-    optunahub.benchmarks.ConstrainedMixin
+   BaseProblem
+   ConstrainedMixin

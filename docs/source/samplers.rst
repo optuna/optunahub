@@ -8,4 +8,4 @@ optunahub.samplers
    :nosignatures:
    :template: custom_summary.rst
 
-   optunahub.samplers.SimpleBaseSampler
+   SimpleBaseSampler

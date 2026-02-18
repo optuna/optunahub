@@ -3,7 +3,7 @@ How to Use Benchmarks
 
 OptunaHub provides various benchmarks, and you can utilize them through a unified interface.
 In this tutorial, we will explain how to use benchmarks in OptunaHub.
-If you are interested in registering your own benchmark problems, please check  `Basic <https://optuna.github.io/optunahub/recipes/006_benchmarks_basic.html>`_ and `Advanced <https://optuna.github.io/optunahub/recipes/007_benchmarks_advanced.html>`_ tutorials.
+If you are interested in registering your own benchmark problems, please check :doc:`Basic </generated/recipes/006_benchmarks_basic>` and :doc:`Advanced </generated/recipes/007_benchmarks_advanced>` tutorials.
 
 The following blog post also provides an overview of this feature:
 
@@ -60,7 +60,7 @@ Here, we use `scipy.optimize.minimize <https://docs.scipy.org/doc/scipy/referenc
 The properties ``initial_solution``, ``lower_bounds``, and ``upper_bounds`` are provided by `the bbob package <https://hub.optuna.org/benchmarks/bbob/>`__.
 
 .. code-block:: python
-    
+
     import optunahub
     import scipy
 
@@ -79,7 +79,7 @@ The properties ``initial_solution``, ``lower_bounds``, and ``upper_bounds`` are 
 Constrained Problem
 ^^^^^^^^^^^^^^^^^^^
 
-Some benchmarks also include constraints. 
+Some benchmarks also include constraints.
 These problems are implemented by inheriting :class:`~optunahub.benchmarks.ConstrainedMixin` class.
 :class:`~optunahub.benchmarks.ConstrainedMixin` provides :meth:`~optunahub.benchmarks.ConstrainedMixin.evaluate_constraints` and :meth:`~optunahub.benchmarks.ConstrainedMixin.constraints_func` methods.
 As same as objective functions, :meth:`~optunahub.benchmarks.ConstrainedMixin.constraints_func` takes an :class:`optuna.Trial` object, while :meth:`~optunahub.benchmarks.ConstrainedMixin.evaluate_constraints` takes a dictionary of input parameters.
@@ -115,7 +115,7 @@ You can optimize these problems in the same way as usual, but you need to set th
 Multi-Objective Problem
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-You can also try multi-objective optimization. 
+You can also try multi-objective optimization.
 Here, we use the `the WFG Problem Collection <https://hub.optuna.org/benchmarks/wfg/>`__ as an example.
 In order to use this module, you need to install `optproblems <https://pypi.org/project/optproblems/>`__ and `diversipy <https://pypi.org/project/diversipy/>`__ packages.
 

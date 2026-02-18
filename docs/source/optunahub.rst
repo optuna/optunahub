@@ -7,5 +7,5 @@ optunahub
    :toctree: generated/
    :nosignatures:
 
-   optunahub.load_module
-   optunahub.load_local_module
+   load_module
+   load_local_module
