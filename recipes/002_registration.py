@@ -20,6 +20,8 @@ See the `template directory <https://github.com/optuna/optunahub-registry/tree/m
 |         ├── LICENSE
 |         ├── (example.py, example.ipynb)
 |         ├── (requirements.txt)
+|         ├── (tests)
+|         │  └── (test_YOUR_FEATURE_NAME.py)
 |         └── (images)
 |             ├──  (figure1.png)
 |             └──  (numerical_results.png)
@@ -38,7 +40,8 @@ The created directory should include the following files:
 - ``LICENSE``: A license file. This file must contain the license of your package. It should be the MIT license in the alpha version of OptunaHub.
 - ``example.py``, ``example.ipynb``: This is optional. This file should contain a simple example of how to use your package (Example: `example.py for Simulated Annealing Sampler <https://github.com/optuna/optunahub-registry/blob/main/package/samplers/simulated_annealing/example.py>`_). You can provide examples in both formats.
 - ``requirements.txt``: This is optional. A file that contains the additional dependencies of your package. If there are no additional dependencies other than Optuna and OptunaHub, you do not need to create this file.
-- ``images``: This is optional. A directory that contains images. Only relative references to images in this directory are allowed in README.md, e.g., ``![Numrical Results](images/numerical_results.png)``, and absolute paths to images are not allowed. The first image that appears in README.md will be used as the thumbnail.
+- ``tests``: A directory that contains unit tests for your package. If you add unit tests for your package, You can create this directory and put test files such as ``test_YOUR_FEATURE_NAME.py`` in this directory. Although unit tests are not mandatory, we highly recommend you to add unit tests to ensure the quality of your package. You can find more details about how to implement unit tests for samplers in :doc:`008_unit_tests`.
+- ``images``: This is optional. A directory that contains images for README. Only relative references to images in this directory are allowed in README.md, e.g., ``![Numrical Results](images/numerical_results.png)``, and absolute paths to images are not allowed. The first image that appears in README.md will be used as the thumbnail. It is highly recommended that images be kept small in file size, with a practical guideline being 100KB per package.
 
 All files must pass linter and formetter checks to be merged to the optunahub-registry repository.
 You can check them by running the `pre-commit <https://pre-commit.com/>`__ tool as follows.
@@ -76,7 +79,7 @@ Although we recommend you write proper type hints, if you find it difficult to c
   - ``description`` (string): A brief description of the package. It should be a one-sentence summary of the package.
   - ``tags`` (list[string]): The package tags. It should be a list of strings. The tags must include ``sampler``, ``visualization``, ``pruner``, or ``benchmark`` depending on the type of the package. You can add other tags as needed. For example, "['sampler', 'LLM']".
   - ``optuna_versions`` (list[string]): A list of Optuna versions that the package supports. It should be a list of strings. You can find your Optuna version with ``python -c 'import optuna; print(optuna.__version__)'``.
-  - ``license`` (string): The license of the package. It should be a string. For example, `MIT License`. The license must be `MIT License` in the current version of OptunaHub.
+  - ``license`` (string): The license of the package. It should be a string, e.g., ``MIT License``. The ``MIT License`` is currently the only supported option in OptunaHub.
 
 - `Abstract <https://github.com/optuna/optunahub-registry/blob/main/template/README.md#abstract>`__ section that describes the summary of your package. It should be a markdown paragraph. This section will help attract potential users to your package.
 

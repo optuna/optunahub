@@ -128,4 +128,5 @@ study.optimize(objective, n_trials=100)
 ###################################################################################################
 # In the next recipe, we will show how to register your sampler to OptunaHub.
 # Let's move on to :doc:`002_registration`.
+# If you are willing to implement unit tests for your sampler, please refer to :doc:`008_unit_tests`.
 # See `the User-Defined Sampler documentation <https://optuna.readthedocs.io/en/stable/tutorial/20_recipes/005_user_defined_sampler.html>`_ for more information to implement a sampler.
