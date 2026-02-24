@@ -59,7 +59,7 @@ Although we recommend you write proper type hints, if you find it difficult to c
   # mypy: ignore-errors
 
 
-`README.md <https://github.com/optuna/optunahub-registry/blob/main/template/README.md>`__ must contain the following sections:
+`README.md <https://github.com/optuna/optunahub-registry/blob/main/template/README.md>`__ typically contains the following sections:
 
 - A `header <https://github.com/optuna/optunahub-registry/blob/main/template/README.md>`__ section written in the following format:
 
@@ -96,7 +96,7 @@ Although we recommend you write proper type hints, if you find it difficult to c
 
       $ pip install -r https://hub.optuna.org/{category}/{your_package_name}/requirements.txt
 
-- An `Example <https://github.com/optuna/optunahub-registry/blob/main/template/README.md#example>`__ section that describes how to use the package. It should be a python code block. It should be a few lines of code snippets that show how to use the package. If you want to provide a full example, please create a separete file like ``example.py`` and refer to it. For example:
+- An `Example <https://github.com/optuna/optunahub-registry/blob/main/template/README.md#example>`__ section that describes how to use the package. It should be a python code block. It should be code snippets that show how to use the package. If you want to provide a full (long) example, please create a separete file like ``example.py`` and refer to it. You may also provide figures of the code execution results.
 
   .. code-block:: markdown
 
@@ -106,7 +106,7 @@ Although we recommend you write proper type hints, if you find it difficult to c
       ```
       See `example.py <path/to/example.py>` for more details.
 
-- An `Others <https://github.com/optuna/optunahub-registry/blob/main/template/README.md#others>`__ section that describes supplementary information about the package such as the paper reference or the original source code link. For example:
+- An `Others <https://github.com/optuna/optunahub-registry/blob/main/template/README.md#others>`__ section (optional) that provides additional numerical results, describes supplementary information about the package such as the paper reference or the original source code link, etc. If you have a lot of information to include, you might consider making it a separate section (e.g., a numerical results section). For example:
 
   .. code-block:: markdown
 
