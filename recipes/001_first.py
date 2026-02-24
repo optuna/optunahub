@@ -7,7 +7,7 @@ How to Implement Your Sampler with OptunaHub
 OptunaHub is an Optuna package registry, which is a platform to share algorithms developed by contributors.
 This recipe shows how to implement your own algorithm with OptunaHub.
 
-Here, we show how to implement your own sampler, i.e., optimizaiton algorithm.
+Here, we show how to implement your own sampler, i.e., optimization algorithm.
 If you want to implement algorithms other than a sampler, please refer to the other recipes.
 
 - :doc:`003_pruner`
