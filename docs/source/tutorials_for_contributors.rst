@@ -7,3 +7,4 @@ Tutorials for Contributors
 - :doc:`generated/recipes/005_debugging`
 - :doc:`generated/recipes/006_benchmarks_basic`
 - :doc:`generated/recipes/007_benchmarks_advanced`
+- :doc:`generated/recipes/008_unit_tests`
