@@ -18,7 +18,7 @@ Learn Optuna Fundamentals
 Are you already familiar with Optuna? If so, you can skip this section.
 If not, let's learn about the concept and basic usage of Optuna first, since OptunaHub is built on top of Optuna.
 
-To get started with OptunaHub, you should at least know the concepts of ``Study``, ``Trial``, how to specify a sampler, how to define search space in a dynamic manner, and how to run optimization with Optuna.
+To get started with OptunaHub, you should at least know the concepts of :class:`Study <optuna:optuna.study.Study>`, :class:`Trial <optuna:optuna.trial.Trial>`, how to specify a sampler, how to define search space in a dynamic manner, and how to run optimization with Optuna.
 The following resources are available to learn Optuna. Note that these are external links to :doc:`the official Optuna documentation <optuna:index>`.
 
 - :doc:`Install Optuna <optuna:installation>`
