@@ -45,11 +45,12 @@ checking = [
 ]
 docs = [
   "plotly",
+  "pytest",
   "sphinx",
   "sphinx_rtd_theme",
   "sphinx-gallery",
   "matplotlib",
-  "optuna",
+  "optuna @ git+https://github.com/optuna/optuna.git@master",
   "optunahub",
 ]
 test = [
