@@ -20,6 +20,7 @@ author = "Optuna team"
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
+    "sphinx.ext.intersphinx",
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
     "sphinx_gallery.gen_gallery",
@@ -27,6 +28,9 @@ extensions = [
 
 templates_path = ["_templates"]
 exclude_patterns = ["build", "Thumbs.db", ".DS_Store"]
+intersphinx_mapping = {
+    "optuna": ("https://optuna.readthedocs.io/en/latest", None),
+}
 
 # Silence warning about unpickleable sphinx_gallery_conf during environment caching.
 suppress_warnings = ["config.cache"]
