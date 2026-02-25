@@ -6,7 +6,7 @@ How to Implement Unit Tests using Optuna's Testing Module
 
 Optuna provides a testing module, ``optuna.testing``, which includes general test cases for Optuna's samplers and storages.
 In this tutorial, we will explain how to implement unit tests for your OptunaHub package using ``optuna.testing``.
-Note that ``Optuna >= 4.8`` is required to use the testing module.
+Note that the sampler-specific testing classes used in this tutorial were introduced in Optuna 4.8.
 
 """
 ###################################################################################################
