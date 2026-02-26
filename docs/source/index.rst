@@ -9,10 +9,33 @@ Please check out :doc:`Tutorials for Users </tutorials_for_users/index>`  as wel
 **If you are interested in registering your own features in OptunaHub**, please visit `the optunahub-registry repository <https://github.com/optuna/optunahub-registry>`__ and submit a pull request there. More details are available in :doc:`Tutorials for Contributors </tutorials_for_contributors>`.
 
 
-Usage
-=====
+Getting Started
+===============
 
-Install the ``optunahub`` package.
+Learn Optuna Fundamentals
+-------------------------
+
+Are you already familiar with Optuna? If so, you can skip this section.
+If not, let's learn about the concept and basic usage of Optuna first, since OptunaHub is built on top of Optuna.
+
+To get started with OptunaHub, you should at least know the concepts of :class:`Study <optuna:optuna.study.Study>`, :class:`Trial <optuna:optuna.trial.Trial>`, how to specify a sampler, how to define search space in a dynamic manner, and how to run optimization with Optuna.
+The following resources are available to learn Optuna. Note that these are external links to :doc:`the official Optuna documentation <optuna:index>`.
+
+- :doc:`Install Optuna <optuna:installation>`
+- :doc:`optuna:tutorial/10_key_features/001_first`
+- :doc:`optuna:tutorial/10_key_features/002_configurations`
+- :doc:`optuna:tutorial/10_key_features/003_efficient_optimization_algorithms`
+
+
+:doc:`The Optuna official tutorial <optuna:tutorial/index>` provides more detailed lectures for learning Optuna, so please check it out if you want to learn more about Optuna.
+
+
+Basic Usage of OptunaHub
+------------------------
+
+Let's learn how to use the OptunaHub library.
+
+First, please install the ``optunahub`` package.
 
 From PyPI:
 
@@ -26,7 +49,7 @@ From conda-forge:
 
    conda install -c conda-forge optunahub
 
-Load the package you want from the OptunaHub registry. In the next example code, you will load the ``AutoSampler`` from the `samplers/auto_sampler <https://hub.optuna.org/samplers/auto_sampler/>`__ package.
+Then, load the package you want from the OptunaHub registry. In the next example code, you will load the ``AutoSampler`` from the `samplers/auto_sampler <https://hub.optuna.org/samplers/auto_sampler/>`__ package.
 The details for ``AutoSampler`` can be found in `this article <https://medium.com/optuna/autosampler-automatic-selection-of-optimization-algorithms-in-optuna-1443875fd8f9>`__.
 
 .. code-block:: python
@@ -52,6 +75,11 @@ The details for ``AutoSampler`` can be found in `this article <https://medium.co
 
 Now that you've successfully loaded a package from the OptunaHub registry, you can start using ``optunahub`` in your optimization!
 Get ready to explore the most suitable packages for your problems in the `OptunaHub registry <https://hub.optuna.org/>`_.
+
+Learn More about OptunaHub
+==========================
+
+Learn more about OptunaHub through the following contents.
 
 .. toctree::
    :maxdepth: 2
