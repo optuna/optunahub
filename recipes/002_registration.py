@@ -106,7 +106,7 @@ Although we recommend you write proper type hints, if you find it difficult to c
       ```
       See `example.py <path/to/example.py>` for more details.
 
-- An `Others <https://github.com/optuna/optunahub-registry/blob/main/template/README.md#others>`__ section (optional) that provides additional numerical results, describes supplementary information about the package such as the paper reference or the original source code link, etc. If you have a lot of information to include, you might consider making it a separate section (e.g., a numerical results section). For example:
+- An `Others <https://github.com/optuna/optunahub-registry/blob/main/template/README.md#others>`__ section (optional) that shows additional numerical results, provides the history of important changes and the corresponding commit hashes, describes supplementary information about the package such as the paper reference or the original source code link, etc. If you have a lot of information to include, you might consider making it a separate section (e.g., a numerical results section). For example:
 
   .. code-block:: markdown
 
@@ -121,4 +121,9 @@ Before making a pull request, please ensure the code examples in ``README.md`` a
 Code such as ``load_local_module("your_package", registry_root=”your_local_directory”)`` or ``load_module("your_package_name", repo_owner=”your_github_id”, ref=”your_working_branch”)`` should be ``load_module("your_package_name")``.
 
 After merging your pull request, your package will be available on the `OptunaHub <https://hub.optuna.org/>`__ in about 1 hour.
+
+To update a package, submit a pull request to make the changes.
+Package versions are managed by git commit.
+To reference a previous version, simply specify the commit hash in the ``ref`` argument of :func:`optunahub.load_module`.
+If you make important changes, it's a good idea to include the changes and the corresponding commit hashes as a change history in the README.md file.
 """

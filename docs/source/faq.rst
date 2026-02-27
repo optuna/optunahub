@@ -47,3 +47,10 @@ You can increase the rate limit by authenticating with GitHub using `a personal 
 `optunahub.load_module <https://optuna.github.io/optunahub/reference.html#optunahub.load_module>`_ receives `an Auth object <https://pygithub.readthedocs.io/en/latest/examples/Authentication.html>`__ for authentication.
 
 Another option is cloning the `optunahub-registry <https://github.com/optuna/optunahub-registry>`__ repository and loading the desired package from the local directory by using `optunahub.load_local_module <https://optuna.github.io/optunahub/reference.html#optunahub.load_local_module>`__.
+
+How can I load a specific version of a package?
+------------------------------------------------
+
+When you load a package, you can specify the version by using the ``ref`` argument of :func:`optunahub.load_module`.
+The ``ref`` argument accepts a git reference, such as a commit hash, branch name, or tag name.
+By default, the latest version of the package is loaded.
