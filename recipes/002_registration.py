@@ -37,7 +37,7 @@ The created directory should include the following files:
 - ``YOUR_FEATURE_NAME.py``: The implementation of your feature.
 - ``__init__.py``: An initialization file. This file must implement your feature or import its implementation from another file, e.g., ``YOUR_FEATURE_NAME.py``.
 - ``README.md``: A description of your package. This file is used to create an `web page of OptunaHub <https://hub.optuna.org/>`_. Let me explain the format of the ``README.md`` file later.
-- ``LICENSE``: A license file. This file must contain the license of your package. It should be the MIT license in the alpha version of OptunaHub.
+- ``LICENSE``: A license file. This file must contain the license of your package. The ``MIT License`` is the only supported option at the moment.
 - ``example.py``, ``example.ipynb``: This is optional. This file should contain a simple example of how to use your package (Example: `example.py for Simulated Annealing Sampler <https://github.com/optuna/optunahub-registry/blob/main/package/samplers/simulated_annealing/example.py>`_). You can provide examples in both formats.
 - ``requirements.txt``: This is optional. A file that contains the additional dependencies of your package. If there are no additional dependencies other than Optuna and OptunaHub, you do not need to create this file.
 - ``tests``: A directory that contains unit tests for your package. If you add unit tests for your package, You can create this directory and put test files such as ``test_YOUR_FEATURE_NAME.py`` in this directory. Although unit tests are not mandatory, we highly recommend you to add unit tests to ensure the quality of your package. You can find more details about how to implement unit tests for samplers in :doc:`008_unit_tests`.
