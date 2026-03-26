@@ -17,14 +17,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: 3.11
+      - uses: astral-sh/setup-uv@v7
       - name: Install
         run: |
-          python -m pip install -U pip
-          pip install --progress-bar off ".[docs]"
+          uv sync --frozen --extra docs
       - name: Build
         run: |
           cd docs
-          make html
+          uv run make html
           cd ..
       - name: Deploy
         uses: actions/upload-pages-artifact@v3
