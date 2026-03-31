@@ -22,6 +22,6 @@ jobs:
       - uses: astral-sh/setup-uv@v7
       - name: Install
         run: |
-          uv sync --frozen --extra test
+          uv sync --frozen --group test
       - name: Run Test
         run: uv run pytest tests

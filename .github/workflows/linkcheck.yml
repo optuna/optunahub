@@ -20,7 +20,7 @@ jobs:
       - uses: astral-sh/setup-uv@v7
       - name: Install
         run: |
-          uv sync --frozen --extra docs
+          uv sync --frozen --group docs
       - name: HTML build (internal links)
         run: |
           uv run sphinx-build -b html -W --keep-going docs/source docs/build/html

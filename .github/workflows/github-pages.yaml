@@ -20,7 +20,7 @@ jobs:
       - uses: astral-sh/setup-uv@v7
       - name: Install
         run: |
-          uv sync --frozen --extra docs
+          uv sync --frozen --group docs
       - name: Build
         run: |
           cd docs

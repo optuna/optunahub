@@ -35,7 +35,7 @@ classifiers = [
   "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
 checking = [
   "pre-commit",
   "mypy",

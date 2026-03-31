@@ -8,6 +8,13 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 
+[options]
+exclude-newer = "2026-03-26T06:57:17.998781Z"
+exclude-newer-span = "P5D"
+
+[options.exclude-newer-package]
+optuna = false
+
 [[package]]
 name = "alabaster"
 version = "0.7.16"
@@ -928,7 +935,7 @@ name = "exceptiongroup"
 version = "1.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/50/79/66800aadf48771f6b62f7eb014e352e5d06856655206165d775e675a02c9/exceptiongroup-1.3.1.tar.gz", hash = "sha256:8b412432c6055b0b7d14c310000ae93352ed6754f70fa8f7c34141f91c4e3219", size = 30371, upload-time = "2025-11-21T23:01:54.787Z" }
 wheels = [
@@ -2237,7 +2244,7 @@ dependencies = [
     { name = "pygithub" },
 ]
 
-[package.optional-dependencies]
+[package.dev-dependencies]
 checking = [
     { name = "mypy" },
     { name = "pre-commit", version = "4.3.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
@@ -2249,6 +2256,7 @@ docs = [
     { name = "matplotlib", version = "3.9.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "matplotlib", version = "3.10.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
     { name = "optuna" },
+    { name = "optunahub" },
     { name = "plotly" },
     { name = "pytest", version = "8.4.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "pytest", version = "9.0.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
@@ -2269,25 +2277,32 @@ test = [
 
 [package.metadata]
 requires-dist = [
-    { name = "coverage", marker = "extra == 'test'" },
     { name = "gitpython" },
-    { name = "matplotlib", marker = "extra == 'docs'" },
-    { name = "mypy", marker = "extra == 'checking'" },
     { name = "optuna" },
-    { name = "optuna", marker = "extra == 'docs'", git = "https://github.com/optuna/optuna.git?rev=master" },
-    { name = "optunahub", marker = "extra == 'docs'" },
-    { name = "plotly", marker = "extra == 'docs'" },
-    { name = "pre-commit", marker = "extra == 'checking'" },
     { name = "pygithub", specifier = ">=1.59" },
-    { name = "pytest", marker = "extra == 'docs'" },
-    { name = "pytest", marker = "extra == 'test'" },
-    { name = "ruff", marker = "extra == 'checking'" },
-    { name = "sphinx", marker = "extra == 'docs'" },
-    { name = "sphinx-gallery", marker = "extra == 'docs'" },
-    { name = "sphinx-rtd-theme", marker = "extra == 'docs'" },
-    { name = "types-toml", marker = "extra == 'checking'" },
 ]
-provides-extras = ["checking", "docs", "test"]
+
+[package.metadata.requires-dev]
+checking = [
+    { name = "mypy" },
+    { name = "pre-commit" },
+    { name = "ruff" },
+    { name = "types-toml" },
+]
+docs = [
+    { name = "matplotlib" },
+    { name = "optuna", git = "https://github.com/optuna/optuna.git?rev=master" },
+    { name = "optunahub" },
+    { name = "plotly" },
+    { name = "pytest" },
+    { name = "sphinx" },
+    { name = "sphinx-gallery" },
+    { name = "sphinx-rtd-theme" },
+]
+test = [
+    { name = "coverage" },
+    { name = "pytest" },
+]
 
 [[package]]
 name = "packaging"
