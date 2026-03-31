@@ -22,13 +22,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Setup Python3.11
-      uses: actions/setup-python@v5
-      with:
-        python-version: 3.11
-
     - name: Setup uv
       uses: astral-sh/setup-uv@v7
+      with:
+        python-version: 3.11
 
     - name: Setup cache
       uses: actions/cache@v3
