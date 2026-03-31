@@ -15,11 +15,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Python${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+      - uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: astral-sh/setup-uv@v7
       - name: Install
         run: |
           uv sync --frozen --group test
