@@ -22,8 +22,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Setup Python3.11
-      uses: actions/setup-python@v5
+    - name: Setup uv
+      uses: astral-sh/setup-uv@v7
       with:
         python-version: 3.11
 
@@ -32,30 +32,26 @@ jobs:
       env:
         cache-name: coverage
       with:
-        path: ~/.cache/pip
+        path: ~/.cache/uv
         key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/pyproject.toml') }}-v1
         restore-keys: |
           ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/pyproject.toml') }}
 
     - name: Install
       run: |
-        python -m pip install --upgrade pip
+        uv sync --frozen --group test
 
-        # Install minimal dependencies and confirm that `import optunahub` is successful.
-        pip install --progress-bar off .
-        python -c 'import optunahub'
-
-        pip install --progress-bar off .[test]
+        # Confirm that `import optunahub` is successful.
+        uv run python -c 'import optunahub'
 
         echo 'import coverage; coverage.process_startup()' > sitecustomize.py
 
     - name: Output installed packages
       run: |
-        pip freeze --all
+        uv pip list
     - name: Output dependency tree
       run: |
-        pip install pipdeptree
-        pipdeptree
+        uv run --with pipdeptree pipdeptree
 
 
     - name: Tests
@@ -65,9 +61,9 @@ jobs:
         COVERAGE_PROCESS_START: .coveragerc  # https://coverage.readthedocs.io/en/6.4.1/subprocess.html
         COVERAGE_COVERAGE: yes  # https://github.com/nedbat/coveragepy/blob/65bf33fc03209ffb01bbbc0d900017614645ee7a/coverage/control.py#L255-L261
       run: |
-        coverage run --source=optunahub -m pytest tests
-        coverage combine
-        coverage xml
+        uv run coverage run --source=optunahub -m pytest tests
+        uv run coverage combine
+        uv run coverage xml
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4
