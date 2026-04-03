@@ -20,7 +20,7 @@ jobs:
           python-version: 3.11
       - name: Install
         run: |
-          uv sync --frozen --group docs
+          uv sync --group docs
       - name: HTML build (internal links)
         run: |
           uv run sphinx-build -b html -W --keep-going docs/source docs/build/html

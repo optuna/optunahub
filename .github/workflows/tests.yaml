@@ -20,6 +20,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install
         run: |
-          uv sync --frozen --group test
+          uv sync --group test
       - name: Run Test
         run: uv run pytest tests

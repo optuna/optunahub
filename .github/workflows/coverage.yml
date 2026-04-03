@@ -39,7 +39,7 @@ jobs:
 
     - name: Install
       run: |
-        uv sync --frozen --group test
+        uv sync --group test
 
         # Confirm that `import optunahub` is successful.
         uv run python -c 'import optunahub'
