@@ -26,6 +26,9 @@ jobs:
       with:
         python-version: 3.11
 
+    - name: Create venv
+      run: uv venv
+
     - name: Install twine
       run: |
         uv pip install -U twine wheel build
