@@ -12,7 +12,7 @@ The following is an example of the directory structure of a package.
 See the `template directory <https://github.com/optuna/optunahub-registry/tree/main/template>`__ for an example of the directory structure.
 
 | `package <https://github.com/optuna/optunahub-registry/tree/main/package>`__
-| └── category (samplers, pruners, visualization, or benchmarks)
+| └── category (samplers, pruners, visualization, benchmarks or callbacks)
 |     └── YOUR_PACKAGE_NAME (you need to create this directory and its contents)
 |         ├── YOUR_FEATURE_NAME.py
 |         ├── __init__.py
