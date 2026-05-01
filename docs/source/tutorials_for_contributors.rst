@@ -11,4 +11,5 @@ Tutorials for Contributors
 	generated/recipes/005_debugging
 	generated/recipes/006_benchmarks_basic
 	generated/recipes/007_benchmarks_advanced
-	generated/recipes/008_unit_tests
+	generated/recipes/008_callbacks
+	generated/recipes/009_unit_tests
