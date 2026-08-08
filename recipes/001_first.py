@@ -24,7 +24,10 @@ You need to install ``optuna`` to implement your own sampler, and ``optunahub`` 
     $ pip install optuna optunahub
 
 """
-
+###################################################################################################
+# <beat 1: when a sampler uses past trial results to decide what to try next, it must
+#  check study.direction, because a raw score isn't good or bad on its own —
+#  higher is better when maximizing, lower is better when minimizing.>
 ###################################################################################################
 # First of all, import ``optuna``, ``optunahub``, and other required modules.
 from __future__ import annotations
@@ -80,7 +83,7 @@ class MySampler(optunahub.samplers.SimpleBaseSampler):
             else:
                 raise NotImplementedError
         return params
-
+###################################################################################################
 
 ###################################################################################################
 # Here, as an example, the objective function is defined as follows.
@@ -100,14 +103,28 @@ sampler = MySampler()
 study = optuna.create_study(sampler=sampler)
 study.optimize(objective, n_trials=100)
 
-###################################################################################################
+# When a sampler uses past trial values to decide what to try next, it must check
+# ``study.direction``, because the same objective value means the opposite thing
+# depending on whether the study is minimizing or maximizing. The pattern below
+# handles both directions, and applies to any comparison a sampler makes (for
+# example, ranking trials or checking whether a new trial improves on earlier ones).
+
+trials = study.trials
+
+if study.direction == optuna.study.StudyDirection.MINIMIZE:
+    best_trial = min(trials, key=lambda t: t.value)
+else:
+    best_trial = max(trials, key=lambda t: t.value)
+
+print(f"Best trial value: {best_trial.value}, params: {best_trial.params}")
+
 # The best parameters can be fetched as follows.
 
 best_params = study.best_params
 best_value = study.best_value
 print(f"Best params: {best_params}, Best value: {best_value}")
 
-###################################################################################################
+
 # We can see that ``best_params`` value found by Optuna is close to the optimal value ``{"x":0, "y": 0, "z": "b"}``.
 
 ###################################################################################################
