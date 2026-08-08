@@ -24,10 +24,7 @@ You need to install ``optuna`` to implement your own sampler, and ``optunahub`` 
     $ pip install optuna optunahub
 
 """
-###################################################################################################
-# <beat 1: when a sampler uses past trial results to decide what to try next, it must
-#  check study.direction, because a raw score isn't good or bad on its own —
-#  higher is better when maximizing, lower is better when minimizing.>
+
 ###################################################################################################
 # First of all, import ``optuna``, ``optunahub``, and other required modules.
 from __future__ import annotations
