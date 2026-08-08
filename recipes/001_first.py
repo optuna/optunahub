@@ -113,7 +113,7 @@ if study.direction == optuna.study.StudyDirection.MINIMIZE:
 else:
     best_trial = max(trials, key=lambda t: t.value)
 
-print(f"Best trial value: {best_trial.value}, params: {best_trial.params}")
+
 
 # The best parameters can be fetched as follows.
 
