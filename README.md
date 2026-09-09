@@ -21,6 +21,7 @@ This is the repository of the optunahub Python Library to use packages published
 
 ## :loudspeaker: News
 
+* **Sep 8, 2026**: The paper [OptunaHub: A Platform for Black-Box Optimization](https://www.jmlr.org/papers/v27/25-2424.html) has been published in the Journal of Machine Learning Research (JMLR).
 * **Oct 7, 2025**: The paper [OptunaHub: A Platform for Black-Box Optimization](https://doi.org/10.48550/arXiv.2510.02798) has been in public on arXiv.
 * **Jan 22, 2025**: A new article [OptunaHub Benchmarks: A New Feature to Use/Register Various Benchmark Problems](https://medium.com/optuna/optunahub-benchmarks-a-new-feature-to-use-register-various-benchmark-problems-694401524ce0) has been published.
 * **Nov 6, 2024**: A new article [AutoSampler: Automatic Selection of Optimization Algorithms in Optuna](https://medium.com/optuna/autosampler-automatic-selection-of-optimization-algorithms-in-optuna-1443875fd8f9) has been published.
@@ -82,13 +83,17 @@ MIT License (see [LICENSE](https://github.com/optuna/optunahub/blob/main/LICENSE
 
 ## Citation
 
-Please cite [the OptunaHub paper](https://arxiv.org/abs/2510.02798) with the following format when you use it in your project:
+Please cite [the OptunaHub paper](https://www.jmlr.org/papers/v27/25-2424.html) with the following format when you use it in your project:
 
 ```bibtex
-@article{ozaki2025optunahub,
+@article{ozaki2026optunahub,
   title={{OptunaHub}: A Platform for Black-Box Optimization},
   author={Ozaki, Yoshihiko and Watanabe, Shuhei and Yanase, Toshihiko},
-  journal={arXiv preprint arXiv:2510.02798},
-  year={2025}
+  journal={Journal of Machine Learning Research},
+  volume={27},
+  number={203},
+  pages={1--10},
+  year={2026},
+  url={https://www.jmlr.org/papers/v27/25-2424.html}
 }
 ```
