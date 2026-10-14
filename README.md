@@ -14,7 +14,7 @@ OptunaHub: A Platform for Black-Box Optimization
 | :question: [**FAQ**](https://optuna.github.io/optunahub/faq.html)
 | [**Optuna.org**](https://optuna.org/)
 
-[*OptunaHub*](https://hub.optuna.org/) is a platform for black-box optimizaiton. On the basis of [Optuna](https://optuna.org/), a powerful and flexible black-box optimization framework, OptunaHub provides implementations of state-of-the-art optimization algorithms and visualization of optimization results for analysis. You can also publish your algorithm implementation on the platform and make it available to Optuna users around the world.
+[*OptunaHub*](https://hub.optuna.org/) is a platform for black-box optimization. On the basis of [Optuna](https://optuna.org/), a powerful and flexible black-box optimization framework, OptunaHub provides implementations of state-of-the-art optimization algorithms and visualization of optimization results for analysis. You can also publish your algorithm implementation on the platform and make it available to Optuna users around the world.
 
 
 This is the repository of the optunahub Python Library to use packages published in [OptunaHub](https://hub.optuna.org/). If you would like to register your package in OptunaHub, please contribute by creating a pull request to [the optunahub-registry repository](https://github.com/optuna/optunahub-registry).
