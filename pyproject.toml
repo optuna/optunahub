@@ -75,7 +75,7 @@ version = {attr = "optunahub.version.__version__"}
 
 [tool.uv]
 exclude-newer = "5 days"
-exclude-newer-package = { optuna = false }
+exclude-newer-package = { certifi = false, optuna = false }
 
 [tool.ruff]
 line-length = 99
