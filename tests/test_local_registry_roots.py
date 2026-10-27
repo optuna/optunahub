@@ -26,7 +26,8 @@ def test_load_local_module_registry_root(
         assert first.VALUE == 1
         root = roots[1] if different_root else roots[0]
         second = optunahub.load_local_module(package, registry_root=str(root))
-        assert second.__file__ == str(root / package / "__init__.py")
+        assert second.__file__ is not None
+        assert Path(second.__file__) == root / package / "__init__.py"
         assert second.VALUE == (2 if different_root else 1)
         assert first.VALUE == 1
     finally:
