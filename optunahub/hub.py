@@ -212,6 +212,12 @@ def load_local_module(
     module = importlib.util.module_from_spec(spec)
     if module is None:
         raise ImportError(f"Module {module_name} not found in {module_path}")
+    previous_module = sys.modules.get(module_name)
+    if previous_module is not None and previous_module.__file__ != module.__file__:
+        # Relative imports must come from the newly selected registry root.
+        for name in list(sys.modules):
+            if name.startswith(module_name + "."):
+                del sys.modules[name]
     sys.modules[module_name] = module
     spec.loader.exec_module(module)
 
